@@ -1,0 +1,125 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+}
+body {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: #ECECEE;
+}
+
+a{
+    text-decoration-line: none;
+}
+
+.background {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 35vh;
+    width: 110%;
+    z-index: -1;
+    background-image: url('../img/common/backgroundpart.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.side_menubar{
+    height: 100vh;
+    width: 240px;
+    position: absolute;
+    left: 0;
+    padding: 20px 1px 20px 0;
+    border-radius: 0 40px 40px 0;
+    background-color: #3B3A45;
+}
+
+.side_main_logo{
+    font-size: 24px;
+    font-weight: 900;
+    color: white;
+    margin: 0 0 50px 30px;
+    cursor: pointer;
+}
+
+.side_purple{
+    color: #AFA5FF;
+}
+
+.side_word{
+    letter-spacing: 1px;
+}
+
+.side_main_menu{
+    color: white;
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0 0 20px 30px;
+}
+
+.side_menu{
+    padding: 12px 0 12px 15px;
+    border-radius: 15px;
+    margin: 0 8px 10px 8px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.fa-solid{
+    color: white;
+    font-size: 18px;
+    width: 25px;
+    margin-right: 25px;
+}
+
+.side_menu_word{
+    color: white;
+    font-size: 20px;
+}
+
+.side_menu:hover{
+    background-color: white;
+}
+
+.side_menu:hover .fa-solid{
+    color:  #3B3A45;
+}
+
+.side_menu:hover .side_menu_word {
+    color: #3B3A45;
+    font-weight: 900;
+}
+
+.clicked_side_menu{
+    background-color: white;
+}
+
+.clicked_fa-solid{
+    color:  #3B3A45;
+}
+
+.clicked_side_menu_word{
+    color: #3B3A45;
+    font-weight: 900;
+}
+
+.header{
+    height: 100px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    border-bottom: 1px solid #717579;
+}
+
+.hd_user_image{
+    width: 20px;
+}

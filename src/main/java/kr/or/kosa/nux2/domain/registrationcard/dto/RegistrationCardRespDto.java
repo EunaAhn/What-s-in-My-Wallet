@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class createRegistrationCardReqDto {
+public class RegistrationCardRespDto {
 }

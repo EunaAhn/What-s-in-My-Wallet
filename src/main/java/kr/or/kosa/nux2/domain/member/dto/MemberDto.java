@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class CreateMemberReqDto {
+public class MemberDto {
     //아이디
     //비밀번호
     //연락처

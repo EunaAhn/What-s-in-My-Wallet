@@ -17,7 +17,7 @@ public interface CardMapper {
     List<CardProductDto.Response> findAllCardList(Map<String, Object> columns);
     // company, cardname, benefit 3개의 인자로 동적쿼리를 생성해야한다.
     // 카드 목록 필터 기능
-    List<CardProductDto.Response> findTop4LikeCardList();
+    List<CardProductDto.Response> findTop4LikeCard();
     // 관심 카드 목록 가져오기 (마이페이지)
     List<CardProductDto.Response> findMemberLikeCard(String memberId);
 }

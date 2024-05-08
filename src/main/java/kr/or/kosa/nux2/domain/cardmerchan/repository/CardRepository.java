@@ -13,9 +13,13 @@ import java.util.Map;
 public class CardRepository {
     private final CardMapper cardMapper;
 
-    public List<CardProductDto.Response> findAllCards(Map<String, Object> requestMap){
+    public List<CardProductDto.Response> findAllCardList(Map<String, Object> requestMap){
         return cardMapper.findAllCardList(requestMap);
     }
-
-
+    public List<CardProductDto.Response> findTop4LikeCard(){
+        return cardMapper.findTop4LikeCard();
+    };
+    public List<CardProductDto.Response> findMemberLikeCard(String memberId) {
+        return cardMapper.findMemberLikeCard(memberId);
+    }
 }

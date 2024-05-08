@@ -1,4 +1,4 @@
-package kr.or.kosa.nux2.domain.cardmd.service;
+package kr.or.kosa.nux2.domain.cardmerchan.service;
 
 import org.springframework.stereotype.Service;
 

@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface RegistrationCardRepository {
+public interface RegistrationCardMapper {
     // 멤버아이디 기반의 등록된 카드 목록 조회
     List <RegistrationCardDto> findAllRegistrationCardByMemberId(String memberId);
     // 삭제, 삽입 개수 반환

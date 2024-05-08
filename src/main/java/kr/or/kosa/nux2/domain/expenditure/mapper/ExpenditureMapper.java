@@ -24,8 +24,7 @@ public interface ExpenditureMapper {
 
     // 현재 사용자의 마지막 id값보다 높은 값을 가지는 마이데이터소비내역을 조회해서 insert한다.
     // 다건 삽입 방법 성능 고민
-    // Request 객체를 생성해야한다.
-    int insertExpenditures(List<ExenditureDto.Response> expenditureDto);
+    int insertExpenditures(List<ExenditureDto.InsertRequest> expenditureList);
 
     // 소비 상세 내역 메모 수정하기
     void updateExpenditureMemo(String expenditureMemo);

@@ -1,6 +1,8 @@
 package kr.or.kosa.nux2.domain.expenditure.dto;
 
 
+import lombok.Setter;
+
 import java.util.List;
 
 public class ExenditureDto {
@@ -81,7 +83,7 @@ public class ExenditureDto {
                                               REQUEST DTO
       ========================================================================================
      */
-
+    @Setter
     public static class InsertRequest {
         private Long cardId;
         private String memberId;

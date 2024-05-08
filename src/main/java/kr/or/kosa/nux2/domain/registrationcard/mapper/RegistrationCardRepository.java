@@ -13,7 +13,7 @@ public interface RegistrationCardRepository {
     // 등록 카드 삭제
     int deleteRegistrationCard(int registrationId);
     // 등록카드에 추가
-    int insertRegistrationCard(RegistrationCardDto registrationCardDto);
+    int insertRegistrationCard(RegistrationCardDto.InsertRequest registrationCard);
 
     // 마이데이터에 카드가 등록될 수 있어야한다.
     // 마이데이터 카드 테이블을 이용하여

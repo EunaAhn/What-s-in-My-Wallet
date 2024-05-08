@@ -16,4 +16,5 @@ public interface MemberMapper {
     // 회원 정보 수
     int updateMember(UpdateMemberDto updateMemberDto);
     Long findMemberTargetExpenditure(String memberId);
+    public MemberDto findById(String memberId);
 }

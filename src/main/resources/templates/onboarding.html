@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+    <th:block layout:fragment="head">
+        <link th:href="@{/css/onboarding.css}" rel="stylesheet" />
+        <link th:href="@{/css/common.css}" rel="stylesheet" />
+        <script type="text/javascript" th:src="@{/js/onboarding.js}" defer></script>
+    </th:block>
+    <body>
+        <div class="background"></div>
+        <div class="container">
+            <div class="left_section">
+                <div class="main_logo">
+                    <p><span class="purple">W</span>hat's</p>
+                    <p><span class="purple">I</span >n My <span class="purple">W</span>allet</p>
+                </div>
+                <div class="description">
+                    개인 소비 패턴 기반 카드추천 서비스
+                </div>
+                <div class="user_box">
+                    <a href="login"><button class="btn login">카드 추천 받기</button></a>
+                    <a href="signup"><button class="btn signup">아직 회원이 아니신가요?</button></a>
+                </div>
+            </div>
+            <div class="right-section">
+                <img class="tmp tmp2" th:src="@{/img/onboarding/tmp2.png}" alt="onboardingImg2"/>
+                <img class="tmp tmp1" th:src="@{/img/onboarding/tmp1.png}" alt="onboardingImg1"/>
+            </div>
+        </div>
+    </body>
+</html>

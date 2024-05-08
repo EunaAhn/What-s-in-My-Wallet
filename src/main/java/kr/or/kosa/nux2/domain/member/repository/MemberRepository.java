@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public class MemberRepository {
     private final MemberMapper memberMapper;
 
-    public MemberDto findById(String memberId) {
+    public MemberDto.MemberAuthenticationResponse findById(String memberId) {
         return memberMapper.findById(memberId);
     }
 }

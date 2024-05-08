@@ -19,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
         log.info("method = {}","loadUserByUsername");
 
-        MemberDto memberData = memberRepository.findById(memberId);
+        MemberDto.MemberAuthenticationResponse memberData = memberRepository.findById(memberId);
         if (memberData != null) {
             return new CustomUserDetails(memberData);
         }

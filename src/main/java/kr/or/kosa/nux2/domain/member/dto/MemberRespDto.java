@@ -1,13 +1,8 @@
 package kr.or.kosa.nux2.domain.member.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.List;
 
-@Getter
-@Setter
-public class CreateMemberReqDto {
+public class MemberRespDto {
     //아이디
     //비밀번호
     //연락처

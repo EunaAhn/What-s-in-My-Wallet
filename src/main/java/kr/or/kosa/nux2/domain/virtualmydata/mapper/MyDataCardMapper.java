@@ -8,9 +8,12 @@ import java.util.List;
 @Mapper
 public interface MyDataCardMapper {
     // 회원 주민등록번호로 카드목록 조회
-    public List<MyDataCardDto> findAllMyDataCard(String reg_num);
+    List<MyDataCardDto> findAllMyDataCardByRegNum(String reg_num);
+    //관리자용
+    void insertMyDataCard(MyDataCardDto myDataCardDto);
+    List<MyDataCardDto> findAllMyDataCard();
+    int deleteMyDataCardByCardNum(String cardNumber);
+    // update는 없음
 
-    // 서비스에서는
-    // 1. 처음 카드목록 조회
-    // 2. 카드 등록 추가 및 삭제
+
 }

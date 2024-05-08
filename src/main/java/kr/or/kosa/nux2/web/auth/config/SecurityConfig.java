@@ -44,7 +44,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         // jwt 토큰을 사용하지 않는 URL
-        String[] permitUrl = {"/oauth2/**", "/", "/login/**", "/signUp/**", "/product/**", "/refresh", "/swagger-ui/**", "/api-docs/**"};
+        String[] permitUrl = {"/oauth2/**", "/", "/login/**", "/signUp/**", "/product/**", "/refresh", "/swagger-ui/index.html","/swagger**.html", "/api-docs/**"};
 
         http
                 .csrf((auth) -> auth.disable());
@@ -52,12 +52,19 @@ public class SecurityConfig {
         http
                 .formLogin((auth) -> auth.permitAll());
 
-        //http
-        //      .httpBasic((auth) -> auth.disable());
+        http
+              .httpBasic((auth) -> auth.disable());
 
         http
-                .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers(permitUrl).permitAll().anyRequest().authenticated());
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**")
+                        .permitAll()
+                        .requestMatchers("/login/**","/auth/**", "/oauth2/**")
+                        .permitAll()
+                        .requestMatchers("/", "/error", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html", "/**/*.css", "/**/*.js")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated());
 
         http
                 .exceptionHandling((exceptions) -> exceptions.authenticationEntryPoint(jwtAuthenticationEntryPoint));

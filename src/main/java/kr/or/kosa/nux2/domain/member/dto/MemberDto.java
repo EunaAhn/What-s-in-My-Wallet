@@ -1,5 +1,6 @@
 package kr.or.kosa.nux2.domain.member.dto;
 
+import kr.or.kosa.nux2.domain.expenditure.dto.ExpenditureCategory;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,5 +18,5 @@ public class MemberDto {
     String password;
     String contact;
     int targetExpenditure;
-    List<ExpenditureDto> expenditureDtoList;
+    List<ExpenditureCategory> expenditureCategoryList;
 }

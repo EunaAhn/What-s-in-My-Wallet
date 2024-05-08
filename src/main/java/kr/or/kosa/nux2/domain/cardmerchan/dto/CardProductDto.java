@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 public class CardProductDto {
-    @Getter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
+
     public static class Response {
         private String cardCompanyId;
         private String cardCompanyName;
@@ -25,22 +22,14 @@ public class CardProductDto {
     }
 
 
-    @Builder
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
     public static class CardmdBenefitDetailsDto {
-        String benefitDetails;
+        private String benefitDetails;
     }
 
 
-    @Getter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
     public static class CardmdBenefitCategoryDto {
-        String benefitName;
+        private String benefitName;
         // 혜택상세Dto의 리스트 속성은 반드시 lazy loading을 적용해야한다.
-        List<CardProductDto.CardmdBenefitDetailsDto> cardmdBenefitDetailsDtoList;
+        private List<CardProductDto.CardmdBenefitDetailsDto> cardmdBenefitDetailsDtoList;
     }
 }

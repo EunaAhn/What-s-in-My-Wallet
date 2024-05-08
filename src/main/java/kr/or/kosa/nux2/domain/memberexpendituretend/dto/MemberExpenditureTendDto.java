@@ -1,4 +1,4 @@
-package kr.or.kosa.nux2.domain.memberconsumptiontend.dto;
+package kr.or.kosa.nux2.domain.memberexpendituretend.dto;
 
 public class MemberExpenditureTendDto {
     String memberConsumptionTendency;

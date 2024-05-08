@@ -24,21 +24,22 @@ public interface ExpenditureMapper {
 
     // 현재 사용자의 마지막 id값보다 높은 값을 가지는 마이데이터소비내역을 조회해서 insert한다.
     // 다건 삽입 방법 성능 고민
+    // Request 객체를 생성해야한다.
     int insertExpenditures(List<ExenditureDto.Response> expenditureDto);
 
     // 소비 상세 내역 메모 수정하기
-    void updateExpenditureDetails(String expenditureContent);
+    void updateExpenditureMemo(String expenditureMemo);
 
     // 소비 카테고리 별 지출비율
     // 개월수가 컬럼으로 들어감
-    ExpenditureRatioByCategoryDto findExpenditureRatio(int month);
+    ExenditureDto.RatioByCategoryResponse findExpenditureRatioForCategoryByMonth(int month);
 
     // 소비 카테고리 별 지출 횟수
-    ExpenditureCountByCategoryDto findExpenditureCount(int month);
+    ExenditureDto.CountByCategoryResponse findExpenditureCountForCategoryByMonth(int month);
 
     // 월별 시간대 지출금액
-    ExpenditureByMonthAndTimeDto findExpenditureByMonthAndTime(String yearAndMonth);
+    ExenditureDto.ByMonthAndTimeResponse findTotalExpenditureForMonthAndTimeByYearAndMonth(String yearAndMonth);
 
     // 월 평균 지출 금액
-    AvgExpenditureByMonth findAvgExpenditureByMonth(int year);
+    ExenditureDto.AverageByMonthResponse findAverageExpenditureForMonthByYear(int year);
 }

@@ -12,5 +12,5 @@ public class MemberRespDto {
     String password;
     String contact;
     int targetExpenditure;
-    List<ExpenditureDto> expenditureDtoList;
+    List<ExpenditureCategoryDto> expenditureCategoryDtoList;
 }

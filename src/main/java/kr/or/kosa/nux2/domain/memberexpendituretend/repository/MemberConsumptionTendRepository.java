@@ -1,4 +1,4 @@
-package kr.or.kosa.nux2.domain.memberconsumptiontend.repository;
+package kr.or.kosa.nux2.domain.memberexpendituretend.repository;
 
 import org.springframework.stereotype.Repository;
 

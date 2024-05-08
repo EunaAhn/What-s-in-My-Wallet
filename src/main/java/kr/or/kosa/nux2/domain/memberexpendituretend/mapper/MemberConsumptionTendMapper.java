@@ -1,4 +1,4 @@
-package kr.or.kosa.nux2.domain.memberconsumptiontend.mapper;
+package kr.or.kosa.nux2.domain.memberexpendituretend.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 

@@ -4,7 +4,12 @@ package kr.or.kosa.nux2.domain.expenditure.dto;
 import java.util.List;
 
 public class ExenditureDto {
-
+    // insert, update 용 DTO도 정의해야한다.
+/*
+      ========================================================================================
+                                          일반 RESPONSE DTO
+      ========================================================================================
+     */
     public static class Response {
         // 달력 한칸에 표현되는 지출 DTO -> 30~31개의 idx를 갖는 List로 Wrapping되는 DTO
         private List<ExenditureDto.CategoryName> expenditureCategoryList;
@@ -35,38 +40,57 @@ public class ExenditureDto {
 
     /*
       ========================================================================================
-                                      하단부터 통계용 RESPONSE DTO
+                                          통계용 RESPONSE DTO
       ========================================================================================
      */
 
     public static class AverageByMonthResponse {
         // 월별 지출 평균 응답 DTO
-        int year;
-        int startMonth;
-        int endMonth;
-        Long maxAvgExpenditure;
-        List<Integer> avgExpenditureList;
+        private int year;
+        private int startMonth;
+        private int endMonth;
+        private Long maxAvgExpenditure;
+        private List<Integer> avgExpenditureList;
     }
 
     public static class ByMonthAndTimeResponse {
         // 대상 month의 두시간 단위의 지출 응답 DTO
-        int maxTotalExpenditure;
-        List<Integer> totalExpenditureList;
+        private int maxTotalExpenditure;
+        private List<Integer> totalExpenditureList;
     }
 
     public static class CountByCategoryResponse {
         // 카테고리별 지출 횟수 응답 DTO
-        String categoryName;
-        String startDate;
-        String endDate;
-        int maxCount;
-        List<Integer> expenditureCountList;
+        private String categoryName;
+        private String startDate;
+        private String endDate;
+        private int maxCount;
+        private List<Integer> expenditureCountList;
     }
 
 
     public static class RatioByCategoryResponse {
         // 카테고리별 지출 비율 응답 DTO
-        String categoryName;
-        Float expenditrueRatio;
+        private String categoryName;
+        private Float expenditrueRatio;
+    }
+
+
+    /*
+      ========================================================================================
+                                              REQUEST DTO
+      ========================================================================================
+     */
+
+    public static class InsertRequest {
+        private Long cardId;
+        private String memberId;
+        private String categoryId;
+        private Long expenditureAmount;
+        private String expenditureDateTime;
+    }
+
+    public static class UpdateMemoRequest{
+        private String memo;
     }
 }

@@ -5,5 +5,5 @@ import java.util.List;
 public class UpdateMemberDto {
     String password;
     int targetExpenditure;
-    List<ExpenditureDto> expenditureDtoList;
+    List<ExpenditureCategoryDto> expenditureCategoryDtoList;
 }

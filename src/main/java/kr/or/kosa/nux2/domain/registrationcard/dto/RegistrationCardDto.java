@@ -4,8 +4,17 @@ import lombok.Getter;
 
 @Getter
 public class RegistrationCardDto {
-    // 멤버 아이디
-    // 카드사아이디
-    // 카드번호(마스킹된)
-    // 카드별칭
+    public static class Response {
+        private String cardCompanyName;
+        private String cardNumber;
+        private String cardNameAlias;
+    }
+
+    public static class InsertRequest {
+
+    }
+
+    public static class UpdateRequest {
+
+    }
 }

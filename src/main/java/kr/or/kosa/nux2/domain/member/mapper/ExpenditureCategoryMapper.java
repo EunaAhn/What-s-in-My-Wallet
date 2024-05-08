@@ -1,6 +1,6 @@
 package kr.or.kosa.nux2.domain.member.mapper;
 
-import kr.or.kosa.nux2.domain.member.dto.ExpenditureDto;
+import kr.or.kosa.nux2.domain.member.dto.ExpenditureCategoryDto;
 import kr.or.kosa.nux2.domain.member.dto.MemberConsCategoryDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface ExpenditureCategoryMapper {
     // 관심사 등록을 위한 소비카테고리 조회
-    List<ExpenditureDto> findAllConsumptionCategory();
+    List<ExpenditureCategoryDto> findAllConsumptionCategory();
     // 회원의 소비카테고리관심사 목록 조회
     List<MemberConsCategoryDto>  findAllMemberConsCategory(String memberId);
     // 회원의 소비카테고리관심사 해제(삭제) -> user id 는 시큐리티컨텍스트에서 취득하는 내용이므로 dto에 담아오기엔 무리가 있다. 따라서 맵 객체 사용

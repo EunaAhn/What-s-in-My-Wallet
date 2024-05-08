@@ -32,4 +32,41 @@ public class ExenditureDto {
         // 달력 한칸에 표현되는 지출 카테고리명
         private String expenditureCategoryName;
     }
+
+    /*
+      ========================================================================================
+                                      하단부터 통계용 RESPONSE DTO
+      ========================================================================================
+     */
+
+    public static class AverageByMonthResponse {
+        // 월별 지출 평균 응답 DTO
+        int year;
+        int startMonth;
+        int endMonth;
+        Long maxAvgExpenditure;
+        List<Integer> avgExpenditureList;
+    }
+
+    public static class ByMonthAndTimeResponse {
+        // 대상 month의 두시간 단위의 지출 응답 DTO
+        int maxTotalExpenditure;
+        List<Integer> totalExpenditureList;
+    }
+
+    public static class CountByCategoryResponse {
+        // 카테고리별 지출 횟수 응답 DTO
+        String categoryName;
+        String startDate;
+        String endDate;
+        int maxCount;
+        List<Integer> expenditureCountList;
+    }
+
+
+    public static class RatioByCategoryResponse {
+        // 카테고리별 지출 비율 응답 DTO
+        String categoryName;
+        Float expenditrueRatio;
+    }
 }

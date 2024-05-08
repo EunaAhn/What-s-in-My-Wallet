@@ -15,16 +15,16 @@ public interface ExpenditureMapper {
     List<Long> findTotalExpenditureByStartAndEndDate(Map<String, Object> columns);
 
     // 동적 쿼리 : 소비카테고리, 월, 카드 별 검색
-    List<DayExpenditureDto> findAllExpenditure (Map<String, Object> columns);
+    List<ExenditureDto.Response> findAllExpenditure (Map<String, Object> columns);
 
     // 상세조회
     // 파라미터 형식 string인지 date인지 고민하기
-    List<ExpenditureDetailsDto> findAllExpenditureDetails(String date);
+    List<ExenditureDto.DetailsReponse> findAllExpenditureDetails(String date);
 
 
     // 현재 사용자의 마지막 id값보다 높은 값을 가지는 마이데이터소비내역을 조회해서 insert한다.
     // 다건 삽입 방법 성능 고민
-    int insertExpenditures(List<DayExpenditureDto> dayExpenditureDtoList);
+    int insertExpenditures(List<ExenditureDto.Response> expenditureDto);
 
     // 소비 상세 내역 메모 수정하기
     void updateExpenditureDetails(String expenditureContent);

@@ -2,16 +2,17 @@ package kr.or.kosa.nux2.domain.registrationcard.mapper;
 
 import kr.or.kosa.nux2.domain.registrationcard.dto.RegistrationCardDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
 public interface RegistrationCardMapper {
     // 멤버아이디 기반의 등록된 카드 목록 조회
-    List <RegistrationCardDto> findAllRegistrationCardByMemberId(String memberId);
+    List <RegistrationCardDto.Response> findAllRegistrationCardByMemberId(@Param("memberId") String memberId);
     // 삭제, 삽입 개수 반환
     // 등록 카드 삭제
-    int deleteRegistrationCard(int registrationId);
+    int deleteRegistrationCard(@Param("registeredCardId") int registeredCardId);
     // 등록카드에 추가
     int insertRegistrationCard(RegistrationCardDto.InsertRequest registrationCard);
 

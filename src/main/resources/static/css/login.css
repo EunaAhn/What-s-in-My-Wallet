@@ -1,0 +1,209 @@
+/* COMMON */
+body {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    color: #333;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1;
+    font-family: 'Montserrat', 'Pretendard', sans-serif;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+}
+
+button {
+    background-color: #3b3a45;
+    color: #f8f8f8;
+    cursor: pointer;
+    border: none;
+    box-sizing: border-box;
+    font-weight: 400;
+    font-family: 'Montserrat', 'Pretendard', sans-serif;
+    transition: 0.1s;
+}
+
+button:focus-visible {
+    outline: 0px solid;
+    background-color: #8B81D4;
+}
+
+button:hover {
+    outline: 0px solid;
+    background-color: #8B81D4;
+}
+
+/* box shape input field */
+.box {
+    width: 100%;
+    height: 50px;
+    box-sizing: border-box;
+    padding: 5px 0 5px 15px;
+    border-radius: 14px;
+    border: 1px solid #d7d7d7;
+    color: #383838;
+    font-weight: 400;
+    font-family: 'Montserrat', 'Pretendard', sans-serif;
+    margin-bottom: 3%;
+}
+
+.box::placeholder {
+    color: #a0a0a0;
+}
+
+.box:focus {
+    outline: 1px solid #8B81D4;
+}
+
+/* CONTAINER */
+.container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    width: 33%;
+    height: 55%;
+    min-width: 450px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #f8f8f8;
+    border-radius: 20px;
+    box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+}
+
+.form-input-container {
+    width: 100%;
+}
+
+.form-input-date-picker-default {
+    position: relative;
+    margin-bottom: 2%; /* 아이디와 비밀번호 입력 요소 간의 간격 조정 */
+}
+
+.start-date {
+    color: #717579;
+    text-align: left;
+    font-family: var(--h6-reguler-font-family, 'Inter-Regular', sans-serif);
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+
+.content {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* HEADER */
+header {
+    width: 100%;
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+
+header h2 {
+    display: inline;
+    color: #303134;
+    text-align: left;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+/* SECTION */
+section {
+    margin: 4% 0 2% 0;
+    width: 100%;
+}
+
+/* SUBMIT */
+button#signin {
+    width: 100%;
+    height: 45px;
+    border-radius: 14px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    font-size: 15px;
+
+}
+
+/* RESULT */
+#result-fail {
+    width: 100%;
+    height: 20px;
+    margin-bottom: 5px;
+    text-align: center;
+    color: red;
+    font-size: 13px;
+}
+
+/* LINK MENU */
+#link-menu {
+    display: flex;
+    margin-top: 2%;
+}
+
+#link-menu a {
+    display: block;
+    position: relative;
+    font-size: 13px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+
+}
+
+#link-menu a::before {
+    content: '';
+    width: 0.1px;
+    height: 15px;
+    background-color: #c4c4c5;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+
+#link-menu a:first-child::before {
+    display: none;
+}
+
+#link-menu a {
+    text-decoration: none;
+    color: #505050;
+    transition: 0.1s;
+}
+
+#link-menu a:hover {
+    text-decoration: none;
+    color: #8B81D4;
+}
+
+.snsbox {
+    display: flex; /* Flexbox를 사용하여 요소들을 수평으로 배치합니다. */
+    align-items: center; /* 요소들을 수직 가운데 정렬합니다. */
+}
+
+.left-image, .right-image {
+    flex: 0 0 15px; /* 이미지가 너비를 자동으로 조절하지 않도록 설정합니다. */
+    margin-top: 20%;
+
+}
+
+.sns {
+    color: #8d8d8d;
+    font-size: 10px;
+    margin: 20% 10px 0 10px; /* 텍스트와 이미지 사이의 간격을 조정합니다. */
+    white-space: nowrap; /* 텍스트의 줄바꿈을 제한합니다. */
+}

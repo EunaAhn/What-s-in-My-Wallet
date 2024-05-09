@@ -1,9 +1,11 @@
 package kr.or.kosa.nux2.global.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.resource.VersionResourceResolver;
 
 @Configuration
 @EnableWebMvc
@@ -14,10 +16,13 @@ public class MvcConfiguration implements WebMvcConfigurer {
         registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
         /* '/css/**'로 호출하는 자원은 '/static/css/' 폴더 아래에서 찾는다. */
         registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
-        /* '/img/**'로 호출하는 자원은 '/static/img/' 폴더 아래에서 찾는다. */
+//        /* '/img/**'로 호출하는 자원은 '/static/img/' 폴더 아래에서 찾는다. */
         registry.addResourceHandler("/img/**").addResourceLocations("classpath:/static/img/");
         /* '/font/**'로 호출하는 자원은 '/static/font/' 폴더 아래에서 찾는다. */
-        registry.addResourceHandler("/font/**").addResourceLocations("classpath:/static/font/");
-
+//        registry.addResourceHandler("/font/**").addResourceLocations("classpath:/static/font/").setCachePeriod(60 * 60 * 24 * 365);
+//        registry.addResourceHandler("/static/**")
+//                .addResourceLocations("classpath:/static/")
+//                .resourceChain(true)
+//                .addResolver(new VersionResourceResolver().addContentVersionStrategy("/**"));
     }
 }

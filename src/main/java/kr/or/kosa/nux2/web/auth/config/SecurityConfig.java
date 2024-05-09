@@ -6,6 +6,7 @@ import kr.or.kosa.nux2.web.auth.JwtLoginFilter;
 import kr.or.kosa.nux2.web.auth.JwtUtils;
 import kr.or.kosa.nux2.web.auth.provider.JwtProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -48,19 +49,20 @@ public class SecurityConfig {
 
         http
                 .csrf((auth) -> auth.disable());
-
         http
                 .formLogin((auth) -> auth.disable());
-
+//                .formLogin((auth) -> auth.permitAll());
         http
-              .httpBasic((auth) -> auth.disable());
-
+                .httpBasic((auth) -> auth.disable());
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**")
                         .permitAll()
-                        .requestMatchers("/login/**","/analyze/**","/carddetail/**", "/cardlist/**","/cardregistration/**","/history/**","/onboarding/**", "/profile/**","/signup/**","/suggestion/**")
+                        .requestMatchers("/login/**","/auth/**", "/oauth2/**")
                         .permitAll()
+                        .requestMatchers("/analyze/**","/carddetail/**", "/cardlist/**","/cardregistration/**","/history/**","/onboarding/**", "/profile/**","/signup/**","/suggestion/**")
+                        .permitAll()
+//                        .requestMatchers("/", "/error", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html", "/**/*.css", "/**/*.js")
                         .requestMatchers("/", "/error", "/favicon.ico","/png/**", "/gif/**", "/svg/**", "/jpg/**", "/html/**", "/css/**", "/js/**","/img/**")
                         .permitAll()
                         .anyRequest()
@@ -68,16 +70,16 @@ public class SecurityConfig {
 
         http
                 .exceptionHandling((exceptions) -> exceptions.authenticationEntryPoint(jwtAuthenticationEntryPoint));
-        //http
-        //        .addFilterBefore(new JwtFilter(jwtUtils), JwtLoginFilter.class);
-
-        //http
-       //         .addFilterAt(new JwtLoginFilter(authenticationManager(), jwtUtils), UsernamePasswordAuthenticationFilter.class);
-
+//        http
+//                .addFilterBefore(new JwtFilter(jwtUtils), JwtLoginFilter.class);
+//        http
+//                .addFilterAt(new JwtLoginFilter(authenticationManager(), jwtUtils), UsernamePasswordAuthenticationFilter.class);
         http
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
     }
+
+
 }

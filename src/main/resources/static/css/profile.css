@@ -1,0 +1,125 @@
+.container {
+    position: absolute;
+    top: 100px;
+    left: 280px;
+    height: calc(100vh - 100px);
+    width: calc(100vw - 280px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+}
+
+.item{
+    height: 130px;
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    background-color: white;
+    margin-bottom: 20px;
+    padding: 20px 40px ;
+    box-shadow: 0 0 15px 0 rgb(0 0 0 / 15%);
+    cursor: pointer;
+    transition: all 0.3s ;
+}
+
+.item:hover{
+    transform: scale(1.01);
+}
+
+
+.right_arrow{
+    height: 30px;
+    aspect-ratio: 1/1;
+}
+
+.left_section{
+    display: flex;
+}
+
+.user_image{
+    width: 60px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+.title{
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 5px;
+}
+
+.content{
+    font-size: 15px;
+    color:#717579
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(1px);
+}
+
+.close_btn{
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.close_image{
+    height: 20px;
+    width: 20px;
+}
+
+/*개인 정보 수정*/
+.user_modal {
+    position: relative;
+    height: 86vh;
+    width: 32vw;
+    top: 7vh;
+    left: 34vw;
+    border: none;
+    border-radius: 20px;
+    padding: 26px 13px 50px 26px;
+    box-shadow: 0 1px 120px 0 rgb(0 0 0 / 12%);
+    overflow: hidden;
+}
+
+/*카드 등록 수정*/
+.card_modal {
+    position: relative;
+    height: 86vh;
+    width: 32vw;
+    top: 7vh;
+    left: 34vw;
+    border: none;
+    border-radius: 20px;
+    padding: 26px 13px 50px 26px;
+    box-shadow: 0 1px 120px 0 rgb(0 0 0 / 12%);
+    overflow: hidden;
+}
+
+/*찜한 카드 목록 수정*/
+.like_modal {
+    position: relative;
+    height: 86vh;
+    width: 32vw;
+    top: 7vh;
+    left: 34vw;
+    border: none;
+    border-radius: 20px;
+    padding: 26px 13px 50px 26px;
+    box-shadow: 0 1px 120px 0 rgb(0 0 0 / 12%);
+    overflow: hidden;
+}
+

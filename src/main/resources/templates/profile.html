@@ -10,8 +10,58 @@
         <script type="text/javascript" th:src="@{/js/profile.js}" defer></script>
     </th:block>
     <body>
-    <th:block layout:fragment="header" th:include="@{/fragments/header}"></th:block>
-    <th:block layout:fragment="sidemenubar" th:include="@{/fragments/sidemenubar}"></th:block>
-    <h1>Profile</h1>
+        <th:block layout:fragment="header" th:include="@{/fragments/header}"></th:block>
+        <th:block layout:fragment="sidemenubar" th:include="@{/fragments/sidemenubar}"></th:block>
+        <div class="container">
+            <div class="item user">
+                <div class="left_section">
+                    <img class="user_image" th:src="@{/img/common/user_image.png}" alt="user_image">
+                    <div class="info">
+                        <p class="title">이눅스님</p>
+                        <p class="content">내 정보 수정하기</p>
+                    </div>
+                </div>
+                <img class="right_arrow" th:src="@{/img/profile/right_arrow.png}" alt="right_arrow">
+            </div>
+            <div class="item card">
+                <div class="info">
+                    <p class="title">마이데이터 자산 연결 관리</p>
+                    <p class="content">내 카드 내역 편집하기</p>
+                </div>
+                <img class="right_arrow" th:src="@{/img/profile/right_arrow.png}" alt="right_arrow">
+            </div>
+            <div class="item like">
+                <div class="info">
+                    <p class="title">찜한 카드</p>
+                    <p class="content">내가 찜한 카드 보기</p>
+                </div>
+                <img class="right_arrow" th:src="@{/img/profile/right_arrow.png}" alt="right_arrow">
+            </div>
+        </div>
+
+        <!--회원 정보 수정-->
+        <dialog class="user_modal">
+            <button class="close_btn">
+                <img class="close_image" th:src="@{/img/common/closebtn.png}" alt="close_button" />
+                user
+            </button>
+        </dialog>
+
+        <!--카드 등록 관리-->
+        <dialog class="card_modal">
+            <button class="close_btn">
+                <img class="close_image" th:src="@{/img/common/closebtn.png}" alt="close_button" />
+                card
+            </button>
+        </dialog>
+
+        <!--카드 찜 목록 관리-->
+        <dialog class="like_modal">
+            <button class="close_btn">
+                <img class="close_image" th:src="@{/img/common/closebtn.png}" alt="close_button" />
+                like
+            </button>
+        </dialog>
+
     </body>
 </html>`

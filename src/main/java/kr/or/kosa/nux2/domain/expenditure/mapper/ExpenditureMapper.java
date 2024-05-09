@@ -8,9 +8,6 @@ import java.util.Map;
 
 @Mapper
 public interface ExpenditureMapper {
-
-
-
     // startDate, endDate 기준으로 total 산출
     List<Long> findTotalExpenditureByStartAndEndDate(Map<String, Object> columns);
 

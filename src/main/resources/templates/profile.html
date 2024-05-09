@@ -8,6 +8,7 @@
         <link th:href="@{/css/profile.css}" rel="stylesheet" />
         <link th:href="@{/css/common.css}" rel="stylesheet" />
         <script type="text/javascript" th:src="@{/js/profile.js}" defer></script>
+        <script src="https://kit.fontawesome.com/e2b1540441.js" crossorigin="anonymous" defer></script>
     </th:block>
     <body>
         <th:block layout:fragment="header" th:include="@{/fragments/header}"></th:block>
@@ -41,27 +42,188 @@
 
         <!--회원 정보 수정-->
         <dialog class="user_modal">
-            <button class="close_btn">
-                <img class="close_image" th:src="@{/img/common/closebtn.png}" alt="close_button" />
-                user
+            <div class="modal_header user_header">
+                <p>이눅스님의 정보</p>
+                <button class="close_btn">
+                    <img class="close_image" th:src="@{/img/common/closebtn.png}" alt="close_button" />
+                </button>
+            </div>
+
+            <section>
+                <div class="form-input-date-picker-default1">
+                    <div class="idbox">
+                        <div class="start-date"> 아이디 </div>
+                        <input class="box" id="userid" type="text" placeholder="아이디 입력(6~20자)"/>
+                    </div>
+
+                    <div class="namebox">
+                        <div class="start-date"> 이름 </div>
+                        <input class="box" id="username" type="text" placeholder="이름 입력"/>
+                    </div>
+                </div>
+
+                <div class="form-input-date-picker-default1">
+                    <div class="pwdbox">
+                        <div class="start-date"> 비밀번호 변경하기</div>
+                        <input class="box" id="signin-pw" type="password" placeholder="새 비밀번호"/>
+                    </div>
+                </div>
+
+                <div class="form-input-date-picker-default1">
+                    <div class="pwdagain">
+                        <div class="start-date"> 비밀번호 확인</div>
+                        <input class="box" id="signin-pw-again" type="password" placeholder="비밀번호 확인"/>
+                    </div>
+                </div>
+
+                <div class="form-input-date-picker-default1">
+                    <div class="phonebox">
+                        <div class="start-date"> 연락처 </div>
+                        <input class="box" id="signin-phonenum" type="text" placeholder="연락처 입력"/>
+                    </div>
+                </div>
+
+                <div class="form-input-date-picker-default2">
+                    <div class="start-date"> 자주 소비하는 카테고리</div>
+                    <div class="form-input-date-picker-default3">
+                        <input type="checkbox" id="categorybox1">
+                        <label class="category-box1" for="categorybox1">대형마트</label>
+
+                        <input type="checkbox" id="categorybox2">
+                        <label class="category-box1" for="categorybox2">힉원</label>
+
+                        <input type="checkbox" id="categorybox3">
+                        <label class="category-box1" for="categorybox3">주유소</label>
+
+                        <input type="checkbox" id="categorybox4">
+                        <label class="category-box1" for="categorybox4">문화생활</label>
+                    </div>
+                    <div class="form-input-date-picker-default3">
+                        <input type="checkbox" id="categorybox5">
+                        <label class="category-box1" for="categorybox5">편의점</label>
+
+                        <input type="checkbox" id="categorybox6">
+                        <label class="category-box1" for="categorybox6">음식점</label>
+
+                        <input type="checkbox" id="categorybox7">
+                        <label class="category-box1" for="categorybox7">카페</label>
+
+                        <input type="checkbox" id="categorybox8">
+                        <label class="category-box1" for="categorybox8">병원</label>
+                    </div>
+                </div>
+                <div class="form-input-date-picker-default">
+                    <div class="start-date"> 월 평균 목표 지출액 </div>
+                    <input class="box" id="signin-moneygoal" type="text" placeholder="ex) 1,200,000"/>
+                </div>
+            </section>
+            <button class="save_btn save_user">
+                <img class="save_image" th:src="@{/img/profile/save.png}" alt="save_image" >
+                저장
             </button>
         </dialog>
 
         <!--카드 등록 관리-->
         <dialog class="card_modal">
-            <button class="close_btn">
-                <img class="close_image" th:src="@{/img/common/closebtn.png}" alt="close_button" />
-                card
+            <div class="modal_header">
+                <p>연결한 정보</p>
+                <button class="close_btn">
+                    <img class="close_image" th:src="@{/img/common/closebtn.png}" alt="close_button" />
+                </button>
+            </div>
+            <p class="modal_description">카드 목록, 카드 정보</p>
+            <div class="modal_content card_content scrollBar">
+                <div class="card_item">
+                    <div class="card_info">
+                        <p class="card_name">하나카드 H 체크카드</p>
+                        <p class="card_number">11111*******11</p>
+                    </div>
+                    <button class="card_delete">삭제</button>
+                </div>
+                <div class="card_item">
+                    <div class="card_info">
+                        <p class="card_name">국민카드 H 체크카드</p>
+                        <p class="card_number">11111*******11</p>
+                    </div>
+                    <button class="card_delete">삭제</button>
+                </div>
+                <div class="card_item">
+                    <div class="card_info">
+                        <p class="card_name">현대카드 H 체크카드</p>
+                        <p class="card_number">11111*******11</p>
+                    </div>
+                    <button class="card_delete">삭제</button>
+                </div>
+                <div class="card_item">
+                    <p class="card_link">카드 연결하기</p>
+                    <a href="cardregistration">
+                        <button class="card_add">추가</button>
+                    </a>
+                </div>
+            </div>
+            <button class="save_btn save_card">
+                <img class="save_image" th:src="@{/img/profile/save.png}" alt="save_image" >
+                저장
             </button>
         </dialog>
 
-        <!--카드 찜 목록 관리-->
+        <!--카드 찜 목록 관리-->w
         <dialog class="like_modal">
-            <button class="close_btn">
-                <img class="close_image" th:src="@{/img/common/closebtn.png}" alt="close_button" />
-                like
+            <div class="modal_header like_header">
+                <p>찜한 카드</p>
+                <button class="close_btn">
+                    <img class="close_image" th:src="@{/img/common/closebtn.png}" alt="close_button" />
+                </button>
+            </div>
+            <p class="modal_description like_description" >내가 찜한 카드 보기</p>
+            <div class="modal_content like_content scrollBar">
+                <div class="like_item">
+                    <img class="like_card_img" th:src="@{/img/cardlist/card1.png}" alt="card1"/>
+                    <div class="like_card_content">
+                        <p class="like_card_name">현대카드 M</p>
+                        <p class="like_card_benefit">국내 모든 가맹점 최대 1.7%캐시백</p>
+                        <p class="like_card_benefit">국내 2만원, 해외 2만원</p>
+                        <p class="like_card_benefit">연회비지원, 납부혜택</p>
+                    </div>
+                    <i class="fa-regular fa-heart"></i>
+                </div>
+                <div class="like_item">
+                    <img class="like_card_img" th:src="@{/img/cardlist/card1.png}" alt="card1"/>
+                    <div class="like_card_content">
+                        <p class="like_card_name">현대카드 M</p>
+                        <p class="like_card_benefit">국내 모든 가맹점 최대 1.7%캐시백</p>
+                        <p class="like_card_benefit">국내 2만원, 해외 2만원</p>
+                        <p class="like_card_benefit">연회비지원, 납부혜택</p>
+                    </div>
+                    <i class="fa-regular fa-heart"></i>
+                </div>
+
+                <div class="like_item">
+                    <img class="like_card_img" th:src="@{/img/cardlist/card1.png}" alt="card1"/>
+                    <div class="like_card_content">
+                        <p class="like_card_name">현대카드 M</p>
+                        <p class="like_card_benefit">국내 모든 가맹점 최대 1.7%캐시백</p>
+                        <p class="like_card_benefit">국내 2만원, 해외 2만원</p>
+                        <p class="like_card_benefit">연회비지원, 납부혜택</p>
+                    </div>
+                    <i class="fa-regular fa-heart"></i>
+                </div>
+
+                <div class="like_item">
+                    <img class="like_card_img" th:src="@{/img/cardlist/card1.png}" alt="card1"/>
+                    <div class="like_card_content">
+                        <p class="like_card_name">현대카드 M</p>
+                        <p class="like_card_benefit">국내 모든 가맹점 최대 1.7%캐시백</p>
+                        <p class="like_card_benefit">국내 2만원, 해외 2만원</p>
+                        <p class="like_card_benefit">연회비지원, 납부혜택</p>
+                    </div>
+                    <i class="fa-regular fa-heart"></i>
+                </div>
+            </div>
+            <button class="save_btn save_like">
+                <img class="save_image" th:src="@{/img/profile/save.png}" alt="save_image" >
+                저장
             </button>
         </dialog>
-
     </body>
 </html>`

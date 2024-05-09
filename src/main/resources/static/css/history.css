@@ -224,7 +224,6 @@ dialog::backdrop {
   overflow-y: auto;
 }
 
-/* 아래의 모든 코드는 영역::코드로 사용 */
 .scrollBar::-webkit-scrollbar {
   width: 8px;  /* 스크롤바의 너비 */
 }

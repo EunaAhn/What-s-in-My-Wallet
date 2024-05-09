@@ -1,5 +1,7 @@
 package kr.or.kosa.nux2.web.restcontroller;
 
+import kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto;
+import kr.or.kosa.nux2.domain.cardproduct.repository.CardProductRepository;
 import kr.or.kosa.nux2.domain.memberexpendituretend.dto.MemberExpenditureTendDto;
 import kr.or.kosa.nux2.domain.memberexpendituretend.repository.MemberExpenditureTendRepository;
 import kr.or.kosa.nux2.domain.registrationcard.dto.RegistrationCardDto;
@@ -28,6 +30,7 @@ public class MyDataCardsRestController {
     private final MyDataTransHistoryRepository myDataTransHistoryRepository;
     private final RegistrationCardRepository registrationCardRepository;
     private final MemberExpenditureTendRepository memberExpenditureTendRepository;
+    private final CardProductRepository cardProductRepository;
 
     @GetMapping("/mydatatest")
     public ResponseEntity<?> test(){
@@ -42,10 +45,11 @@ public class MyDataCardsRestController {
        //List<RegistrationCardDto.Response> response = registrationCardRepository.findAllRegistrationCardByMemberId("dnwo1111");
         //registrationCardRepository.insertRegistrationCard(new RegistrationCardDto.InsertRequest(2L, "dnwo1111", 8L, "12331111****1111", "차애카드"));
         //registrationCardRepository.deleteRegistrationCard(2);
-        Map<String, Object> map = new HashMap<>();
-        map.put("updateCode", "202405");
-        map.put("memberId", "dnwo1111");
-        List<MemberExpenditureTendDto.ServiceResponse> response =  memberExpenditureTendRepository.findMemberExpenditureTendMapper(map);
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("updateCode", "202405");
+//        map.put("memberId", "dnwo1111");
+//        List<MemberExpenditureTendDto.ServiceResponse> response =  memberExpenditureTendRepository.findMemberExpenditureTendMapper(map);
+        List<CardProductDto.Response> response = cardProductRepository.findAllCardList(new HashMap<>());
         return new ResponseEntity<>(response, HttpStatusCode.valueOf(200));
     }
 }

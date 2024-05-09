@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="kr.or.kosa.nux2.domain.cardproduct.mapper.CardProductMapper">
+    <resultMap id="cardListResult" type="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$Response">
+        <result property="cardProductId" column="card_product_id"/> <!-- property는 도메인 클래스의 멤버변수명과 일치, column은 테이블의 컬럼명과 일치 -->
+        <result property="cardCompanyId" column="card_company_id"/>
+        <result property="cardName" column="card_product_name"/>
+        <result property="cardImageFileName" column="card_product_image"/>
+        <result property="membershipFee" column="membership_fee"/>
+        <result property="benefitSummary" column="benefit_summary"/>
+        <result property="likeCount" column="likeCount"/>
+        <collection property="benefitCategoryList" column="benefit_code_id" javaType="java.util.ArrayList" ofType="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$BenefitCategory">
+            <!-- Comment 클래스의 멤버 변수와 property 값이 일치 -->
+            <result property = "benefitName" column="benefit_name"/>
+<!--            <collection property="benefitDetails" column="card_benefit_details" javaType="java.util.ArrayList" ofType="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$BenefitDetails">-->
+<!--                &lt;!&ndash; Comment 클래스의 멤버 변수와 property 값이 일치 &ndash;&gt;-->
+<!--                <result property = "benefitDetails" column="benefit_details"/>-->
+<!--            </collection>-->
+        </collection>
+    </resultMap>
+    <select id="findAllCardList" resultMap="cardListResult" resultType="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$Response">
+        select
+            cp.card_product_id as cardProductId,
+            cp.card_company_id as cardCompanyId,
+            cp.card_product_name as cardName,
+            cp.card_product_image as cardImageFileName,
+            cp.membership_fee as membersihpFee,
+            cp.benefit_summary as benefitSummary,
+            cbc.benefit_code_id as benefitCategoryList,
+            (select count(member_id) from member_like_card) as likeCount
+        from
+            card_product cp
+            right join
+            card_benefit_code cbc
+            on cp.card_product_id = cbc.card_product_id
+
+    </select>
+</mapper>

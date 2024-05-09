@@ -8,6 +8,7 @@ public class CardProductDto {
 
     public static class Response {
         // 카드상품 테이블 컬럼
+        private Long cardProductId;
         private String cardCompanyId;
         private String cardName;
         private String cardImageFileName;
@@ -15,9 +16,9 @@ public class CardProductDto {
         private String benefitSummary;
 
         // 아래 조인 테이블 데이터 DTO 및 속성
-        private boolean isLikeCard; // 어쩔수 없이 N+1 쿼리 수행
-        private List<BenefitCategory> benefitCategoryList;
-        private CardCompanyDto.Response cardCompanyDto;
+        private Long likeCount; // 어쩔수 없이 N+1 쿼리 수행
+//        private List<BenefitCategory> benefitCategoryList;
+//        private CardCompanyDto.Response cardCompanyDto;
     }
 
 

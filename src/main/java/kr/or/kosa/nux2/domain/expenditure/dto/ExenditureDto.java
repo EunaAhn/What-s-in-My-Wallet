@@ -63,7 +63,7 @@ public class ExenditureDto {
 
     public static class CountByCategoryResponse {
         // 카테고리별 지출 횟수 응답 DTO
-        private String categoryName;
+        private ExenditureDto.CategoryName categoryName;
         private String startDate;
         private String endDate;
         private int maxCount;
@@ -73,9 +73,27 @@ public class ExenditureDto {
 
     public static class RatioByCategoryResponse {
         // 카테고리별 지출 비율 응답 DTO
-        private String categoryName;
+        private ExenditureDto.CategoryName categoryName;
         private Float expenditrueRatio;
     }
+
+    /*
+      ========================================================================================
+                                            소비성향 사용 DTO
+      ========================================================================================
+     */
+
+
+
+
+    //    int expenditureConutByTime;
+    public static class CountByTime {
+        private int expenditureCount;
+        private int time;
+    }
+
+
+
 
 
     /*

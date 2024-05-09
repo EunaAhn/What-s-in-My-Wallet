@@ -7,11 +7,12 @@ import java.util.List;
 
 @Mapper
 public interface MyDataCardMapper {
-    // 회원 주민등록번호로 카드목록 조회
-    List<MyDataCardDto.Response> findAllMyDataCard(MyDataCardDto.authenticationRequest authenticationRequest);
+    // 회원 dus로 카드목록 조회
+    List<MyDataCardDto.Response> findAllMyDataCardByAuth(MyDataCardDto.AuthenticationRequest authenticationRequest);
 
     //관리자용
     void insertMyDataCard(MyDataCardDto.InsertRequest insertRequest);
+
     List<MyDataCardDto.Response> findAllMyDataCard();
     //int deleteMyDataCardByCardNum(String cardNumber, String userName);
 }

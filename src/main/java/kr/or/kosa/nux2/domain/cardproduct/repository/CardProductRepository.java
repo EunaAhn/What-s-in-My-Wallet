@@ -3,13 +3,14 @@ package kr.or.kosa.nux2.domain.cardproduct.repository;
 import kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto;
 import kr.or.kosa.nux2.domain.cardproduct.mapper.CardProductMapper;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
 @Repository
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CardProductRepository {
     private final CardProductMapper cardProductMapper;
 

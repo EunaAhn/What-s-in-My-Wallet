@@ -1,7 +1,7 @@
-package kr.or.kosa.nux2.domain.cardmerchan.repository;
+package kr.or.kosa.nux2.domain.cardmerchand.repository;
 
-import kr.or.kosa.nux2.domain.cardmerchan.dto.CardProductDto;
-import kr.or.kosa.nux2.domain.cardmerchan.mapper.CardMapper;
+import kr.or.kosa.nux2.domain.cardmerchand.dto.CardProductDto;
+import kr.or.kosa.nux2.domain.cardmerchand.mapper.CardMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 

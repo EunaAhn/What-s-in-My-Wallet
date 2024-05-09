@@ -38,4 +38,17 @@ public interface ExpenditureMapper {
 
     // 월 평균 지출 금액
     ExenditureDto.AverageByMonthResponse findAverageExpenditureForMonthByYear(int year);
+
+    // 소비성향을 넘겨주면 해당 시간대의 총 지출 횟수를 반환해야한다.
+    // 리팩터링 부채 : enum의 위치 애매 + 단순 columns으로 넘기는게 타당한지 의문
+    // 일단 MemberExpenditureTendDto에서 값을 꺼내서 전달
+    // 저녁형 : 18~24
+    // 아침형 : 06~18
+    // 시작시간, 종료시간, 년월을 넘겨줘야한다.
+    // 소비성향을 넘겨서 매퍼가 로직을 처리하는 것 보다는 서비스레이어가 로직을 처리하는 편이 더 바람직하다고 판단하여 조건만 넘ㅡ
+    ExenditureDto.TotalCount findExpenditureTotalCount(int startTime, int endTime, String yearAndMonth);
+
+
+    // member-expenditure 조인 쿼리
+    ExenditureDto.TendencyAnalysis findExpendiutreTendencyAnalysis(int year, int month);
 }

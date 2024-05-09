@@ -1,6 +1,6 @@
-package kr.or.kosa.nux2.domain.cardmerchan.mapper;
+package kr.or.kosa.nux2.domain.cardmerchand.mapper;
 
-import kr.or.kosa.nux2.domain.cardmerchan.dto.CardProductDto;
+import kr.or.kosa.nux2.domain.cardmerchand.dto.CardProductDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

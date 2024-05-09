@@ -50,7 +50,7 @@ public class SecurityConfig {
                 .csrf((auth) -> auth.disable());
 
         http
-                .formLogin((auth) -> auth.permitAll());
+                .formLogin((auth) -> auth.disable());
 
         http
               .httpBasic((auth) -> auth.disable());
@@ -59,20 +59,20 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**")
                         .permitAll()
-                        .requestMatchers("/login/**","/auth/**", "/oauth2/**")
+                        .requestMatchers("/login/**","/analyze/**","/carddetail/**", "/cardlist/**","/cardregistration/**","/history/**","/onboarding/**", "/profile/**","/signup/**","/suggestion/**")
                         .permitAll()
-                        .requestMatchers("/", "/error", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html", "/**/*.css", "/**/*.js")
+                        .requestMatchers("/", "/error", "/favicon.ico","/png/**", "/gif/**", "/svg/**", "/jpg/**", "/html/**", "/css/**", "/js/**","/img/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated());
 
         http
                 .exceptionHandling((exceptions) -> exceptions.authenticationEntryPoint(jwtAuthenticationEntryPoint));
-        http
-                .addFilterBefore(new JwtFilter(jwtUtils), JwtLoginFilter.class);
+        //http
+        //        .addFilterBefore(new JwtFilter(jwtUtils), JwtLoginFilter.class);
 
-        http
-                .addFilterAt(new JwtLoginFilter(authenticationManager(), jwtUtils), UsernamePasswordAuthenticationFilter.class);
+        //http
+       //         .addFilterAt(new JwtLoginFilter(authenticationManager(), jwtUtils), UsernamePasswordAuthenticationFilter.class);
 
         http
                 .sessionManagement((session) -> session

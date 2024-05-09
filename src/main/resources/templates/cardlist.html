@@ -10,8 +10,128 @@
         <script type="text/javascript" th:src="@{/js/cardlist.js}" defer></script>
     </th:block>
     <body>
-        <th:block layout:fragment="header" th:insert="@{/fragments/header}"></th:block>
-        <th:block layout:fragment="sidemenubar" th:insert="@{/fragments/sidemenubar}"></th:block>
-        <h1>cardlist</h1>
+        <th:block layout:fragment="header" th:include="@{/fragments/header}"></th:block>
+        <th:block layout:fragment="sidemenubar" th:include="@{/fragments/sidemenubar}"></th:block>
+        <div class="container">
+            <div class="favorite-card">
+                <div class="favorite-card-title">
+                    <img id="favorite-card-title-img" src="/img/cardlist/What’s%20Our%20Favorite%20Card%20Top6.png">
+                    <div class="favorite-card-info">(좋아요 많은순)</div>
+                </div>
+            </div>
+
+            <div class="favorite-card-list">
+                <div class="favorite-list">
+                    <img class="favorite-card-list-img" src="/img/cardlist/card1.png">
+                    <div class="favorite">신한카드</div>
+                </div>
+                <div class="favorite-list">
+                    <img class="favorite-card-list-img" src="/img/cardlist/card2.png">
+                    <div class="favorite">신한카드</div>
+                </div>
+                <div class="favorite-list">
+                    <img class="favorite-card-list-img" src="/img/cardlist/card3.png">
+                    <div class="favorite">신한카드</div>
+                </div>
+                <div class="favorite-list">
+                    <img class="favorite-card-list-img" src="/img/cardlist/card4.png">
+                    <div class="favorite">신한카드</div>
+                </div>
+                <div class="favorite-list">
+                    <img class="favorite-card-list-img" src="/img/cardlist/card4.png">
+                    <div class="favorite">신한카드</div>
+                </div>
+                <div class="favorite-list">
+                    <img class="favorite-card-list-img" src="/img/cardlist/card4.png">
+                    <div class="favorite">신한카드</div>
+                </div>
+            </div>
+
+            <div class="card-info-list">
+                <div class="card-container">
+                    <div class="card-list">
+                        <img class="image-19" src="/img/cardlist/card1.png" />
+
+                        <div class="card-text-info">
+                            <div class="card-title"> 디지로카 London </div>
+                            <div class="benefit-info">
+                                <div class="card-info"> 국내 모든 가맹점 최대 1.7%캐시백 </div>
+                                <div class="card-info"> 국내 2만원, 해외 2만원 </div>
+                                <div class="card-info"> 연회비지원, 납부혜택 </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-list">
+                        <img class="image-19" src="/img/cardlist/card1.png" />
+
+                        <div class="card-text-info">
+                            <div class="card-title"> 디지로카 London </div>
+                            <div class="benefit-info">
+                                <div class="card-info"> 국내 모든 가맹점 최대 1.7%캐시백 </div>
+                                <div class="card-info"> 국내 2만원, 해외 2만원 </div>
+                                <div class="card-info"> 연회비지원, 납부혜택 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <div class="card-list">
+                        <img class="image-19" src="/img/cardlist/card1.png" />
+
+                        <div class="card-text-info">
+                            <div class="card-title"> 디지로카 London </div>
+                            <div class="benefit-info">
+                                <div class="card-info"> 국내 모든 가맹점 최대 1.7%캐시백 </div>
+                                <div class="card-info"> 국내 2만원, 해외 2만원 </div>
+                                <div class="card-info"> 연회비지원, 납부혜택 </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-list">
+                        <img class="image-19" src="/img/cardlist/card1.png" />
+
+                        <div class="card-text-info">
+                            <div class="card-title"> 디지로카 London </div>
+                            <div class="benefit-info">
+                                <div class="card-info"> 국내 모든 가맹점 최대 1.7%캐시백 </div>
+                                <div class="card-info"> 국내 2만원, 해외 2만원 </div>
+                                <div class="card-info"> 연회비지원, 납부혜택 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-container">
+                    <div class="card-list">
+                        <img class="image-19" src="/img/cardlist/card1.png" />
+
+                        <div class="card-text-info">
+                            <div class="card-title"> 디지로카 London </div>
+                            <div class="benefit-info">
+                                <div class="card-info"> 국내 모든 가맹점 최대 1.7%캐시백 </div>
+                                <div class="card-info"> 국내 2만원, 해외 2만원 </div>
+                                <div class="card-info"> 연회비지원, 납부혜택 </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-list">
+                        <img class="image-19" src="/img/cardlist/card1.png" />
+
+                        <div class="card-text-info">
+                            <div class="card-title"> 디지로카 London </div>
+                            <div class="benefit-info">
+                                <div class="card-info"> 국내 모든 가맹점 최대 1.7%캐시백 </div>
+                                <div class="card-info"> 국내 2만원, 해외 2만원 </div>
+                                <div class="card-info"> 연회비지원, 납부혜택 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

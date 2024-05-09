@@ -1,0 +1,133 @@
+.container {
+    position: absolute;
+    top: 100px;
+    left: 280px;
+    height: calc(100vh - 100px);
+    width: calc(100vw - 280px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid red;
+    overflow-y: auto; /* 세로 스크롤 활성화 */
+    overflow-x: hidden; /* 가로 스크롤 비활성화 */
+}
+
+#favorite-card-title-img{
+    width: 395px;
+    height: auto;
+}
+
+.favorite-card-info{
+    color: #717579;
+    font-size: 14px;
+    margin-left: 10px; /* 이미지와 글자 사이의 간격 조정 */
+    margin-top: 3%;
+}
+
+.favorite-card {
+    position: absolute; /* 이미지를 절대 위치로 설정합니다. */
+    top: 5%; /* 위쪽 여백을 0으로 설정하여 컨테이너의 상단에 배치합니다. */
+    left: 5%; /* 왼쪽 여백을 0으로 설정하여 컨테이너의 왼쪽에 배치합니다. */
+
+}
+
+.favorite-card-title{
+    display: flex; /* Flexbox 사용 */
+    justify-content: space-between;
+}
+
+.favorite-card-list{
+    position: absolute; /* 이미지를 절대 위치로 설정합니다. */
+    top: 10%; /* 위쪽 여백을 0으로 설정하여 컨테이너의 상단에 배치합니다. */
+    left: 5%; /* 왼쪽 여백을 0으로 설정하여 컨테이너의 왼쪽에 배치합니다. */
+    display: flex; /* Flexbox 사용 */
+    justify-content: space-between;
+}
+
+.favorite-list{
+    margin: 2.8% 2.8% 0% 2.8%;;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+}
+
+.favorite-card-list-img{
+    transform: rotate(-5deg);
+    box-shadow: 0px 0px 20px 3px rgba(0, 0, 0, 0.20);
+}
+
+.favorite{
+    margin-top: 13%;
+    color: #3B3A45;
+    text-align: center;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+.card-info-list{
+    position: absolute;
+    width: 92%;
+    top: 53%; /* 위쪽 여백을 0으로 설정하여 컨테이너의 상단에 배치합니다. */
+    left: 3.5%; /* 왼쪽 여백을 0으로 설정하여 컨테이너의 왼쪽에 배치합니다. */
+    display: flex;
+    flex-direction: column;
+}
+
+.card-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-list{
+    background-color: #ffffff;
+    width: 100%;
+    height: 100%;
+    min-width: 450px;
+    border: 1px solid #f8f8f8;
+    border-radius: 20px;
+    box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    margin: 1%;
+    padding: 1%
+
+}
+
+.card-list {
+    display: flex;
+    align-items: center;
+}
+
+.card-list .image-19 {
+    flex: 0 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+    margin-left: 20px;
+    width: 70px;
+
+}
+
+.card-list .card-text-info {
+    flex: 1 1 auto;
+}
+
+.card-title{
+    color: #3b3a45;
+    text-align: left;
+    font-family: 'Inter-Bold';
+    font-size: 18px;
+}
+
+.card-info{
+    color: #717579;
+    text-align: left;
+    font-family: 'Inter-Regular', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 1%;
+}
+
+.benefit-info{
+    margin-top: 2.5%;
+}

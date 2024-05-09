@@ -1,4 +1,4 @@
-package kr.or.kosa.nux2.domain.cardmerchand.dto;
+package kr.or.kosa.nux2.domain.cardproduct.dto;
 
 import kr.or.kosa.nux2.domain.cardcompany.dto.CardCompanyDto;
 

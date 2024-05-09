@@ -1,13 +1,13 @@
-package kr.or.kosa.nux2.domain.cardmerchand.mapper;
+package kr.or.kosa.nux2.domain.cardproduct.mapper;
 
-import kr.or.kosa.nux2.domain.cardmerchand.dto.CardProductDto;
+import kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 import java.util.Map;
 
 @Mapper
-public interface CardMapper {
+public interface CardProductMapper {
     // update 는 무조건 int를 반환하도록 막아둠
     // insert는 int혹은 void를 반환하는 것이 일반적
     // select 는 dto객체 혹은 dto의 컬렉션 객체를 반환한다.

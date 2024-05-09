@@ -12,8 +12,8 @@ import java.util.List;
 public class MyDataTransHistoryRepository {
     private final MyDataTransHistoryMapper myDataTransHistoryMapper;
 
-    public List<MyDataTransanctionHistoryDto.Response> findAllTransHistory(Long cardId, String cardNumber){
-        return myDataTransHistoryMapper.findAllTransHistory(cardId, cardNumber);
+    public List<MyDataTransanctionHistoryDto.Response> findAllTransHistory(Long transactionId, String cardNumber){
+        return myDataTransHistoryMapper.findAllTransHistory(transactionId, cardNumber);
     };
     public int insertTransHistory(MyDataTransanctionHistoryDto.InsertRequest insertRequest){
         return myDataTransHistoryMapper.insertTransHistory(insertRequest);

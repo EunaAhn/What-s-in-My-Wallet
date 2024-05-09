@@ -14,7 +14,7 @@
             and
             member_contact_number = #{memberContactNumber}
     </select>
-    
+
     <insert id = "insertMyDataCard" parameterType="kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataCardDto$InsertRequest">
         insert into my_data_cards(card_number, cvs_code, member_name, exp_month, exp_year, member_contact_number, card_company)
         values(#{cardNumber}, #{cvs}, #{memberName}, #{ExpireMonth}, #{ExpireYear}, #{memberContactNumber}, #{cardCompanyCode})

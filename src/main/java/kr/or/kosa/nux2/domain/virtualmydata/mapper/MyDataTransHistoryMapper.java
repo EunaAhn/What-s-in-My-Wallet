@@ -3,6 +3,7 @@ package kr.or.kosa.nux2.domain.virtualmydata.mapper;
 import kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataTransanctionHistoryDto;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,6 @@ public interface MyDataTransHistoryMapper {
     // 즉, select, insert 용 테이블
 
     // 아이디보다 큰 아이디 값, 카드번호
-    public List<MyDataTransanctionHistoryDto.Response> findAllTransHistory(Long cardId, String cardNumber);
+    public List<MyDataTransanctionHistoryDto.Response> findAllTransHistory(@Param("transactionId") Long transactionId, @Param("cardNumber") String cardNumber);
     public int insertTransHistory(MyDataTransanctionHistoryDto.InsertRequest insertRequest);
 }

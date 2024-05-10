@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.kosa.nux2.domain.virtualmydata.mapper.MyDataTransHistoryMapper">
+    <select id="findAllTransHistory" parameterType="map" resultType="kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataTransanctionHistoryDto$Response">
+        select
+            transaction_id as transactionId,
+            transaction_code as transactionCode,
+            transaction_datetime as transactionDateTime,
+            transaction_amount as transactionAmount,
+            card_company as cardCompanyCode,
+            card_number as cardNumber,
+            store_name as storeName,
+            store_address as storeAddress,
+            industry_code as industryCode
+        from
+            my_data_transactions
+        where
+            transaction_id > #{transactionId}
+            and
+            card_number = #{cardNumber}
+    </select>
+
+    <insert id = "insertTransHistory" parameterType="kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataTransanctionHistoryDto$InsertRequest">
+        insert into my_data_transactions(transaction_id, transaction_code, transaction_datetime, transaction_amount, card_company, card_number, store_name, store_address, industry_code)
+        values(#{transactionId}, #{transactionCode}, #{transactionDateTime}, #{transactionAmount}, #{cardCompanyCode}, #{cardNumber}, #{storeName}, #{storeAddress},#{industryCode})
+    </insert>
+</mapper>

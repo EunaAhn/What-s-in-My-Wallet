@@ -10,13 +10,15 @@ import java.util.List;
 @Repository
 @AllArgsConstructor
 public class MyDataTransHistoryRepository {
-    private final MyDataTransHistoryMapper myDataTransHistoryRepository;
 
-    public List<MyDataTransanctionHistoryDto.Response> findAllTransHistory(Long cardId, String cardNumber){
-        return myDataTransHistoryRepository.findAllTransHistory(cardId, cardNumber);
+    private final MyDataTransHistoryMapper myDataTransHistoryMapper;
+
+
+    public List<MyDataTransanctionHistoryDto.Response> findAllTransHistory(Long transactionId, String cardNumber){
+        return myDataTransHistoryMapper.findAllTransHistory(transactionId, cardNumber);
     };
     public int insertTransHistory(MyDataTransanctionHistoryDto.InsertRequest insertRequest){
-        return myDataTransHistoryRepository.insertTransHistory(insertRequest);
+        return myDataTransHistoryMapper.insertTransHistory(insertRequest);
     };
 
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.kosa.nux2.domain.virtualmydata.mapper.MyDataCardMapper">
+    <select id="findAllMyDataCardByAuth" parameterType="kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataCardDto$AuthenticationRequest" resultType="kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataCardDto$Response">
+        select
+            card_number as cardNumber,
+            member_name as memberName,
+            card_company as cardCompanyCode
+        from
+            my_data_cards
+        where
+            member_name = #{memberName}
+            and
+            member_contact_number = #{memberContactNumber}
+    </select>
+
+    <insert id = "insertMyDataCard" parameterType="kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataCardDto$InsertRequest">
+        insert into my_data_cards(card_number, cvs_code, member_name, exp_month, exp_year, member_contact_number, card_company)
+        values(#{cardNumber}, #{cvs}, #{memberName}, #{ExpireMonth}, #{ExpireYear}, #{memberContactNumber}, #{cardCompanyCode})
+    </insert>
+
+    <select id="findAllMyDataCard"  resultType="kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataCardDto$Response">
+        select
+            card_number as cardNumber,
+            member_name as memberName,
+            card_company as cardCompanyCode
+        from
+            my_data_cards
+    </select>
+</mapper>

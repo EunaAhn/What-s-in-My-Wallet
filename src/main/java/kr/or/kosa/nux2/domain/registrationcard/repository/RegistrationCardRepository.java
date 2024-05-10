@@ -11,13 +11,13 @@ import java.util.List;
 @AllArgsConstructor
 public class RegistrationCardRepository {
     private final RegistrationCardMapper registrationCardMapper;
-    List<RegistrationCardDto> findAllRegistrationCardByMemberId(String memberId){
+    public List<RegistrationCardDto.Response> findAllRegistrationCardByMemberId(String memberId){
         return registrationCardMapper.findAllRegistrationCardByMemberId(memberId);
     };
-    int deleteRegistrationCard(int registrationId){
+    public int deleteRegistrationCard(int registrationId){
         return registrationCardMapper.deleteRegistrationCard(registrationId);
     };
-    int insertRegistrationCard(RegistrationCardDto.InsertRequest registrationCard){
+    public int insertRegistrationCard(RegistrationCardDto.InsertRequest registrationCard){
         return registrationCardMapper.insertRegistrationCard(registrationCard);
     };
 }

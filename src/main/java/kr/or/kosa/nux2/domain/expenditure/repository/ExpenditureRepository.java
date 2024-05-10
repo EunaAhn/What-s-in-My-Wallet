@@ -11,40 +11,42 @@ import java.util.Map;
 @Repository
 @AllArgsConstructor
 public class ExpenditureRepository {
-    private final ExpenditureMapper expenditureRepository;
+
+    private final ExpenditureMapper expenditureMapper;
+
     List<Long> findTotalExpenditureByStartAndEndDate(Map<String, Object> columns){
-        return expenditureRepository.findTotalExpenditureByStartAndEndDate(columns);
+        return expenditureMapper.findTotalExpenditureByStartAndEndDate(columns);
     };
 
     List<ExenditureDto.Response> findAllExpenditure (Map<String, Object> columns){
-        return expenditureRepository.findAllExpenditure(columns);
+        return expenditureMapper.findAllExpenditure(columns);
     };
 
     List<ExenditureDto.DetailsReponse> findAllExpenditureDetails(String date){
-        return expenditureRepository.findAllExpenditureDetails(date);
+        return expenditureMapper.findAllExpenditureDetails(date);
     };
 
     int insertExpenditures(List<ExenditureDto.InsertRequest> expenditureList){
-        return expenditureRepository.insertExpenditures(expenditureList);
+        return expenditureMapper.insertExpenditures(expenditureList);
     };
 
     void updateExpenditureMemo(String expenditureMemo){
-        expenditureRepository.updateExpenditureMemo(expenditureMemo);
+        expenditureMapper.updateExpenditureMemo(expenditureMemo);
     };
 
     ExenditureDto.RatioByCategoryResponse findExpenditureRatioForCategoryByMonth(int month){
-        return expenditureRepository.findExpenditureRatioForCategoryByMonth(month);
+        return expenditureMapper.findExpenditureRatioForCategoryByMonth(month);
     };
 
     ExenditureDto.CountByCategoryResponse findExpenditureCountForCategoryByMonth(int month){
-        return expenditureRepository.findExpenditureCountForCategoryByMonth(month);
+        return expenditureMapper.findExpenditureCountForCategoryByMonth(month);
     };
 
     ExenditureDto.ByMonthAndTimeResponse findTotalExpenditureForMonthAndTimeByYearAndMonth(String yearAndMonth){
-        return expenditureRepository.findTotalExpenditureForMonthAndTimeByYearAndMonth(yearAndMonth);
+        return expenditureMapper.findTotalExpenditureForMonthAndTimeByYearAndMonth(yearAndMonth);
     };
 
     ExenditureDto.AverageByMonthResponse findAverageExpenditureForMonthByYear(int year){
-        return expenditureRepository.findAverageExpenditureForMonthByYear(year);
+        return expenditureMapper.findAverageExpenditureForMonthByYear(year);
     };
 }

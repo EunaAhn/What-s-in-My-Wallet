@@ -10,18 +10,20 @@ import java.util.List;
 @Repository
 @AllArgsConstructor
 public class MyDataCardRepository {
-    private final MyDataCardMapper myDataCardRepository;
 
-    List<MyDataCardDto.Response> findAllMyDataCard(MyDataCardDto.authenticationRequest authenticationRequest){
-        return myDataCardRepository.findAllMyDataCard(authenticationRequest);
+    private final MyDataCardMapper myDataCardMapper;
+
+
+    public List<MyDataCardDto.Response> findAllMyDataCard(MyDataCardDto.AuthenticationRequest authenticationRequest){
+        return myDataCardMapper.findAllMyDataCardByAuth(authenticationRequest);
     };
 
-    void insertMyDataCard(MyDataCardDto.InsertRequest insertRequest){
-        myDataCardRepository.insertMyDataCard(insertRequest);
+    public void insertMyDataCard(MyDataCardDto.InsertRequest insertRequest){
+        myDataCardMapper.insertMyDataCard(insertRequest);
     };
 
-    List<MyDataCardDto.Response> findAllMyDataCard(){
-        return myDataCardRepository.findAllMyDataCard();
+    public List<MyDataCardDto.Response> findAllMyDataCard(){
+        return myDataCardMapper.findAllMyDataCard();
     }
 
 }

@@ -2,12 +2,8 @@ package kr.or.kosa.nux2.web.restcontroller;
 
 import kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto;
 import kr.or.kosa.nux2.domain.cardproduct.repository.CardProductRepository;
-import kr.or.kosa.nux2.domain.memberexpendituretend.dto.MemberExpenditureTendDto;
 import kr.or.kosa.nux2.domain.memberexpendituretend.repository.MemberExpenditureTendRepository;
-import kr.or.kosa.nux2.domain.registrationcard.dto.RegistrationCardDto;
 import kr.or.kosa.nux2.domain.registrationcard.repository.RegistrationCardRepository;
-import kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataCardDto;
-import kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataTransanctionHistoryDto;
 import kr.or.kosa.nux2.domain.virtualmydata.repository.MyDataCardRepository;
 import kr.or.kosa.nux2.domain.virtualmydata.repository.MyDataTransHistoryRepository;
 import lombok.AllArgsConstructor;
@@ -16,12 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @AllArgsConstructor
@@ -49,7 +42,9 @@ public class MyDataCardsRestController {
 //        map.put("updateCode", "202405");
 //        map.put("memberId", "dnwo1111");
 //        List<MemberExpenditureTendDto.ServiceResponse> response =  memberExpenditureTendRepository.findMemberExpenditureTendMapper(map);
-        List<CardProductDto.Response> response = cardProductRepository.findAllCardList(new HashMap<>());
-        return new ResponseEntity<>(response, HttpStatusCode.valueOf(200));
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("benefit", "주유");
+        List<CardProductDto.Response> responses = cardProductRepository.findAllCards(new HashMap<>());
+        return new ResponseEntity<>(responses, HttpStatusCode.valueOf(200));
     }
 }

@@ -2,7 +2,6 @@ package kr.or.kosa.nux2.domain.cardproduct.repository;
 
 import kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto;
 import kr.or.kosa.nux2.domain.cardproduct.mapper.CardProductMapper;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -14,9 +13,14 @@ import java.util.Map;
 public class CardProductRepository {
     private final CardProductMapper cardProductMapper;
 
-    public List<CardProductDto.Response> findAllCardList(Map<String, Object> requestMap){
-        return cardProductMapper.findAllCardList(requestMap);
+    public List<CardProductDto.DetailsResponse> findCardDetails(Long cardProductId){
+        return cardProductMapper.findCardDetail(cardProductId);
     }
+
+    public List<CardProductDto.Response> findAllCards(Map<String, Object> columns) {
+        return cardProductMapper.findAllCards(columns);
+    }
+
     public List<CardProductDto.Response> findTop4LikeCard(){
         return cardProductMapper.findTop4LikeCard();
     };

@@ -4,7 +4,21 @@
 
 
 <mapper namespace="kr.or.kosa.nux2.domain.cardproduct.mapper.CardProductMapper">
-    <resultMap id="cardListResult" type="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$Response">
+
+    <resultMap id="categoryListResult" type="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$BenefitCategoryDetails">
+         <!-- property는 도메인 클래스의 멤버변수명과 일치, column은 테이블의 컬럼명과 일치 -->
+        <result property="benefitName" column="benefit_name"/>
+        <collection property="benefitDetailsList" column="card_benefit_details" javaType="java.util.ArrayList" resultMap="benefitDetailsResult">
+
+        </collection>
+    </resultMap>
+    <resultMap id="benefitDetailsResult" type="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$BenefitDetails">
+        <!-- property는 도메인 클래스의 멤버변수명과 일치, column은 테이블의 컬럼명과 일치 -->
+        <result property="benefitDetails" column="benefit_details"/>
+
+    </resultMap>
+
+    <resultMap id="cardListResult" type="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$DetailsResponse">
         <result property="cardProductId" column="card_product_id"/> <!-- property는 도메인 클래스의 멤버변수명과 일치, column은 테이블의 컬럼명과 일치 -->
         <result property="cardCompanyId" column="card_company_id"/>
         <result property="cardName" column="card_product_name"/>
@@ -12,30 +26,124 @@
         <result property="membershipFee" column="membership_fee"/>
         <result property="benefitSummary" column="benefit_summary"/>
         <result property="likeCount" column="likeCount"/>
-        <collection property="benefitCategoryList" column="benefit_code_id" javaType="java.util.ArrayList" ofType="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$BenefitCategory">
-            <!-- Comment 클래스의 멤버 변수와 property 값이 일치 -->
-            <result property = "benefitName" column="benefit_name"/>
-<!--            <collection property="benefitDetails" column="card_benefit_details" javaType="java.util.ArrayList" ofType="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$BenefitDetails">-->
-<!--                &lt;!&ndash; Comment 클래스의 멤버 변수와 property 값이 일치 &ndash;&gt;-->
-<!--                <result property = "benefitDetails" column="benefit_details"/>-->
-<!--            </collection>-->
+        <collection property="benefitCategoryList" column="benefit_code_id" javaType="java.util.ArrayList" resultMap="categoryListResult">
+
         </collection>
     </resultMap>
-    <select id="findAllCardList" resultMap="cardListResult" resultType="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$Response">
+    <select id="findCardDetail" parameterType="map" resultMap="cardListResult">
         select
-            cp.card_product_id as cardProductId,
-            cp.card_company_id as cardCompanyId,
-            cp.card_product_name as cardName,
-            cp.card_product_image as cardImageFileName,
-            cp.membership_fee as membersihpFee,
-            cp.benefit_summary as benefitSummary,
-            cbc.benefit_code_id as benefitCategoryList,
+            cp.card_product_id,
+            cp.card_company_id,
+            cp.card_product_name,
+            cp.card_product_image,
+            cp.membership_fee,
+            cp.benefit_summary,
+            cbc.benefit_code_id,
+            cbc.benefit_name,
+            cbd.benefit_details,
             (select count(member_id) from member_like_card) as likeCount
         from
             card_product cp
             right join
             card_benefit_code cbc
             on cp.card_product_id = cbc.card_product_id
+            join
+            card_benefit_details cbd
+            on cbd.card_id = cbc.card_product_id
+        where cp.card_product_id = #{cardProductId}
 
     </select>
+
+    <select id="findBenefitDetails" parameterType="map" resultType="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$BenefitDetails">
+        select benefit_details
+        from card_benefit_details  as benefitDetails
+<!--        where benfit_code_id = 'EC2' and card_id =1-->
+    </select>
+
+    <resultMap id="cardListResultSumm" type="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$Response">
+        <result property="cardProductId" column="card_product_id"/> <!-- property는 도메인 클래스의 멤버변수명과 일치, column은 테이블의 컬럼명과 일치 -->
+        <result property="cardCompanyId" column="card_company_id"/>
+        <result property="cardName" column="card_product_name"/>
+        <result property="cardImageFileName" column="card_product_image"/>
+        <result property="membershipFee" column="membership_fee"/>
+        <result property="benefitSummary" column="benefit_summary"/>
+        <result property="likeCount" column="likeCount"/>
+        <collection property="benefitCategoryList" column="benefit_code_id"  resultMap="categoryListResultSumm">
+
+        </collection>
+    </resultMap>
+    <resultMap id="categoryListResultSumm" type="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$BenefitCategory">
+        <!-- property는 도메인 클래스의 멤버변수명과 일치, column은 테이블의 컬럼명과 일치 -->
+        <result property="benefitName" column="benefit_name"/>
+    </resultMap>
+    <select id="findAllCards" parameterType="map" resultMap="cardListResultSumm">
+        select
+            cp.card_product_id,
+            cp.card_company_id,
+            cp.card_product_name,
+            cp.card_product_image,
+            cp.membership_fee,
+            cp.benefit_summary,
+            cbc.benefit_code_id,
+            cbc.benefit_name,
+            (select count(member_id) from member_like_card) as likeCount
+        from
+            card_product cp
+            right join
+            card_benefit_code cbc
+            on cp.card_product_id = cbc.card_product_id
+            <choose>
+                <when test="cardCompanyName != null">
+                    where cp.card_company_id = #{cardCompanyName}
+                </when>
+                <when test="cardName != null">
+                    where cp.card_product_name = #{cardName}
+                </when>
+                <when test="benefit != null">
+                    where cbc.benefit_name = #{benefit}
+                </when>
+            </choose>
+    </select>
+
+
+    <select id="findTop4LikeCard" resultMap="cardListResultSumm">
+        select * from  (
+            select
+            cp.card_product_id,
+            cp.card_company_id,
+            cp.card_product_name,
+            cp.card_product_image,
+            cp.membership_fee,
+            cp.benefit_summary,
+            cbc.benefit_code_id,
+            cbc.benefit_name,
+            (select count(member_id) from member_like_card) as likeCount
+            from
+                card_product cp
+                right join
+                card_benefit_code cbc
+                on cp.card_product_id = cbc.card_product_id
+            order by likeCount
+        ) where
+            <![CDATA[rownum < 5]]>
+    </select>
+
+
+    <select id="findMemberLikeCard" parameterType="String" resultMap="cardListResultSumm">
+        select
+            cp.card_product_id,
+            cp.card_company_id,
+            cp.card_product_name,
+            cp.card_product_image,
+            cp.membership_fee,
+            cp.benefit_summary,
+            (select count(member_id) from member_like_card) as likeCount
+        from
+            card_product cp
+        join
+            member_like_card mlc
+        on cp.card_product_id = mlc.card_product_id
+        where mlc.member_id = #{memberId}
+    </select>
+
 </mapper>

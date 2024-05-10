@@ -40,7 +40,6 @@ public class Nux2WebApplicationInitializer implements WebApplicationInitializer 
         var loaderListener = new ContextLoaderListener(rootApplicationContext);
         servletContext.addListener(loaderListener);
 
-
         // ServletApplicationContext 생성
         var applicationContext = new AnnotationConfigWebApplicationContext();
         applicationContext.register(ServletConfig.class);

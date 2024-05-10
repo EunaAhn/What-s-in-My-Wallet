@@ -5,8 +5,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default_layout}">
     <th:block layout:fragment="head">
-        <link th:href="@{/css/onboarding.css}" rel="stylesheet" />
-        <link th:href="@{/css/common.css}" rel="stylesheet" />
+        <link th:href="@{/css/onboarding.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
         <script type="text/javascript" th:src="@{/js/onboarding.js}" defer></script>
     </th:block>
     <body>
@@ -26,8 +26,8 @@
                 </div>
             </div>
             <div class="right-section">
-                <img class="tmp tmp2" th:src="@{/img/onboarding/tmp2.png}" alt="onboardingImg2"/>
-                <img class="tmp tmp1" th:src="@{/img/onboarding/tmp1.png}" alt="onboardingImg1"/>
+                <img class="display display1" th:src="@{/img/onboarding/display1.png}" alt="onboardingImg1"/>
+                <img class="display display2" th:src="@{/img/onboarding/display2.png}" alt="onboardingImg2"/>
             </div>
         </div>
     </body>

@@ -10,7 +10,9 @@ import java.util.List;
 @Repository
 @AllArgsConstructor
 public class MyDataTransHistoryRepository {
+
     private final MyDataTransHistoryMapper myDataTransHistoryMapper;
+
 
     public List<MyDataTransanctionHistoryDto.Response> findAllTransHistory(Long transactionId, String cardNumber){
         return myDataTransHistoryMapper.findAllTransHistory(transactionId, cardNumber);

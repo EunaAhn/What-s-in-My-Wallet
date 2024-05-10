@@ -1,7 +1,32 @@
+@font-face {
+    font-family: 'WooridaumB';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2205@1.0/WooridaumB.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BCcardB';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.1/BCcardB.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'paybooc-Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/paybooc-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     box-sizing: border-box;
+    /*font-family: 'WooridaumB';*/
+    font-family: 'BCcardB';
+    /*font-family: 'paybooc-Bold';*/
     margin: 0px;
 }
+
 body {
     position: relative;
     display: flex;
@@ -31,7 +56,7 @@ a{
 
 .side_menubar{
     height: 100vh;
-    width: 240px;
+    width: 280px;
     position: absolute;
     left: 0;
     padding: 20px 1px 20px 0;
@@ -40,7 +65,7 @@ a{
 }
 
 .side_main_logo{
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 900;
     color: white;
     margin: 0 0 50px 30px;
@@ -57,13 +82,13 @@ a{
 
 .side_main_menu{
     color: white;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 400;
     margin: 0 0 20px 30px;
 }
 
 .side_menu{
-    padding: 12px 0 12px 15px;
+    padding: 10px 0 10px 17px;
     border-radius: 15px;
     margin: 0 8px 10px 8px;
     display: flex;
@@ -73,14 +98,14 @@ a{
 
 .fa-solid{
     color: white;
-    font-size: 18px;
+    font-size: 16px;
     width: 25px;
-    margin-right: 25px;
+    margin-right: 20px;
 }
 
 .side_menu_word{
     color: white;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .side_menu:hover{
@@ -120,6 +145,60 @@ a{
     border-bottom: 1px solid #717579;
 }
 
-.hd_user_image{
-    width: 20px;
+.hd_search_wrapper{
+    position: relative;
+    display: flex;
+    align-items: center;
 }
+
+.hd_card_search{
+    height: 45px;
+    width: 280px;
+    font-size: 12px;
+    border: 2px solid #717579;
+    outline: none;
+    border-radius: 30px;
+    background-color: transparent;
+    padding: 10px 20px;
+    margin-right: 20px;
+}
+
+.hd_search_image{
+    position: absolute;
+    right: 10px;
+    color: #717579;
+    cursor: pointer;
+}
+
+.hd_card_search:focus{
+    border: 2px solid #9288DD;
+}
+
+.focusing{
+    color: #9288DD;
+}
+
+.hd_user_info{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    margin-right: 20px;
+}
+
+.hd_user_name{
+    font-weight: 900;
+    font-size: 18px;
+}
+
+.hd_user_email{
+    font-size: 15px;
+}
+
+.hd_user_image{
+    width: 50px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    margin-right: 60px;
+    cursor: pointer;
+}
+

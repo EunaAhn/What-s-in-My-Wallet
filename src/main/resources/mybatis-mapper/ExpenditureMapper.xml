@@ -16,40 +16,54 @@
     </select>
 
 
+    <resultMap id="summaryMap" type="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$Summary">
+        <result property="storeName" column="store_name"/>
+<!--        <result property="expenditureDatetime" column="expenditure_datetime"/>-->
+<!--        <result property="totalExpenditureCount" column="expenditure_count"/>-->
+        <result property="storeAddress" column="store_address"/>
+    </resultMap>
 
-    <resultMap id="expenditureDetailsMap" type="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$DetailsResponse">
-        <result property="expenditureId" column="card_product_id"/> <!-- property는 도메인 클래스의 멤버변수명과 일치, column은 테이블의 컬럼명과 일치 -->
-        <result property="cardCompanyId" column="card_company_id"/>
-        <result property="cardName" column="card_product_name"/>
-        <result property="cardImageFileName" column="card_product_image"/>
-        <result property="membershipFee" column="membership_fee"/>
-        <result property="benefitSummary" column="benefit_summary"/>
-        <result property="likeCount" column="likeCount"/>
-        <collection property="benefitCategoryList" column="benefit_code_id"  resultMap="categoryListResultSumm">
+    <resultMap id="expenditureDetailsMap" type="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$DetailsReponse">
+        <result property="expenditureTotalAmount" column="expenditure_total_amount"/> <!-- property는 도메인 클래스의 멤버변수명과 일치, column은 테이블의 컬럼명과 일치 -->
+        <result property="memo" column="expenditure_memo"/>
+        <collection property="expenditureSummaryDtoList" column="expenditure_history_id" javaType="java.util.ArrayList" resultMap="summaryMap">
 
         </collection>
     </resultMap>
-    <select id="findAllExpenditureDetails" parameterType="map" resultType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$DetailsResponse">
+    <select id="findAllExpenditureDetails" parameterType="map" resultMap="expenditureDetailsMap">
         select
+            (select sum(expenditure_amount) from expenditure_history WHERE TO_CHAR(expenditure_datetime, 'YYYY-MM-DD') BETWEEN #{startdate} AND #{enddate}) as expenditure_total_amount,
             ehd.expenditure_memo,
-            (select sum(expenditure_amount) from expenditure_history where to_char(expenditure_datetime, 'YYYY-MM-DD') between '2024-05-01' and '2024-05-02') as expenditureTotalAmount
+            ehd.expenditure_history_id
         from
             expenditure_history eh
             join
             expenditure_history_dts ehd
         on eh.expenditure_history_id = ehd.expenditure_history_id
-            where member_id = #{member_id}
-            and <![CDATA[expenditure_datetime <= #{startdate}]]>
-            and <![CDATA[expenditure_datetime >= #{enddate}]]>
-<!--
- select (select sum(expenditure_amount) from expenditure_history WHERE TO_CHAR(expenditure_datetime, 'YYYY-MM-DD') BETWEEN '2024-05-01' AND '2024-05-02') as s
-from
-expenditure_history eh
-join
-expenditure_history_dts ehd
-on eh.expenditure_history_id = ehd.expenditure_history_id
-where member_id = 'dnwo1111'
-and expenditure_datetime <= '2024-05-02'
-and expenditure_datetime >='2024-05-01';-->
+            where member_id = #{memberId}
+            and <![CDATA[expenditure_datetime <= #{enddate}]]>
+            and <![CDATA[expenditure_datetime >= #{startdate}]]>
+        <!--
+        // 일자별 지출 상세 내역의 지출 요약  DTO
+        private Long expenditureId;
+        private String storeName;
+        private String expenditureDatetime;
+        private String totalExpenditureConut; // 지출 횟수
+        private String storeAddress;
+
+        private Long expenditureTotalAmount;
+        private String memo;
+        private List<ExenditureDto.Summary> expenditureSummaryDtoList;
+
+
+         select (select sum(expenditure_amount) from expenditure_history WHERE TO_CHAR(expenditure_datetime, 'YYYY-MM-DD') BETWEEN '2024-05-01' AND '2024-05-02') as s
+        from
+        expenditure_history eh
+        join
+        expenditure_history_dts ehd
+        on eh.expenditure_history_id = ehd.expenditure_history_id
+        where member_id = 'dnwo1111'
+        and expenditure_datetime <= '2024-05-02'
+        and expenditure_datetime >='2024-05-01';-->
     </select>
 </mapper>

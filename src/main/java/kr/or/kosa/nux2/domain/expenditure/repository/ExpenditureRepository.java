@@ -20,8 +20,8 @@ public class ExpenditureRepository {
         return expenditureMapper.findAllExpenditure(columns);
     };
 
-    List<ExenditureDto.DetailsReponse> findAllExpenditureDetails(String date){
-        return expenditureMapper.findAllExpenditureDetails(date);
+    public List<ExenditureDto.DetailsReponse> findAllExpenditureDetails(Map<String, Object> columns){
+        return expenditureMapper.findAllExpenditureDetails(columns);
     };
 
     int insertExpenditures(List<ExenditureDto.InsertRequest> expenditureList){

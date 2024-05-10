@@ -2,6 +2,7 @@ package kr.or.kosa.nux2.domain.expenditure.dto;
 
 
 import kr.or.kosa.nux2.domain.member.dto.MemberTargetExpenditureDto;
+import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class ExenditureDto {
         private List<ExenditureDto.CategoryName> expenditureCategoryList;
         private Long expenditureAmount;
     }
-
+    @Getter
     public static class DetailsReponse {
         // 달력에서 일자별 지출을 클릭했을때 표현되는 지출상세 DTO
         private Long expenditureTotalAmount;
@@ -26,7 +27,7 @@ public class ExenditureDto {
         private List<ExenditureDto.Summary> expenditureSummaryDtoList;
     }
 
-
+    @Getter
     public static class Summary {
         // 일자별 지출 상세 내역의 지출 요약  DTO
         private Long expenditureId;

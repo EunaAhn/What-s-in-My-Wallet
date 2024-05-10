@@ -2,6 +2,8 @@ package kr.or.kosa.nux2.web.restcontroller;
 
 import kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto;
 import kr.or.kosa.nux2.domain.cardproduct.repository.CardProductRepository;
+import kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto;
+import kr.or.kosa.nux2.domain.expenditure.repository.ExpenditureRepository;
 import kr.or.kosa.nux2.domain.memberexpendituretend.repository.MemberExpenditureTendRepository;
 import kr.or.kosa.nux2.domain.registrationcard.repository.RegistrationCardRepository;
 import kr.or.kosa.nux2.domain.virtualmydata.repository.MyDataCardRepository;
@@ -24,6 +26,7 @@ public class MyDataCardsRestController {
     private final RegistrationCardRepository registrationCardRepository;
     private final MemberExpenditureTendRepository memberExpenditureTendRepository;
     private final CardProductRepository cardProductRepository;
+    private final ExpenditureRepository expenditureRepository;
 
     @GetMapping("/mydatatest")
     public ResponseEntity<?> test(){
@@ -44,7 +47,12 @@ public class MyDataCardsRestController {
 //        List<MemberExpenditureTendDto.ServiceResponse> response =  memberExpenditureTendRepository.findMemberExpenditureTendMapper(map);
 //        Map<String, Object> map = new HashMap<>();
 //        map.put("benefit", "주유");
-        List<CardProductDto.Response> responses = cardProductRepository.findAllCards(new HashMap<>());
+
+        Map<String, Object> map = new HashMap();
+        map.put("startdate", "2024-05-01");
+        map.put("enddate", "2024-05-02");
+        map.put("memberId", "dnwo1111");
+        List<ExenditureDto.DetailsReponse> responses = expenditureRepository.findAllExpenditureDetails(map);
         return new ResponseEntity<>(responses, HttpStatusCode.valueOf(200));
     }
 }

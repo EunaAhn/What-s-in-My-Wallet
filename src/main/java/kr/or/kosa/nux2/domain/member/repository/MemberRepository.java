@@ -13,5 +13,4 @@ public class MemberRepository {
     public MemberDto findById(String memberId) {
         return memberMapper.findById(memberId);
     }
-
 }

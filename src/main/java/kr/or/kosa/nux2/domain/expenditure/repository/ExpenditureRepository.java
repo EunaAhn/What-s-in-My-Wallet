@@ -11,7 +11,9 @@ import java.util.Map;
 @Repository
 @AllArgsConstructor
 public class ExpenditureRepository {
+
     private final ExpenditureMapper expenditureMapper;
+
     List<Long> findTotalExpenditureByStartAndEndDate(Map<String, Object> columns){
         return expenditureMapper.findTotalExpenditureByStartAndEndDate(columns);
     };

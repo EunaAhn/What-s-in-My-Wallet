@@ -10,7 +10,9 @@ import java.util.List;
 @Repository
 @AllArgsConstructor
 public class MyDataCardRepository {
+
     private final MyDataCardMapper myDataCardMapper;
+
 
     public List<MyDataCardDto.Response> findAllMyDataCard(MyDataCardDto.AuthenticationRequest authenticationRequest){
         return myDataCardMapper.findAllMyDataCardByAuth(authenticationRequest);

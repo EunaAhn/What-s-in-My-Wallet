@@ -11,6 +11,92 @@
     </th:block>
     <body>
     <div class="background"></div>
-    signup
+    <div class="container">
+        <div class="content">
+            <!-- HEADER -->
+            <header>
+                <h2>회원가입</h2>
+            </header>
+
+            <!-- INPUT -->
+            <section>
+                <div class="form-input-date-picker-default1">
+                    <div class="idbox">
+                        <div class="start-date"> 아이디 </div>
+                        <input class="box" id="userid" type="text" placeholder="아이디 입력(6~20자)"/>
+                    </div>
+
+                    <div class="namebox">
+                        <div class="start-date"> 이름 </div>
+                        <input class="box" id="username" type="text" placeholder="이름 입력"/>
+                    </div>
+                </div>
+
+                <div class="form-input-date-picker-default1">
+                    <div class="pwdbox">
+                        <div class="start-date"> 비밀번호 </div>
+                        <input class="box" id="signin-pw" type="password" placeholder="비밀번호 입력"/>
+                    </div>
+
+                    <div class="pwdagain">
+                        <div class="start-date"> 비밀번호 확인</div>
+                        <input class="box" id="signin-pw-again" type="password" placeholder="비밀번호 재입력"/>
+                    </div>
+
+                </div>
+
+                <div class="form-input-date-picker-default1">
+                    <div class="phonebox">
+                        <div class="start-date"> 연락처 </div>
+                        <input class="box" id="signin-phonenum" type="text" placeholder="연락처 입력"/>
+                    </div>
+
+                    <button id="checknum">인증받기</button>
+
+                </div>
+
+                <div class="form-input-date-picker-default">
+                    <div class="start-date"> 인증번호 </div>
+                    <input class="box" id="signin-checknum" type="text" placeholder="인증 번호"/>
+                </div>
+
+                <div class="form-input-date-picker-default2">
+                    <div class="start-date"> 자주 소비하는 카테고리</div>
+                    <div class="form-input-date-picker-default3">
+                        <input type="checkbox" id="categorybox1">
+                        <label class="category-box1" for="categorybox1">대형마트</label>
+
+                        <input type="checkbox" id="categorybox2">
+                        <label class="category-box1" for="categorybox2">학원</label>
+
+                        <input type="checkbox" id="categorybox3">
+                        <label class="category-box1" for="categorybox3">주유소</label>
+
+                        <input type="checkbox" id="categorybox4">
+                        <label class="category-box1" for="categorybox4">문화생활</label>
+                    </div>
+                    <div class="form-input-date-picker-default3">
+                        <input type="checkbox" id="categorybox5">
+                        <label class="category-box1" for="categorybox5">편의점</label>
+
+                        <input type="checkbox" id="categorybox6">
+                        <label class="category-box1" for="categorybox6">음식점</label>
+
+                        <input type="checkbox" id="categorybox7">
+                        <label class="category-box1" for="categorybox7">카페</label>
+
+                        <input type="checkbox" id="categorybox8">
+                        <label class="category-box1" for="categorybox8">병원</label>
+                    </div>
+                </div>
+                <div class="form-input-date-picker-default">
+                    <div class="start-date"> 월 평균 목표 지출액 </div>
+                    <input class="box" id="signin-moneygoal" type="text" placeholder="ex) 1,200,000"/>
+                </div>
+            </section>
+            <button id="signup">회원가입</button>
+
+        </div>
+    </div>
     </body>
 </html>

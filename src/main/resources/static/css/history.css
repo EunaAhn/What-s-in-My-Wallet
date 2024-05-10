@@ -1,0 +1,349 @@
+.container {
+  position: absolute;
+  top: 100px;
+  left: 280px;
+  height: calc(100vh - 100px);
+  width: calc(100vw - 280px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar-container {
+  height: 90%;
+  width: 78%;
+  border-radius: 15px;
+  padding: 30px 50px 30px 50px;
+  background-color: white;
+  box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 4%);
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 50px;
+  padding: 0 20px;
+}
+
+.left_section {
+  display: flex;
+}
+
+#prevBtn {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+}
+
+#currentMonth {
+  font-size: 27px;
+  line-height: 25px;
+  margin: 0 10px;
+}
+
+#nextBtn {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+}
+
+.right_section {
+  display: flex;
+}
+
+.categories {
+  padding: 0 10px 0 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.update_btn {
+  display: flex;
+  align-items: center;
+  padding: 10px 25px;
+  margin-left: 10px;
+  color: white;
+  background-color: #9288dd;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.update_btn img {
+  margin-right: 6px;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-weight: 900;
+  font-size: 18px;
+  padding-bottom: 25px;
+}
+
+.day {
+  display: flex;
+  justify-content: center;
+  color: #717579;
+  padding: 5px;
+}
+
+.calendar-wrapper {
+  position: relative;
+  height: 76%;
+}
+
+.calendar-borderU {
+  background-color: white;
+  position: absolute;
+  top: 0;
+  height: 2px;
+  width: 100%;
+  z-index: 1;
+}
+
+.calendar-borderR {
+  background-color: white;
+  position: absolute;
+  right: 0;
+  height: 100%;
+  width: 2px;
+  z-index: 1;
+}
+
+.calendar-borderD {
+  background-color: white;
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  z-index: 1;
+}
+
+.calendar-borderL {
+  background-color: white;
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 2px;
+  z-index: 1;
+}
+
+.calendar-dates {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+}
+
+.date {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px;
+  border: 0.5px solid #eeeeee;
+}
+
+/*.date_day{*/
+/*  width: 100%;*/
+/*}*/
+
+/*.date_day:hover{*/
+/*  color: #9288dd;*/
+/*  font-weight: 900;*/
+/*}*/
+
+.date_content{
+  padding-left: 5px;
+  border-left: 4px solid #5ECFFF;
+}
+
+.date_categories{
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.date_totalmoney{
+  font-size: 15px;
+  color: #717579;
+}
+
+.date:hover {
+  /*border: 4px solid #9288dd;*/
+  /*border-radius: 10px;*/
+  background-color: #9288dd;
+}
+
+.empty{
+  background-color: #F6F6F6;
+}
+
+dialog {
+  position: relative;
+  height: 86vh;
+  width: 32vw;
+  top: 7vh;
+  left: 34vw;
+  border: none;
+  border-radius: 20px;
+  padding: 26px 13px 50px 26px;
+  box-shadow: 0 1px 120px 0 rgb(0 0 0 / 12%);
+  overflow: hidden;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(1px);
+}
+
+.modal_header{
+  display: flex;
+  justify-content: space-between;
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 40px;
+}
+
+.modal_box{
+  position: relative;
+  height: 90%;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.scrollBar::-webkit-scrollbar {
+  width: 8px;  /* 스크롤바의 너비 */
+}
+
+.scrollBar::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #AAADB0; /* 스크롤바의 색상 */
+  border-radius: 10px;
+}
+
+.close_btn{
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.close_image{
+  height: 20px;
+  width: 20px;
+}
+
+.main{
+  display: flex;
+  width:97%;
+  /*border: 1px solid red;*/
+}
+
+.main_box{
+  width: 50%;
+  /*border: 1px solid blue;*/
+}
+
+.price{
+  margin-right: 2%;
+}
+
+.title{
+  color: #717579;
+  font-size: 15px;
+  margin-bottom: 7px;
+}
+
+.content{
+  color: black;
+  font-size: 17px;
+  width: 100%;
+  padding: 8px 15px;
+  border: 1px solid #D7D7D7;
+  border-radius: 10px;
+  margin-bottom: 13px;
+}
+
+.memo_box{
+  width: 97%;
+}
+
+.memo_content{
+  width: 100%;
+}
+
+.map_box{
+  position: sticky;
+  top:0;
+  padding-bottom: 30px;
+  background-color: white;
+}
+
+#map{
+  height: 30vh;
+  width: 98%;
+  border-radius: 10px;
+}
+
+.expense_list{
+}
+
+.expense_item{
+  width: 98%;
+  border: 1.5px solid #9EA2A5;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+}
+
+.expense_price{
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.expense_place{
+  font-size: 15px;
+  font-weight: 700;
+  color: #717579;
+  margin: 2px 0;
+}
+
+.expense_date_card{
+  font-size: 14px;
+  color: #717579;
+}
+
+.modal_save{
+  position: absolute;
+  bottom: 10px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 14px;
+  font-weight: 900;
+  padding: 7px 13px;
+  border: none;
+  border-radius: 10px;
+  background-color: #9288DD;
+  cursor: pointer;
+}
+
+.saveimage{
+  height: 14px;
+  width: 14px;
+  margin-right: 5px;
+}

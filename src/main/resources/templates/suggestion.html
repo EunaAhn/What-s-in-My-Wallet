@@ -8,10 +8,56 @@
         <link th:href="@{/css/suggestion.css}" rel="stylesheet" />
         <link th:href="@{/css/common.css}" rel="stylesheet" />
         <script type="text/javascript" th:src="@{/js/suggestion.js}" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     </th:block>
     <body>
     <th:block layout:fragment="header" th:include="@{/fragments/header}"></th:block>
     <th:block layout:fragment="sidemenubar" th:include="@{/fragments/sidemenubar}"></th:block>
-    <h1>suggestion</h1>
+    <div class="container">
+        <div class="card-recommend-title">이눅스님에게 딱 맞는 카드 추천 Top6</div>
+
+        <div class="favorite-card-list">
+            <div class="favorite-list">
+                <img class="favorite-card-list-img" src="/img/cardlist/card1.png">
+                <div class="favorite">신한카드</div>
+            </div>
+            <div class="favorite-list">
+                <img class="favorite-card-list-img" src="/img/cardlist/card2.png">
+                <div class="favorite">신한카드</div>
+            </div>
+            <div class="favorite-list">
+                <img class="favorite-card-list-img" src="/img/cardlist/card3.png">
+                <div class="favorite">신한카드</div>
+            </div>
+            <div class="favorite-list">
+                <img class="favorite-card-list-img" src="/img/cardlist/card4.png">
+                <div class="favorite">신한카드</div>
+            </div>
+            <div class="favorite-list">
+                <img class="favorite-card-list-img" src="/img/cardlist/card4.png">
+                <div class="favorite">신한카드</div>
+            </div>
+            <div class="favorite-list">
+                <img class="favorite-card-list-img" src="/img/cardlist/card4.png">
+                <div class="favorite">신한카드</div>
+            </div>
+        </div>
+
+        <div class="graph-container">
+            <div class="graph-list">
+                <div class="graph-detail">
+                    <div>소비 카테고리별 지출액</div>
+                    <div id="pie-chart"></div>
+                </div>
+
+                <div class="graph-detail">
+                    <div>소비 카테고리별 지출횟수</div>
+                    <div id="line-chart"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
     </body>
-</html>`
+</html>

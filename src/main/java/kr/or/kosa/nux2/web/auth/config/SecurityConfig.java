@@ -50,7 +50,8 @@ public class SecurityConfig {
         http
                 .csrf((auth) -> auth.disable());
         http
-                .formLogin((auth) -> auth.permitAll());
+              .formLogin((auth) -> auth.disable());
+//                .formLogin((auth) -> auth.permitAll());
         http
                 .httpBasic((auth) -> auth.disable());
         http
@@ -69,10 +70,10 @@ public class SecurityConfig {
 
         http
                 .exceptionHandling((exceptions) -> exceptions.authenticationEntryPoint(jwtAuthenticationEntryPoint));
-        http
-                .addFilterBefore(new JwtFilter(jwtUtils), JwtLoginFilter.class);
-        http
-                .addFilterAt(new JwtLoginFilter(authenticationManager(), jwtUtils), UsernamePasswordAuthenticationFilter.class);
+//        http
+//                .addFilterBefore(new JwtFilter(jwtUtils), JwtLoginFilter.class);
+//        http
+//                .addFilterAt(new JwtLoginFilter(authenticationManager(), jwtUtils), UsernamePasswordAuthenticationFilter.class);
         http
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

@@ -1,6 +1,7 @@
 package kr.or.kosa.nux2.domain.expenditure.repository;
 
 import kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto;
+import kr.or.kosa.nux2.domain.expenditure.mapper.ExpenditureMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +11,7 @@ import java.util.Map;
 @Repository
 @AllArgsConstructor
 public class ExpenditureRepository {
-    private final ExpenditureRepository expenditureRepository;
+    private final ExpenditureMapper expenditureRepository;
     List<Long> findTotalExpenditureByStartAndEndDate(Map<String, Object> columns){
         return expenditureRepository.findTotalExpenditureByStartAndEndDate(columns);
     };

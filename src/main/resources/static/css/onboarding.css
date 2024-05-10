@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: center;
 
-    /*border: 1px solid red;*/
+    border: 1px solid red;
 }
 
 .left_section{
@@ -57,17 +57,42 @@
     background-color: #AFA5FF;
 }
 
-.tmp{
+.display{
     width: 750px;
 }
 
-.tmp1{
-    transform: translate(25%,-30%);
-    position: absolute;
-}
-
-.tmp2{
+.display1{
     transform: translate(5%,-60%);
+    animation: moveUpDown1 3s infinite;
     position: absolute;
 }
 
+.display2{
+    transform: translate(25%,-30%);
+    animation: moveUpDown2 3s infinite;
+    position: absolute;
+}
+
+@keyframes moveUpDown1 {
+    0% {
+        transform: translate(5%,-60%);
+    }
+    50% {
+        transform: translate(5%,-65%);
+    }
+    100% {
+        transform: translate(5%,-60%);
+    }
+}
+
+@keyframes moveUpDown2 {
+    0% {
+        transform: translate(25%,-30%);
+    }
+    50% {
+        transform: translate(25%,-35%);
+    }
+    100% {
+        transform: translate(25%,-30%);
+    }
+}

@@ -50,7 +50,7 @@ public class SecurityConfig {
         http
                 .csrf((auth) -> auth.disable());
         http
-//                .formLogin((auth) -> auth.disable());
+//              .formLogin((auth) -> auth.disable());
                 .formLogin((auth) -> auth.permitAll());
         http
                 .httpBasic((auth) -> auth.disable());

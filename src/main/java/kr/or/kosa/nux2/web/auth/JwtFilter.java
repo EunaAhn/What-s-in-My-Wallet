@@ -27,7 +27,7 @@ public class JwtFilter extends OncePerRequestFilter {
 //    private List<String> excludeUrlPatterns = new ArrayList<>(Arrays.asList(
 //            "/", "/error", "/favicon.ico", "/*.png", "/*.gif", "/*.svg", "/*.jpg", "/*.html", "/*.css", "/*.js"
 //    ));
-//
+
 //    @Override
 //    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 //        return excludeUrlPatterns.stream().anyMatch(p -> pathMatcher.match(p, request.getRequestURI()));

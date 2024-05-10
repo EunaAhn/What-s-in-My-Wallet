@@ -6,8 +6,8 @@
     width: calc(100vw - 280px);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start; /* 상단 정렬 */
+    align-items: flex-start; /* 좌측 정렬 */
     border: 1px solid red;
     overflow-y: auto; /* 세로 스크롤 활성화 */
     overflow-x: hidden; /* 가로 스크롤 비활성화 */
@@ -24,23 +24,24 @@
     font-size: 25px;
     font-weight: 600;
     height: 30px;
-    position: absolute; /* 이미지를 절대 위치로 설정합니다. */
-    top: 5%; /* 위쪽 여백을 0으로 설정하여 컨테이너의 상단에 배치합니다. */
-    left: 5%; /* 왼쪽 여백을 0으로 설정하여 컨테이너의 왼쪽에 배치합니다. */
+    position: relative;
+    margin: 3% 0% 0% 3%;
 }
 
 .card-info-list{
-    position: absolute;
+    position: relative;
     width: 92%;
-    top: 10%; /* 위쪽 여백을 0으로 설정하여 컨테이너의 상단에 배치합니다. */
-    left: 3.5%; /* 왼쪽 여백을 0으로 설정하여 컨테이너의 왼쪽에 배치합니다. */
     display: flex;
     flex-direction: column;
+    margin: 0% 0% 0% 2%;
 }
 
 .card-container{
+    position: relative;
     display: flex;
     justify-content: space-between;
+    width: 80vw;
+    margin: 2% 0% 0% 0%;
 }
 
 .card-list{
@@ -53,7 +54,7 @@
     box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     margin: 1%;
-    padding: 1%
+    padding: 0% 1% 0% 1%;
 
 }
 
@@ -117,16 +118,22 @@ button:hover {
     background-color: #8B81D4;
 }
 
+.register-button{
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    width: 85vw;
+    padding: 0% 3% 0% 0%;
+}
+
 button#register {
-    position: absolute;
-    top: 540px;
-    right: 6%;
+    position: relative;
     width: 20%;
     height: 58px;
     border-radius: 14px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     font-size: 15px;
-
+    margin: 3% 2% 0% auto;
 }
 
 /* RESULT */
@@ -137,4 +144,35 @@ button#register {
     text-align: center;
     color: red;
     font-size: 13px;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #8B81D4;
+    outline: none;
+    cursor: pointer;
+    margin-right: 3%;
+    position: relative; /* 부모 요소로부터 상대적 위치 지정 */
+}
+
+input[type="checkbox"]:checked {
+    background-color: transparent;
+}
+
+input[type="checkbox"]:checked::before {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: #8B81D4;
+    border-radius: 50%;
+    position: absolute; /* 절대적 위치 지정 */
+    top: 50%; /* 부모 요소의 세로 중앙으로 이동 */
+    left: 50%; /* 부모 요소의 가로 중앙으로 이동 */
+    transform: translate(-50%, -50%); /* 요소의 중심을 부모 요소의 중심으로 이동 */
 }

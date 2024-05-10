@@ -25,6 +25,8 @@ public class Nux2WebApplicationInitializer implements WebApplicationInitializer 
         public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 
         }
+
+
     }
 
     @Configuration

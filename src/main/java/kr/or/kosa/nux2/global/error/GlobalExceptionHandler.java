@@ -13,6 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -20,7 +21,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-//@RestControllerAdvice 개발 완료 후 주석 해제 권장
+@RestControllerAdvice
+//개발 완료 후 주석 해제 권장
 public class GlobalExceptionHandler {
     private final HttpStatus HTTP_BADREQUEST = HttpStatus.BAD_REQUEST;
 

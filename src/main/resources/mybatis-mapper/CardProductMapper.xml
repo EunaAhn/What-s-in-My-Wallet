@@ -88,21 +88,32 @@
             cbc.benefit_name,
             (select count(member_id) from member_like_card) as likeCount
         from
-            card_product cp
-            right join
-            card_benefit_code cbc
+            (
+                select * from
+                    (select
+                        card_product_id,
+                        card_company_id,
+                        card_product_name,
+                        card_product_image,
+                        membership_fee,
+                        benefit_summary,
+                        row_number() over(order by card_product_id) as row_num
+                    from card_product) where row_num between #{startnum} and #{endnum}
+            ) cp
+            left join
+                card_benefit_code cbc
             on cp.card_product_id = cbc.card_product_id
-            <choose>
-                <when test="cardCompanyName != null">
-                    where cp.card_company_id = #{cardCompanyName}
-                </when>
-                <when test="cardName != null">
-                    where cp.card_product_name = #{cardName}
-                </when>
-                <when test="benefit != null">
-                    where cbc.benefit_name = #{benefit}
-                </when>
-            </choose>
+<!--            <choose>-->
+<!--                <when test="cardCompanyName != null">-->
+<!--                    where cp.card_company_id = #{cardCompanyName}-->
+<!--                </when>-->
+<!--                <when test="cardName != null">-->
+<!--                    where cp.card_product_name = #{cardName}-->
+<!--                </when>-->
+<!--                <when test="benefit != null">-->
+<!--                    where cbc.benefit_name = #{benefit}-->
+<!--                </when>-->
+<!--            </choose>-->
     </select>
 
 

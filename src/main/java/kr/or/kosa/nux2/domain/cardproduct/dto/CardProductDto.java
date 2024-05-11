@@ -58,4 +58,11 @@ public class CardProductDto {
     public static class DetailRequest {
         private Long cardId;
     }
+
+    @Getter
+    @Setter
+    public static class ListRequest{
+        int startNum;
+        int endNum;
+    }
 }

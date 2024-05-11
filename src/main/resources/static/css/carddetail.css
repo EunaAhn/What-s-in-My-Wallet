@@ -7,7 +7,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /*justify-content: center;*/
     border: 1px solid red;
     padding-top: 40px;
     overflow-y: auto; /* 세로 스크롤 활성화 *!*/
@@ -15,14 +15,13 @@
 }
 
 .card-info-list{
-    position: relative;
     align-items: center;
-    height: 46%;
+    height: 100%;
     width: 75%;
+    flex-wrap: wrap;
     padding: 20px 0;
     display: flex;
-    flex-direction: column;
-    margin-bottom: 5%;
+    margin-bottom: 2%;
 }
 
 .card-container{
@@ -34,39 +33,18 @@
 }
 
 .card-list{
-    position: relative;
     background-color: #ffffff;
-    width: 100%;
-    height: 100%;
-    max-width: 1000px;
-    min-width: 450px;
+    width: calc(33.33% - 2%);
     border: 1px solid #f8f8f8;
     border-radius: 10px;
     box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     margin: 1%;
-    padding: 1.5% 0% 0% 0%;
+    padding: 1.5% 0% 2% 0%;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
-
-/*.card-detail-container{*/
-/*    position: relative;*/
-/*    background-color: #ffffff;*/
-/*    width: 75%;*/
-/*    height: 46%;*/
-/*    !*max-width: 80vw;*!*/
-/*    !*min-width: 80vw;*!*/
-/*    border: 1px solid #f8f8f8;*/
-/*    border-radius: 20px;*/
-/*    box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.2);*/
-/*    box-sizing: border-box;*/
-/*    margin: 3% 3% 0% 3%;*/
-/*    padding: 1%;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*}*/
 
 .card-detail-container{
     position: relative;
@@ -77,10 +55,9 @@
     box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
     width: 75%;
-    height: 46%;
     display: flex;
     margin: 0% 3% 0% 3%;
-    padding: 1%;
+    padding: 1% 1% 2% 1%;
 }
 
 .card-text-info{
@@ -105,13 +82,13 @@
 }
 
 .card-detail-info{
-    margin-top: 5%;
+    margin: 5% 0% 3% 0%;
 }
 
 .card-detail-text{
     color: #717579;
     font-family: Inter;
-    font-size: 23px;
+    font-size: 18px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -169,14 +146,14 @@ button:hover {
 }
 
 button#card-website-move {
-    width: 29vw;
+    width: 100%;
     height: 5vh;
     border-radius: 14px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     margin: 4% 0% 0% 3%;
     text-align: center;
     font-family: Inter;
-    font-size: 20px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;

@@ -14,6 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const cardTitle = cardList.querySelector(".card-title");
             cardTitle.style.color = "#3b3a45";
         })
+
+        cardList.addEventListener("click", () =>  {
+            location.href =  "carddetail";
+        })
     })
 })
 

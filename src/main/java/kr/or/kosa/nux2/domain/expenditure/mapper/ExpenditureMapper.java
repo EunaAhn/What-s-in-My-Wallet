@@ -11,7 +11,7 @@ import java.util.Map;
 public interface ExpenditureMapper {
     // startDate, endDate 기준으로 total 산출
     // 소비성향 한달 지출액
-    List<ExenditureDto.TotalCount> findTotalExpenditureByStartAndEndDate(String month);
+    List<ExenditureDto.TotalCount> findTotalExpenditureByStartAndEndDate(Map<String, Object> map);
 
     // 동적 쿼리 : 소비카테고리, 월, 카드 별 검색
     List<ExenditureDto.Response> findAllExpenditure (Map<String, Object> columns);
@@ -30,16 +30,16 @@ public interface ExpenditureMapper {
 
     // 소비 카테고리 별 지출비율
     // 개월수가 컬럼으로 들어감
-    ExenditureDto.RatioByCategoryResponse findExpenditureRatioForCategoryByMonth(int month);
+    List<ExenditureDto.RatioByCategoryResponse> findExpenditureRatioForCategoryByMonth(Map<String, Object> map);
 
     // 소비 카테고리 별 지출 횟수
-    ExenditureDto.CountByCategoryResponse findExpenditureCountForCategoryByMonth(int month);
+    List<Map<String, Object>>  findExpenditureCountForCategoryByMonth(Map<String, Object> map);
 
     // 월별 시간대 지출금액
-    ExenditureDto.ByMonthAndTimeResponse findTotalExpenditureForMonthAndTimeByYearAndMonth(String yearAndMonth);
+    Map<String, Object> findTotalExpenditureForMonthAndTimeByYearAndMonth(Map<String, Object> map);
 
     // 월 평균 지출 금액
-    ExenditureDto.AverageByMonthResponse findAverageExpenditureForMonthByYear(int year);
+    Map<String, Object> findAverageExpenditureForMonthByYear(Map<String, Object> map);
 
     // 소비성향을 넘겨주면 해당 시간대의 총 지출 횟수를 반환해야한다.
     // 리팩터링 부채 : enum의 위치 애매 + 단순 columns으로 넘기는게 타당한지 의문

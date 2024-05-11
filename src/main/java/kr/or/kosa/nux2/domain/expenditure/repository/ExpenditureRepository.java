@@ -14,8 +14,8 @@ public class ExpenditureRepository {
 
     private final ExpenditureMapper expenditureMapper;
 
-    public List<ExenditureDto.TotalCount> findTotalExpenditureByStartAndEndDate(String month){
-        return expenditureMapper.findTotalExpenditureByStartAndEndDate(month);
+    public List<ExenditureDto.TotalCount> findTotalExpenditureByStartAndEndDate(Map<String, Object> map){
+        return expenditureMapper.findTotalExpenditureByStartAndEndDate(map);
     };
 
     public List<ExenditureDto.Response> findAllExpenditure (Map<String, Object> columns){
@@ -34,19 +34,19 @@ public class ExpenditureRepository {
         expenditureMapper.updateExpenditureMemo(map);
     };
 
-    public ExenditureDto.RatioByCategoryResponse findExpenditureRatioForCategoryByMonth(int month){
-        return expenditureMapper.findExpenditureRatioForCategoryByMonth(month);
+    public List<ExenditureDto.RatioByCategoryResponse> findExpenditureRatioForCategoryByMonth(Map<String, Object> map){
+        return expenditureMapper.findExpenditureRatioForCategoryByMonth(map);
     };
 
-    ExenditureDto.CountByCategoryResponse findExpenditureCountForCategoryByMonth(int month){
-        return expenditureMapper.findExpenditureCountForCategoryByMonth(month);
+    public List<Map<String, Object>>  findExpenditureCountForCategoryByMonth(Map<String, Object> map){
+        return expenditureMapper.findExpenditureCountForCategoryByMonth(map);
     };
 
-    ExenditureDto.ByMonthAndTimeResponse findTotalExpenditureForMonthAndTimeByYearAndMonth(String yearAndMonth){
-        return expenditureMapper.findTotalExpenditureForMonthAndTimeByYearAndMonth(yearAndMonth);
+    public Map<String, Object> findTotalExpenditureForMonthAndTimeByYearAndMonth(Map<String, Object> map){
+        return expenditureMapper.findTotalExpenditureForMonthAndTimeByYearAndMonth(map);
     };
 
-    ExenditureDto.AverageByMonthResponse findAverageExpenditureForMonthByYear(int year){
-        return expenditureMapper.findAverageExpenditureForMonthByYear(year);
+    public Map<String, Object> findAverageExpenditureForMonthByYear(Map<String, Object> map){
+        return expenditureMapper.findAverageExpenditureForMonthByYear(map);
     };
 }

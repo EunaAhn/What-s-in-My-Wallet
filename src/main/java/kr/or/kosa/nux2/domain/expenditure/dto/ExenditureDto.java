@@ -75,10 +75,10 @@ public class ExenditureDto {
         private List<Integer> expenditureCountList;
     }
 
-
+    @Getter
     public static class RatioByCategoryResponse {
         // 카테고리별 지출 비율 응답 DTO
-        private ExenditureDto.CategoryName categoryName;
+        private String categoryName;
         private Float expenditrueRatio;
     }
 
@@ -121,6 +121,19 @@ public class ExenditureDto {
     @Setter
     public static class ExpenditureDetailRequest {
         String expenditureId;
+        String nowDate;
+    }
+
+    @Getter
+    @Setter
+    public static class MonthRequest {
+        int month;
+    }
+
+
+    @Getter
+    @Setter
+    public static class TotalExpenditureCountRequest {
         String nowDate;
     }
 }

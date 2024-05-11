@@ -5,6 +5,7 @@ import kr.or.kosa.nux2.domain.expenditure.repository.ExpenditureRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.Key;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -50,5 +51,74 @@ public class ExpenditureServiceImpl implements ExpenditureService{
 
         ExenditureDto.DetailsReponse expenditureDetail = expenditureRepository.findAllExpenditureDetails(map);
         return expenditureDetail;
+    }
+
+    @Override
+    public List<ExenditureDto.TotalCount> showTotalExpenditureByMonth(ExenditureDto.TotalExpenditureCountRequest request) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("nowDate", request.getNowDate());
+        map.put("memberId", "dnwo1111");
+        List<ExenditureDto.TotalCount> response = expenditureRepository.findTotalExpenditureByStartAndEndDate(map);
+        return response;
+    }
+
+    @Override
+    public void modifyExpenditureMemo(Map<String, Object> map) {
+
+    }
+
+    @Override
+    public List<ExenditureDto.RatioByCategoryResponse> showExpenditureRatioForCategoryByMonth(Map<String, Object> map) {
+        List<ExenditureDto.RatioByCategoryResponse>  response = expenditureRepository.findExpenditureRatioForCategoryByMonth(map);
+        return response;
+    }
+
+    @Override
+    public List<Map<String, Object>>  showExpenditureCountForCategoryByMonth(int month) {
+        // 현재 날짜 가져오기
+        LocalDate currentDate = LocalDate.now();
+
+        // 14개월 전 날짜 계산
+        LocalDate fourteenMonthsAgo = currentDate.minusMonths(month+1);
+
+        // YYYY-MM 형식으로 변환
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+        String formattedDate = fourteenMonthsAgo.format(formatter);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("targetDate", formattedDate);
+        map.put("memberId", "dnwo1111");
+
+
+        List<Map<String, Object>> result = expenditureRepository.findExpenditureCountForCategoryByMonth(map);
+
+        return result;
+    }
+
+    @Override
+    public Map<String, Object> showTotalExpenditureForMonthAndTimeByYearAndMonth(String yearAndMonth) {
+        Map<String, Object> columns = new HashMap<>();
+        columns.put("nowDate", yearAndMonth);
+        columns.put("memberId", "dnwo1111");
+
+        Map<String, Object> map = expenditureRepository.findTotalExpenditureForMonthAndTimeByYearAndMonth(columns);
+
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> findAverageExpenditureForMonthByYear(int year) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("memberId", "dnwo1111");
+        map.put("year", year);
+
+        Map<String, Object> m = expenditureRepository.findAverageExpenditureForMonthByYear(map);
+
+        return m;
+    }
+
+    @Override
+    public int insertExpenditure(List<ExenditureDto.InsertRequest> expenditureList) {
+        return 0;
     }
 }

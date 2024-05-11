@@ -13,7 +13,7 @@ import java.util.Map;
 public class CardProductRepository {
     private final CardProductMapper cardProductMapper;
 
-    public List<CardProductDto.DetailsResponse> findCardDetails(Long cardProductId){
+    public CardProductDto.DetailsResponse findCardDetails(Long cardProductId){
         return cardProductMapper.findCardDetail(cardProductId);
     }
 

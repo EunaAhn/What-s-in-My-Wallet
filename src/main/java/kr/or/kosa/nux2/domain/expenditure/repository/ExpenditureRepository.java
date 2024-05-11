@@ -14,15 +14,15 @@ public class ExpenditureRepository {
 
     private final ExpenditureMapper expenditureMapper;
 
-    List<Long> findTotalExpenditureByStartAndEndDate(Map<String, Object> columns){
-        return expenditureMapper.findTotalExpenditureByStartAndEndDate(columns);
+    public List<ExenditureDto.TotalCount> findTotalExpenditureByStartAndEndDate(String month){
+        return expenditureMapper.findTotalExpenditureByStartAndEndDate(month);
     };
 
-    List<ExenditureDto.Response> findAllExpenditure (Map<String, Object> columns){
+    public List<ExenditureDto.Response> findAllExpenditure (Map<String, Object> columns){
         return expenditureMapper.findAllExpenditure(columns);
     };
 
-    public List<ExenditureDto.DetailsReponse> findAllExpenditureDetails(Map<String, Object> columns){
+    public ExenditureDto.DetailsReponse findAllExpenditureDetails(Map<String, Object> columns){
         return expenditureMapper.findAllExpenditureDetails(columns);
     };
 
@@ -30,11 +30,11 @@ public class ExpenditureRepository {
         return expenditureMapper.insertExpenditures(expenditureList);
     };
 
-    void updateExpenditureMemo(String expenditureMemo){
-        expenditureMapper.updateExpenditureMemo(expenditureMemo);
+    public void updateExpenditureMemo(Map<String, Object> map){
+        expenditureMapper.updateExpenditureMemo(map);
     };
 
-    ExenditureDto.RatioByCategoryResponse findExpenditureRatioForCategoryByMonth(int month){
+    public ExenditureDto.RatioByCategoryResponse findExpenditureRatioForCategoryByMonth(int month){
         return expenditureMapper.findExpenditureRatioForCategoryByMonth(month);
     };
 

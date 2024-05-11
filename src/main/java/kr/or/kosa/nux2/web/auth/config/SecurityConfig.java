@@ -55,7 +55,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**")
                         .permitAll()
-                        .requestMatchers("/user","/login/**","/auth/**", "/logout/**","/oauth2/**")
+                        .requestMatchers("/user","/login/**","/auth/**","/oauth2/**")
                         .permitAll()
                         .requestMatchers("/analyze/**","/carddetail/**", "/cardlist/**","/cardregistration/**","/history/**","/onboarding/**", "/profile/**","/signup/**","/suggestion/**")
                         .permitAll()
@@ -77,10 +77,10 @@ public class SecurityConfig {
                 );
         http
                 .exceptionHandling((exceptions) -> exceptions.authenticationEntryPoint(jwtAuthenticationEntryPoint));
-//        http
-//                .addFilterBefore(new JwtFilter(jwtUtils), JwtLoginFilter.class);
-//        http
-//                .addFilterAt(new JwtLoginFilter(authenticationManager(), jwtUtils), UsernamePasswordAuthenticationFilter.class);
+        http
+                .addFilterBefore(new JwtFilter(jwtUtils), JwtLoginFilter.class);
+        http
+                .addFilterAt(new JwtLoginFilter(authenticationManager(), jwtUtils), UsernamePasswordAuthenticationFilter.class);
         http
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

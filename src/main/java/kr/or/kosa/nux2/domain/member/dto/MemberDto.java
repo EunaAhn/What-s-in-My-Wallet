@@ -8,36 +8,13 @@ import lombok.*;
 
 import java.util.List;
 
-@Setter
-@Getter
-public class MemberDto {
-    private String memberId;
-    private String memberName;
-    private String memberContactNumber;
-    private String memberPassword;
-    private Long targetExpenditure;
-    List<ExenditureDto.CategoryName> expenditureCategoryList;
-public class MemberDto {
-    @Setter
-    @Getter
-    public static class AuthenticationResponse{
-        private String memberId;
-        private String memberPassword;
-    }
 
-    public static class SignInOAuthRequest{
-        private String memberId;
-        private String memberPassword; //암호화
-        private String memberEmail;
-        private String memberRole;
-        private String provider;
-        private String providerId;
-    }
+public class MemberDto {
+
     @AllArgsConstructor
     public static class UpdateSocialTokenRequest{
         private String memberId;
         private String socialToken;
-
 
     }
 

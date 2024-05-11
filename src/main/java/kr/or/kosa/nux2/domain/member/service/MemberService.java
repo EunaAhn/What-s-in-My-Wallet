@@ -5,5 +5,5 @@ import kr.or.kosa.nux2.web.auth.CustomUserDetails;
 
 public interface MemberService {
     public String test();
-    public String login(CustomUserDetails customUserDetails);
+    public String logout(CustomUserDetails customUserDetails);
 }

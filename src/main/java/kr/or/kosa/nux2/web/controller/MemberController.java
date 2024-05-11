@@ -47,18 +47,11 @@ public class MemberController {
     }
 
 
-    @GetMapping("/user")
-    public @ResponseBody String user(@AuthenticationPrincipal CustomUserDetails customUserDetails){
-        //System.out.println("pricipalDetails"+customUserDetails.getUserDto());
-        System.out.println("security"+SecurityContextHolder.getContext().getAuthentication());
-        System.out.println("dto"+customUserDetails.getUserDto());
-        return "session";
-    }
     @PostMapping("/logout/1")
     public String logout(HttpServletRequest request,@AuthenticationPrincipal CustomUserDetails customUserDetails){
         HttpSession session = request.getSession();
         session.invalidate();
-        return memberService.login(customUserDetails);
+        return memberService.logout(customUserDetails);
     }
 
 

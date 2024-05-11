@@ -20,7 +20,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public String login(CustomUserDetails customUserDetails) {
+    public String logout(CustomUserDetails customUserDetails) {
         log.info("method = {}","login");
         if(customUserDetails.getUserDto().getProvider().equals("google")){
             String socialAccessToken = customUserDetails.getUserDto().getSocialToken();

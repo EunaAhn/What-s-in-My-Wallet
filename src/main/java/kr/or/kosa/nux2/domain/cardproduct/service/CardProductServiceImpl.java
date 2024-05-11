@@ -24,6 +24,7 @@ public class CardProductServiceImpl implements CardProductService {
     @Override
     public CardProductDto.DetailsResponse showCardProductDetail(CardProductDto.DetailRequest request) {
         Long cardProductId = request.getCardId();
+        System.out.println(cardProductId);
         CardProductDto.DetailsResponse response = cardProductRepository.findCardDetails(cardProductId);
         return response;
     }

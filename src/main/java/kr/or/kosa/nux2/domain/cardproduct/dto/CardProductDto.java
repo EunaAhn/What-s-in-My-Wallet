@@ -10,11 +10,12 @@ public class CardProductDto {
     public static class DetailsResponse {
         // 카드상품 테이블 컬럼
         private Long cardProductId; // 카드 상품 아이디 (바인딩 해줄 데이터는 아님)
-        private String cardCompanyId; //
+        private Long cardCompanyId; //
         private String cardName;
         private String cardImageFileName;
         private String membershipFee;
         private String benefitSummary;
+
 
         // 아래 조인 테이블 데이터 DTO 및 속성
         private Long likeCount; // 어쩔수 없이 N+1 쿼리 수행
@@ -32,7 +33,7 @@ public class CardProductDto {
         private String membershipFee;
         private String benefitSummary;
         // 아래 조인 테이블 데이터 DTO 및 속성
-        private Long likeCount; // 어쩔수 없이 N+1 쿼리 수행
+        private int likeCount; // 어쩔수 없이 N+1 쿼리 수행
         private List<BenefitCategory> benefitCategoryList;
     }
 

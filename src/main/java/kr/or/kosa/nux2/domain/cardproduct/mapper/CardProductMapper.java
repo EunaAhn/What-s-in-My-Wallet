@@ -11,7 +11,7 @@ import java.util.Map;
 public interface CardProductMapper {
 
     // map을 파라미터 값으로 전달하는 경우 동적쿼리를 생성할 수 있다.
-    CardProductDto.DetailsResponse findCardDetail(Long cardProductId);
+    CardProductDto.DetailsResponse findCardDetail(@Param("cardProductId") Long cardProductId);
     List<CardProductDto.Response> findAllCards(Map<String, Object> map);
     // company, cardname, benefit 3개의 인자로 동적쿼리를 생성해야한다.
     // 카드 목록 필터 기능

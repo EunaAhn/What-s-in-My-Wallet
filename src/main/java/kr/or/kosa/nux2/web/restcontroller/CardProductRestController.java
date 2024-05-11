@@ -25,8 +25,8 @@ public class CardProductRestController {
 
     @GetMapping("/detail")
     public ResponseEntity<ApiResponse<CardProductDto.DetailsResponse>> cardProductDetail(@RequestBody CardProductDto.DetailRequest request) {
-        cardProductService.showCardProductDetail(request);
-        return null;
+        CardProductDto.DetailsResponse response = cardProductService.showCardProductDetail(request);
+        return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
     @GetMapping("/list")
     public ResponseEntity<ApiResponse<List<CardProductDto.Response>>> cardProductDetail(@RequestBody CardProductDto.ListRequest request) {

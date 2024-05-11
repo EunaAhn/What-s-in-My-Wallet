@@ -23,7 +23,7 @@ public class ExpenditureServiceImpl implements ExpenditureService{
         // 해당 쿼리를 불러오기
         LocalDate today = LocalDate.now();
         // 포맷 정의
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM");         // 포맷 적용        String formatedNow = now.format(formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");         // 포맷 적용        String formatedNow = now.format(formatter);
         String nowDate = today.format(formatter);
 
         String memberId = "dnwo1111";
@@ -43,10 +43,12 @@ public class ExpenditureServiceImpl implements ExpenditureService{
         String memberId = "dnwo1111";
         String nowDate = request.getNowDate();
 
+        String expenditureId = request.getExpenditureId();
         map.put("memberId", memberId);
         map.put("nowDate", nowDate);
+        map.put("expenditureId", expenditureId);
 
         ExenditureDto.DetailsReponse expenditureDetail = expenditureRepository.findAllExpenditureDetails(map);
-        return null;
+        return expenditureDetail;
     }
 }

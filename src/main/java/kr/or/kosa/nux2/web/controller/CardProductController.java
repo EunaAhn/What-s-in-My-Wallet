@@ -1,7 +1,10 @@
 package kr.or.kosa.nux2.web.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class CardListController {
+@RequiredArgsConstructor
+public class CardProductController {
+
 }

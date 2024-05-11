@@ -120,6 +120,7 @@ public class ExenditureDto {
     @Getter
     @Setter
     public static class ExpenditureDetailRequest {
+        String expenditureId;
         String nowDate;
     }
 }

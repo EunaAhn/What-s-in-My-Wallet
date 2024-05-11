@@ -1,6 +1,7 @@
 package kr.or.kosa.nux2.domain.cardproduct.dto;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -8,8 +9,8 @@ public class CardProductDto {
     @Getter
     public static class DetailsResponse {
         // 카드상품 테이블 컬럼
-        private Long cardProductId;
-        private String cardCompanyId;
+        private Long cardProductId; // 카드 상품 아이디 (바인딩 해줄 데이터는 아님)
+        private String cardCompanyId; //
         private String cardName;
         private String cardImageFileName;
         private String membershipFee;
@@ -50,5 +51,11 @@ public class CardProductDto {
     @Getter
     public static class BenefitCategory {
         private String benefitName;
+    }
+
+    @Getter
+    @Setter
+    public static class DetailRequest {
+        private Long cardId;
     }
 }

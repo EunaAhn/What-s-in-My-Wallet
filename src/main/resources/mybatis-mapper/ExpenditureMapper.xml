@@ -37,11 +37,10 @@
     </resultMap>
     <select id="findAllExpenditureDetails" parameterType="map" resultMap="expenditureDetailsMap">
         select
-            (select sum(expenditure_amount) from expenditure_history WHERE TO_CHAR(expenditure_datetime, 'YYYY-MM-DD') BETWEEN #{startdate} AND #{enddate}) as expenditure_total_amount,
+            (select sum(expenditure_amount) from expenditure_history WHERE TO_CHAR(expenditure_datetime, 'YYYY-MM-DD') = #{nowDate}) as expenditure_total_amount,
             ehd.expenditure_memo,
             ehd.expenditure_history_id,
-            (select count(expenditure_history_id) from expenditure_history where member_id = #{memberId} and <![CDATA[expenditure_datetime <= #{enddate}]]>
-            and <![CDATA[expenditure_datetime >= #{startdate}]]>) as expenditure_count,
+            (select count(expenditure_history_id) from expenditure_history where member_id = #{memberId} and to_char(expenditure_datetime,'YYYY-MM-DD') = #{nowDate}) as expenditure_count,
             ehd.store_name,
             ehd.store_address,
             eh.expenditure_datetime,
@@ -52,7 +51,7 @@
             join
             expenditure_history_dts ehd
         on eh.expenditure_history_id = ehd.expenditure_history_id
-            where eh.expenditure_history_id = #{expenditureId}
+        where TO_CHAR(expenditure_datetime, 'YYYY-MM-DD') = #{nowDate}
     </select>
 
     <select id="findTotalExpenditureByStartAndEndDate" resultType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$TotalCount" parameterType="map">
@@ -74,8 +73,8 @@
             expenditure_category ec
         on
             eh.expenditurecategory_id = ec.expenditure_category_id
-        where
-            to_char(eh.expenditure_datetime) in (#{}, #{}, #{})
+<!--        where-->
+<!--            to_char(eh.expenditure_datetime) in (#{}, #{}, #{})-->
         group by
             ec.expenditure_category_name
     </select>

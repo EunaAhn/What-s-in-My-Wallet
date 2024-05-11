@@ -52,7 +52,7 @@ public class MyDataCardsRestController {
         map.put("startdate", "2024-05-01");
         map.put("enddate", "2024-05-02");
         map.put("memberId", "dnwo1111");
-        List<ExenditureDto.DetailsReponse> responses = expenditureRepository.findAllExpenditureDetails(map);
+        ExenditureDto.DetailsReponse responses = expenditureRepository.findAllExpenditureDetails(map);
         return new ResponseEntity<>(responses, HttpStatusCode.valueOf(200));
     }
 }

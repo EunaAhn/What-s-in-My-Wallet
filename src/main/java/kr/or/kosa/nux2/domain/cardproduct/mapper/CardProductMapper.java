@@ -17,6 +17,6 @@ public interface CardProductMapper {
     // 카드 목록 필터 기능
     List<CardProductDto.Response> findTop4LikeCard();
     // 관심 카드 목록 가져오기 (마이페이지)
-    List<CardProductDto.Response> findMemberLikeCard(String memberId);
+    List<CardProductDto.Response> findMemberLikeCard(@Param("memberId") String memberId);
     List<CardProductDto.BenefitDetails> findBenefitDetails(@Param("benefitCode") String benefitCode, @Param("cardProductId") Long cardProductId);
 }

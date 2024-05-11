@@ -28,4 +28,16 @@ public class CardProductServiceImpl implements CardProductService {
         CardProductDto.DetailsResponse response = cardProductRepository.findCardDetails(cardProductId);
         return response;
     }
+
+    @Override
+    public List<CardProductDto.Response> showTop4CardProduct() {
+        List<CardProductDto.Response> responses = cardProductRepository.findTop4LikeCard();
+        return responses;
+    }
+
+    @Override
+    public List<CardProductDto.Response> showMembersLikeCard(String memberId) {
+        return cardProductRepository.findMemberLikeCard(memberId);
+    }
+
 }

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/expenditure")
 public class ExpenditureRestController {
     private final ExpenditureService expenditureService;
+
+
     @GetMapping("/daily")
     public ResponseEntity<ApiResponse<ExenditureDto.DetailsReponse>> memberDailyExpenditureDetail(@RequestBody ExenditureDto.ExpenditureDetailRequest request) {
         ExenditureDto.DetailsReponse response = expenditureService.showMemberDailyExpenditureDetails(request);

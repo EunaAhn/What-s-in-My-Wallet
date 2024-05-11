@@ -40,4 +40,17 @@ public class CardProductRestController {
 
         return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
+
+
+    @GetMapping("/top4list")
+    public ResponseEntity<ApiResponse<List<CardProductDto.Response>>> top4Card() {
+        List<CardProductDto.Response> responses = cardProductService.showTop4CardProduct();
+        return new ResponseEntity<>(new ApiResponse<>(responses, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
+    }
+
+    @GetMapping("/memberlike")
+    public ResponseEntity<ApiResponse<List<CardProductDto.Response>>> memberLike() {
+        List<CardProductDto.Response> responses = cardProductService.showMembersLikeCard("dnwo111");
+        return new ResponseEntity<>(new ApiResponse<>(responses, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
+    }
 }

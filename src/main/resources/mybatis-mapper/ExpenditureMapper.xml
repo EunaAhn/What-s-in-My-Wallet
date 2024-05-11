@@ -5,7 +5,9 @@
     <select id="findAllExpenditures" parameterType="map" resultType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$Response">
         select
             expenditure_amount as expenditureAmount,
-            expenditure_category_name as expenditureCategoryList
+            expenditure_category_name as expenditureCategoryList,
+            expenditure_history_id as expenditureId,
+            to_char(expenditure_datetime, 'YYYY-MM') as expenditureDate
         from
             expenditure_history eh
             join
@@ -13,6 +15,8 @@
             on eh.expenditurecategory_id = ec.expenditure_category_id
         where
             member_id = #{memberId}
+            and
+            to_char(expenditure_datetime, 'YYYY-MM') = #{nowDate}
     </select>
 
 
@@ -48,9 +52,7 @@
             join
             expenditure_history_dts ehd
         on eh.expenditure_history_id = ehd.expenditure_history_id
-            where member_id = #{memberId}
-            and <![CDATA[expenditure_datetime <= #{enddate}]]>
-            and <![CDATA[expenditure_datetime >= #{startdate}]]>
+            where eh.expenditure_history_id = #{expenditureId}
     </select>
 
     <select id="findTotalExpenditureByStartAndEndDate" resultType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$TotalCount" parameterType="map">

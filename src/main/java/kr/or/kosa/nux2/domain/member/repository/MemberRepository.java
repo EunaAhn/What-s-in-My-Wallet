@@ -10,7 +10,15 @@ import org.springframework.stereotype.Repository;
 public class MemberRepository {
     private final MemberMapper memberMapper;
 
-    public MemberDto findById(String memberId) {
+    public MemberDto.UserDto findById(String memberId) {
         return memberMapper.findById(memberId);
     }
+
+    public int save(MemberDto.UserDto userDto){
+        return memberMapper.save(userDto);
+    }
+    public int updateSocialToken(MemberDto.UpdateSocialTokenRequest request){
+        return memberMapper.updateSocialToken(request);
+    }
+
 }

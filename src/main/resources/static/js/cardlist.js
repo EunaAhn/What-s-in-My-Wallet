@@ -2,18 +2,18 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem('clickedmenu', ".side_cardlist");
 })
 
+document.addEventListener("DOMContentLoaded", () => {
+    const cardLists  = document.querySelectorAll(".card-list")
+    cardLists.forEach((cardList) => {
+        cardList.addEventListener("mouseover", () => {
+            const cardTitle = cardList.querySelector(".card-title");
+            cardTitle.style.color = "#9288dd";
+        })
 
+        cardList.addEventListener("mouseout", () => {
+            const cardTitle = cardList.querySelector(".card-title");
+            cardTitle.style.color = "#3b3a45";
+        })
+    })
+})
 
-document.addEventListener('DOMContentLoaded', function() {
-    var cardLists = document.querySelectorAll('.card-list');
-
-    cardLists.forEach(function(card) {
-        card.addEventListener('click', function() {
-            // 상세 페이지 URL 생성
-            var cardDetailUrl = 'carddetail';
-
-            // 상세 페이지로 이동
-            window.location.href = cardDetailUrl;
-        });
-    });
-});

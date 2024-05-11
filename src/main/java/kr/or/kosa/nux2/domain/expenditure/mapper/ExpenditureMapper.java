@@ -16,7 +16,7 @@ public interface ExpenditureMapper {
 
     // 상세조회
     // 파라미터 형식 string인지 date인지 고민하기
-    List<ExenditureDto.DetailsReponse> findAllExpenditureDetails(String date);
+    List<ExenditureDto.DetailsReponse> findAllExpenditureDetails(Map<String , Object> columns);
 
 
     // 현재 사용자의 마지막 id값보다 높은 값을 가지는 마이데이터소비내역을 조회해서 insert한다.

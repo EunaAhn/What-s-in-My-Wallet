@@ -7,7 +7,8 @@
     <th:block layout:fragment="head">
         <link th:href="@{/css/onboarding.css}" rel="stylesheet" type="text/css"/>
         <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" th:src="@{/js/onboarding.js}" defer></script>
+        <script type="module" th:src="@{/js/api/auth.js}" defer></script>
+        <script type="module" th:src="@{/js/onboarding.js}" defer></script>
     </th:block>
     <body>
         <div class="background"></div>

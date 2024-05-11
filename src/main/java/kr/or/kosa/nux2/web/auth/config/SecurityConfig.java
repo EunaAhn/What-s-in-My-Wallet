@@ -54,6 +54,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/test/*").permitAll());
+        http.authorizeHttpRequests(auth -> auth.requestMatchers("/api/cardproduct/*").permitAll());
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**")
@@ -74,8 +75,6 @@ public class SecurityConfig {
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(principleOauth2UserService))
                         .successHandler(new OAuthSuccessHandler(jwtUtils))
-
-
 
                 );
         http

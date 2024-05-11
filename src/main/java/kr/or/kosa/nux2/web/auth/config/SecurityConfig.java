@@ -1,9 +1,7 @@
 package kr.or.kosa.nux2.web.auth.config;
 
-import kr.or.kosa.nux2.web.auth.JwtAuthenticationEntryPoint;
-import kr.or.kosa.nux2.web.auth.JwtFilter;
-import kr.or.kosa.nux2.web.auth.JwtLoginFilter;
-import kr.or.kosa.nux2.web.auth.JwtUtils;
+import kr.or.kosa.nux2.web.auth.PrincipleOauth2UserService;
+import kr.or.kosa.nux2.web.auth.*;
 import kr.or.kosa.nux2.web.auth.provider.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -18,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import java.util.Collections;
 
@@ -29,17 +28,15 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtProvider jwtProvider;
     private final JwtUtils jwtUtils;
+    private final PrincipleOauth2UserService principleOauth2UserService;
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
 
     @Bean
     public AuthenticationManager authenticationManager() throws Exception {
         return new ProviderManager(Collections.singletonList(jwtProvider));
     }
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -61,7 +58,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**")
                         .permitAll()
-                        .requestMatchers("/login/**","/auth/**", "/oauth2/**")
+                        .requestMatchers("/user","/login/**","/auth/**","/oauth2/**")
                         .permitAll()
                         .requestMatchers("/analyze/**","/carddetail/**", "/cardlist/**","/cardregistration/**","/history/**","/onboarding/**", "/profile/**","/signup/**","/suggestion/**")
                         .permitAll()
@@ -70,16 +67,28 @@ public class SecurityConfig {
                         .permitAll()
                         .anyRequest()
                         .authenticated());
+                        //.logout((logout)->logout.logoutUrl("/logout").logoutSuccessUrl("/login"));
 
         http
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(principleOauth2UserService))
+                        .successHandler(new OAuthSuccessHandler(jwtUtils))
+
+
+
+                );
+        http
                 .exceptionHandling((exceptions) -> exceptions.authenticationEntryPoint(jwtAuthenticationEntryPoint));
-//        http
-//                .addFilterBefore(new JwtFilter(jwtUtils), JwtLoginFilter.class);
-//        http
-//                .addFilterAt(new JwtLoginFilter(authenticationManager(), jwtUtils), UsernamePasswordAuthenticationFilter.class);
+        http
+                .addFilterBefore(new JwtFilter(jwtUtils), JwtLoginFilter.class);
+        http
+                .addFilterAt(new JwtLoginFilter(authenticationManager(), jwtUtils), UsernamePasswordAuthenticationFilter.class);
         http
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+
 
         return http.build();
     }

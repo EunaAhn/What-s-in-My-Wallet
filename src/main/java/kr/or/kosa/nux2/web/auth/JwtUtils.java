@@ -13,6 +13,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -36,6 +37,7 @@ public class JwtUtils {
     private Long refreshExpirationTime;
 
     private final CustomUserDetailsService userDetailsService;
+
 
     /*
     Access 토큰 생성
@@ -75,23 +77,24 @@ public class JwtUtils {
     }
 
     public Key createSecretKey(String secretKey){
+        log.info("method = {}","createSecretKey");
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
         return key;
     }
 
     public String extractUsername(String token){
+        log.info("method = {}","extractUsername");
         return extractClaim(token, Claims::getSubject);
     }
-//
-//    public String extractUserGrade(String token){
-//        return extractClaim(token, claims ->claims.get("userGrade",String.class));
-//    }
+
     private <T> T extractClaim(String token, Function<Claims,T> claimsResolver){
+        log.info("method = {}","extractClaim");
         Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
     public Claims extractAllClaims(String token){
+        log.info("method = {}","extractAllClaims");
         return Jwts.parserBuilder()
                 .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8)).build()
                 .parseClaimsJws(token).getBody();
@@ -101,13 +104,14 @@ public class JwtUtils {
     토큰으로 클레임 생성, 이를 통해 Authentication 객체 반환
      */
     public Authentication getAuthentication(String token) {
+        log.info("method = {}","getAuthentication");
         String userPrincipal = extractAllClaims(token).getSubject();
-
         UserDetails userDetails = userDetailsService.loadUserByUsername(userPrincipal);
-        return new JwtAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
+        return new JwtAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
     }
     //토큰 추출
     public String findToken(HttpServletRequest request) {
+        log.info("method = {}","findToken");
         String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (bearerToken != null && !bearerToken.equalsIgnoreCase("")) {
             return bearerToken.split(" ")[1];

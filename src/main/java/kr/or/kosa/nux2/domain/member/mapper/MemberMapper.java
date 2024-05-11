@@ -1,11 +1,14 @@
 package kr.or.kosa.nux2.domain.member.mapper;
 
 import kr.or.kosa.nux2.domain.member.dto.MemberDto;
-import kr.or.kosa.nux2.domain.member.dto.UpdateMemberDto;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface MemberMapper {
+
+    MemberDto.UserDto findById(String memberId);
+    int save(MemberDto.UserDto userDto);
+    int updateSocialToken(MemberDto.UpdateSocialTokenRequest request);
     // 회원생성
     int insertMember(MemberDto memberDto);
     // 굳이 동적쿼리 쓸이유가 있나? -> 만약 동적쿼리하면 컨트롤러 dto와 서비스 dto를 나누어야할것같음
@@ -16,5 +19,5 @@ public interface MemberMapper {
     // 회원 정보 수
     int updateMember(UpdateMemberDto updateMemberDto);
     Long findMemberTargetExpenditure(String memberId);
-    public MemberDto findById(String memberId);
-}
+    }
+

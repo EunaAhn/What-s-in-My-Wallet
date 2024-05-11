@@ -17,7 +17,7 @@
         where
         member_id = #{memberId}
     </select>
-    <insert id="save" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$UserDto" >
+    <insert id="insertOAuthMember" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$UserDto" >
         insert into member1 (member_id,member_name, member_password,member_email, role, provider, provider_id, social_token,status)
         values (#{memberId},#{memberName},#{memberPassword},#{memberEmail},#{role},#{provider},#{providerId},#{socialToken},'1')
     </insert>
@@ -26,6 +26,9 @@
         set social_token = #{socialToken}
         where member_id = #{memberId}
     </update>
-
+    <insert id="insertMember" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$SignInRequest" >
+    insert into member1 (member_id,member_name, member_password,member_email, target_expenditure,role)
+    values (#{memberId},#{memberName},#{memberPassword},#{memberEmail},#{targetExpenditure},#{role})
+</insert>
 
 </mapper>

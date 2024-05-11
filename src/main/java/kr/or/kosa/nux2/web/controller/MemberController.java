@@ -6,6 +6,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import kr.or.kosa.nux2.domain.member.dto.MemberConsCategoryDto;
+import kr.or.kosa.nux2.domain.member.dto.MemberDto;
+import kr.or.kosa.nux2.domain.member.dto.Role;
 import kr.or.kosa.nux2.domain.member.service.MemberService;
 import kr.or.kosa.nux2.web.auth.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -53,6 +59,13 @@ public class MemberController {
         session.invalidate();
         return memberService.logout(customUserDetails);
     }
+    @Operation(summary = "controller", description = "controller.")
+    @PostMapping("/signIn")
+    public String signIn(@RequestBody MemberDto.SignInRequest request){
+        memberService.signIn(request);
+        return "main";
+    }
+
 
 
 }

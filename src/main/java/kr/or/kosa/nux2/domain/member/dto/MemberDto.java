@@ -18,7 +18,6 @@ public class MemberDto {
 
     }
 
-
     @Setter
     @Getter
     @NoArgsConstructor
@@ -34,7 +33,9 @@ public class MemberDto {
         private String provider;
         private String providerId;
         private String socialToken;
+        private String targetExpenditure;
 
+        //todo targetexpenditure 추가해서 코드변경해야함
         public static UserDto of(String registrationId, String memberId, String memberName, String email, String password, String providerId, String socialToken){
             if(registrationId.equals("google")){
                 return ofGoogle(memberId,memberName, email, password, providerId,socialToken);
@@ -58,4 +59,17 @@ public class MemberDto {
 
 
     }
+    @Builder
+    @Getter
+    public static class SignInRequest{
+        private String memberId;
+        private String memberPassword; //암호화
+        private String memberEmail;
+        private String memberName;
+        private String role;
+        private List<MemberConsCategoryDto> memberConsCategoryDtoList;
+        private String targetExpenditure;
+
+    }
+
 }

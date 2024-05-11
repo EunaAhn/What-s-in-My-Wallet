@@ -35,7 +35,7 @@ public class PrincipleOauth2UserService extends DefaultOAuth2UserService {
         MemberDto.UserDto userDto = memberRepository.findById(memberId);
         if(userDto==null){
             userDto = MemberDto.UserDto.of(registrationId,memberId,memberName,email,password,providerId,socialToken);
-            memberRepository.save(userDto);
+            memberRepository.insertOAuthMember(userDto);
         }else{
             userDto.setSocialToken(socialToken);
             memberRepository.updateSocialToken(new MemberDto.UpdateSocialTokenRequest(memberId,socialToken));

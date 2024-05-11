@@ -54,6 +54,9 @@ public class SecurityConfig {
 //                .formLogin((auth) -> auth.permitAll());
         http
                 .httpBasic((auth) -> auth.disable());
+
+        http
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/test/*").permitAll());
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**")

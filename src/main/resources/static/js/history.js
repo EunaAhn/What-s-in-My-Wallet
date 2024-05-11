@@ -133,43 +133,90 @@ var options = {
 };
 var map = new kakao.maps.Map(container, options); // 지도를 생성합니다.
 
-document.addEventListener("DOMContentLoaded", function () {
-    var REST_API_KEY = "846a14217115ae6027031b39e790b997"; // 여기에 발급받은 Kakao REST API 키를 입력하세요.
-    var query = "서울 종로구 창경궁로 239 다이소 혜화점"; // 검색할 장소의 이름
+// document.addEventListener("DOMContentLoaded", function () {
+//     var REST_API_KEY = "846a14217115ae6027031b39e790b997"; // 여기에 발급받은 Kakao REST API 키를 입력하세요.
+//     var query = "서울 종로구 창경궁로 239 다이소 혜화점"; // 검색할 장소의 이름
+//
+//     // 카카오 지도 API를 통해 다이소 혜화역점의 위치를 검색
+//     fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(query)}&x=127.06283102249932&y=37.514322572335935&radius=20000`, {
+//         headers: {
+//             "Authorization": `KakaoAK ${REST_API_KEY}`
+//         }
+//     })
+//         .then(response => response.json())
+//         .then(data => {
+//             console.log(data); // API 응답을 콘솔에 출력하여 확인합니다.
+//             if (data.documents.length > 0) { // 검색 결과가 있는지 확인합니다.
+//                 // 검색 결과 중에서 0번째 장소의 위치 정보를 가져옵니다.
+//                 var firstPlace = data.documents[0];
+//
+//                 // 마커가 표시될 위치입니다
+//                 var markerPosition = new kakao.maps.LatLng(firstPlace.y, firstPlace.x);
+//
+//                 // 기존 지도에 마커를 추가합니다.
+//                 var marker = new kakao.maps.Marker({
+//                     position: markerPosition
+//                 });
+//
+//                 // 기존 지도에 마커를 표시합니다.
+//                 marker.setMap(map);
+//
+//                 // 마커 클릭 이벤트 리스너 추가
+//                 kakao.maps.event.addListener(marker, 'click', function() {
+//                     // 마커 클릭 시 실행할 동작을 여기에 작성합니다.
+//                     window.open(firstPlace.place_url);
+//                 });
+//             } else {
+//                 console.error('검색 결과가 없습니다.'); // 검색 결과가 없는 경우 에러 메시지를 출력합니다.
+//             }
+//         })
+//         .catch(error => console.error('Error:', error));
+// });
 
-    // 카카오 지도 API를 통해 다이소 혜화역점의 위치를 검색
-    fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(query)}&x=127.06283102249932&y=37.514322572335935&radius=20000`, {
-        headers: {
-            "Authorization": `KakaoAK ${REST_API_KEY}`
-        }
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data); // API 응답을 콘솔에 출력하여 확인합니다.
-            if (data.documents.length > 0) { // 검색 결과가 있는지 확인합니다.
-                // 검색 결과 중에서 0번째 장소의 위치 정보를 가져옵니다.
-                var firstPlace = data.documents[0];
 
-                // 마커가 표시될 위치입니다
-                var markerPosition = new kakao.maps.LatLng(firstPlace.y, firstPlace.x);
+// const BaseUrl = "http://localhost:8090"; // 포트에 대한 프로토콜을 추가해야 합니다.
+// const myHeaders = new Headers();
+// myHeaders.append("Content-Type", "application/json");
+//
+// const raw = JSON.stringify({
+//     "nowDate": "2023-05-04"
+// });
+//
+// // GET 요청에는 body를 포함시킬 수 없습니다. 따라서 requestOptions에서 body 속성을 제거해야 합니다.
+// const requestOptions = {
+//     method: "GET",
+//     headers: myHeaders,
+//     redirect: "follow"
+// };
+//
+// // 쿼리 매개변수로 데이터를 전달합니다.
+// const queryParams = new URLSearchParams({ "nowDate": "2023-05-04" });
+// const url = `${BaseUrl}/api/expenditure/daily?${queryParams}`;
+//
+// fetch(url, requestOptions)
+//     .then((response) => response.text())
+//     .then((result) => console.log(result))
+//     .catch((error) => console.error(error));
 
-                // 기존 지도에 마커를 추가합니다.
-                var marker = new kakao.maps.Marker({
-                    position: markerPosition
-                });
 
-                // 기존 지도에 마커를 표시합니다.
-                marker.setMap(map);
+const BaseUrl = "localhost:8090"
+const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
 
-                // 마커 클릭 이벤트 리스너 추가
-                kakao.maps.event.addListener(marker, 'click', function() {
-                    // 마커 클릭 시 실행할 동작을 여기에 작성합니다.
-                    window.open(firstPlace.place_url);
-                });
-            } else {
-                console.error('검색 결과가 없습니다.'); // 검색 결과가 없는 경우 에러 메시지를 출력합니다.
-            }
-        })
-        .catch(error => console.error('Error:', error));
-});
-
+const getCardProductList  = () => {
+    const raw = JSON.stringify({
+        "cardCompanyName": null,
+        "benefit": "",
+        "cardName": ""
+    });
+    const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+    };
+    fetch(`${BaseUrl}/mydatatest`, requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
+}

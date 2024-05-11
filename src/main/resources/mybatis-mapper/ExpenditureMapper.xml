@@ -17,24 +17,32 @@
 
 
     <resultMap id="summaryMap" type="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$Summary">
+        <result property="expenditureId" column="expenditure_history_id"/>
         <result property="storeName" column="store_name"/>
-<!--        <result property="expenditureDatetime" column="expenditure_datetime"/>-->
-<!--        <result property="totalExpenditureCount" column="expenditure_count"/>-->
+        <result property="expenditureDatetime" column="expenditure_datetime"/>
         <result property="storeAddress" column="store_address"/>
+        <result property="expenditureAmount" column="expenditure_amount"/>
     </resultMap>
 
     <resultMap id="expenditureDetailsMap" type="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$DetailsReponse">
         <result property="expenditureTotalAmount" column="expenditure_total_amount"/> <!-- property는 도메인 클래스의 멤버변수명과 일치, column은 테이블의 컬럼명과 일치 -->
         <result property="memo" column="expenditure_memo"/>
+        <result property="totalExpenditureCount" column="expenditure_count"/>
         <collection property="expenditureSummaryDtoList" column="expenditure_history_id" javaType="java.util.ArrayList" resultMap="summaryMap">
-
         </collection>
     </resultMap>
     <select id="findAllExpenditureDetails" parameterType="map" resultMap="expenditureDetailsMap">
         select
             (select sum(expenditure_amount) from expenditure_history WHERE TO_CHAR(expenditure_datetime, 'YYYY-MM-DD') BETWEEN #{startdate} AND #{enddate}) as expenditure_total_amount,
             ehd.expenditure_memo,
-            ehd.expenditure_history_id
+            ehd.expenditure_history_id,
+            (select count(expenditure_history_id) from expenditure_history where member_id = #{memberId} and <![CDATA[expenditure_datetime <= #{enddate}]]>
+            and <![CDATA[expenditure_datetime >= #{startdate}]]>) as expenditure_count,
+            ehd.store_name,
+            ehd.store_address,
+            eh.expenditure_datetime,
+            ehd.expenditure_history_id,
+            eh.expenditure_amount
         from
             expenditure_history eh
             join
@@ -43,27 +51,84 @@
             where member_id = #{memberId}
             and <![CDATA[expenditure_datetime <= #{enddate}]]>
             and <![CDATA[expenditure_datetime >= #{startdate}]]>
-        <!--
-        // 일자별 지출 상세 내역의 지출 요약  DTO
-        private Long expenditureId;
-        private String storeName;
-        private String expenditureDatetime;
-        private String totalExpenditureConut; // 지출 횟수
-        private String storeAddress;
+    </select>
 
-        private Long expenditureTotalAmount;
-        private String memo;
-        private List<ExenditureDto.Summary> expenditureSummaryDtoList;
+    <select id="findTotalExpenditureByStartAndEndDate" resultType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$TotalCount" parameterType="map">
+        select sum(expenditure_amount) as expenditureTotalCount
+        from expenditure_history
+        where to_char(expenditure_datetime, 'MM') = #{month}
+    </select>
+
+    <update id="updateExpenditureMemo" parameterType="map">
+        update expenditure_history_dts set expenditure_memo = #{expenditureMemo} where expenditure_history_id = #{expenditureId}
+    </update>
+
+    <select id="findExpenditureRatioForCategoryByMonth">
+        select
+            sum(eh.expenditure_amount), ec.expenditure_category_name
+        from
+            expenditure_history eh
+        join
+            expenditure_category ec
+        on
+            eh.expenditurecategory_id = ec.expenditure_category_id
+        where
+            to_char(eh.expenditure_datetime) in (#{}, #{}, #{})
+        group by
+            ec.expenditure_category_name
+    </select>
 
 
-         select (select sum(expenditure_amount) from expenditure_history WHERE TO_CHAR(expenditure_datetime, 'YYYY-MM-DD') BETWEEN '2024-05-01' AND '2024-05-02') as s
+    <select id="findExpenditureCountForCategoryByMonth">
+        select
+            count(eh.expenditure_amount), ec.expenditure_category_name
+        from
+            expenditure_history eh
+        join
+            expenditure_category ec
+        on
+            eh.expenditurecategory_id = ec.expenditure_category_id
+        where
+            to_char(eh.expenditure_datetime, 'MM') IN ('05', '04', '03')
+        group by
+            ec.expenditure_category_name;
+    </select>
+
+    <select id="findTotalExpenditureForMonthAndTimeByYearAndMonth">
+        select *
+        from (
+        select
+        FLOOR(TO_CHAR(eh.expenditure_datetime, 'HH24') / 3) AS time_group,
+        eh.expenditure_amount as a
         from
         expenditure_history eh
         join
-        expenditure_history_dts ehd
-        on eh.expenditure_history_id = ehd.expenditure_history_id
-        where member_id = 'dnwo1111'
-        and expenditure_datetime <= '2024-05-02'
-        and expenditure_datetime >='2024-05-01';-->
+        expenditure_category ec
+        on eh.expenditurecategory_id = ec.expenditure_category_id
+        where to_char(eh.expenditure_datetime, 'YYYY-MM') IN ('2024-05')
+        )
+        PIVOT (
+        sum(a)
+        FOR time_group IN (0 AS "0-2", 1 AS "3-5", 2 AS "6-8", 3 AS "9-11",
+        4 AS "12-14", 5 AS "15-17", 6 AS "18-20", 7 AS "21-23")
+        );
+
     </select>
+    <select id="findAverageExpenditureForMonthByYear">
+        select * from
+        (
+        select
+        expenditure_amount,
+        to_char(expenditure_datetime, 'MM') as month
+        from
+        expenditure_history
+        where to_char(expenditure_datetime, 'YYYY') = '2024'
+        ) pivot (
+        sum(expenditure_amount)월
+        for month in ('01' as "1",'02' as "2월", '03' as "3월", '04' as "4월", '05' as "5월", '06' as "6월",
+        '07' as "7월", '08' as "8월", '09' as "9월",'10' as "10월",'11' as "11월",'12' as "12월")
+        );
+    </select>
+
+
 </mapper>

@@ -1,24 +1,22 @@
+const BaseUrl = "localhost:8090"
 const myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
-export const getCardProductList = async () => {
+export const getCardProductList  = () => {
     const raw = JSON.stringify({
-        startNum : 1,
-        endNum: 10
+        "cardCompanyName": null,
+        "benefit": "",
+        "cardName": ""
     });
     const requestOptions = {
-        method: "POST",
+        method: "GET",
         headers: myHeaders,
         body: raw,
+        redirect: "follow"
     };
-    try {
-        const response = await fetch(`/api/cardproduct/list`, requestOptions);
-        const result = await response.json();
-        console.log(result.result)
-        return result.result;
-    } catch (error) {
-        console.log("getCardProductList error : ",error)
-        return null
-    }
+    fetch(`${BaseUrl}/mydatatest`, requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
 }
 

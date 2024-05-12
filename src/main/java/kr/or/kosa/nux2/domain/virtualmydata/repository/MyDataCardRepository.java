@@ -26,4 +26,7 @@ public class MyDataCardRepository {
         return myDataCardMapper.findAllMyDataCard();
     }
 
+    public MyDataCardDto.Response findMyDataCardByCardNumber(String cardNumber) {
+        return myDataCardMapper.findMyDataCardByCardNumber(cardNumber);
+    }
 }

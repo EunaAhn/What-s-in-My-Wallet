@@ -19,11 +19,17 @@ public class RegistrationCardDto {
 
     @Setter
     @AllArgsConstructor
-    public static class InsertRequest {
+    public static class InsertServiceRequest {
         Long cardId;
         String memberId;
         Long cardCompanyId;
         String cardNumber;
         String cardNickName;
+    }
+
+    @Getter
+    @Setter
+    public static class InsertControllerRequest {
+        String cardNumber;
     }
 }

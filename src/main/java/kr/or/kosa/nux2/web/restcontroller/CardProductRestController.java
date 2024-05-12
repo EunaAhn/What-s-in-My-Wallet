@@ -5,13 +5,11 @@ import kr.or.kosa.nux2.domain.cardproduct.service.CardProductServiceImpl;
 import kr.or.kosa.nux2.web.common.code.SuccessCode;
 import kr.or.kosa.nux2.web.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +18,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/cardproduct")
+//@CrossOrigin(origins = "*")
 public class CardProductRestController {
     private final CardProductServiceImpl cardProductService;
 
@@ -28,6 +27,7 @@ public class CardProductRestController {
         cardProductService.showCardProductDetail(request);
         return null;
     }
+
     @GetMapping("/list")
     public ResponseEntity<ApiResponse<List<CardProductDto.Response>>> cardProductDetail(@RequestBody CardProductDto.ListRequest request) {
         int startNum = request.getStartNum();
@@ -37,7 +37,8 @@ public class CardProductRestController {
         map.put("startnum", startNum);
         map.put("endnum", endNum);
         List<CardProductDto.Response> response = cardProductService.showCardProductList(map);
-
-        return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Access-Control-Allow-Origin", "*");
+        return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS),headers, HttpStatus.OK);
     }
 }

@@ -1,5 +1,6 @@
 package kr.or.kosa.nux2.web.auth.config;
 
+import jakarta.servlet.http.HttpServletRequest;
 import kr.or.kosa.nux2.web.auth.PrincipleOauth2UserService;
 import kr.or.kosa.nux2.web.auth.*;
 import kr.or.kosa.nux2.web.auth.provider.JwtProvider;
@@ -17,7 +18,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration

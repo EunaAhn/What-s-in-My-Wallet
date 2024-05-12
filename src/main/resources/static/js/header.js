@@ -1,5 +1,5 @@
 const searchImage = document.querySelector(".hd_search_image")
-const searchInput = document.querySelector(".hd_card_search")
+const searchInput = document.querySelector("#hd_card_search")
 
 searchImage.addEventListener("click", () => {
     searchInput.focus()
@@ -13,3 +13,4 @@ searchInput.addEventListener("focus",()=>{
 searchInput.addEventListener("blur",()=>{
     searchImage.classList.remove("focusing")
 })
+

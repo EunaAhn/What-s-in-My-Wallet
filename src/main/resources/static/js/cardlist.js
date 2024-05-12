@@ -1,84 +1,56 @@
-const data = [
-    {
-        "cardProductId": 1,
-        "cardCompanyId": "1",
-        "cardName": "더드림신한카드",
-        "cardImageFileName": "더드림신한카드",
-        "membershipFee": "국내 10000원",
-        "benefitSummary": "한번에 하나씩 편의점 1%할인",
-        "likeCount": 4,
-        "benefitCategoryList": [
-            {
-                "benefitName": "언제나할인"
-            },
-            {
-                "benefitName": "주유"
-            }
-        ]
-    },
-    {
-        "cardProductId": 2,
-        "cardCompanyId": "2",
-        "cardName": "마일리지카드",
-        "cardImageFileName": "마일리지카드",
-        "membershipFee": "국내 20000원",
-        "benefitSummary": "마일리지 1%적립",
-        "likeCount": 6,
-        "benefitCategoryList": [
-            {
-                "benefitName": "항공"
-            },
-            {
-                "benefitName": "호텔"
-            }
-        ]
-    },
-    {
-        "cardProductId": 3,
-        "cardCompanyId": "3",
-        "cardName": "롯데카드",
-        "cardImageFileName": "롯데카드",
-        "membershipFee": "국내 15000원",
-        "benefitSummary": "롯데백화점 5%할인",
-        "likeCount": 8,
-        "benefitCategoryList": [
-            {
-                "benefitName": "백화점"
-            },
-            {
-                "benefitName": "마트"
-            }
-        ]
-    }
-]
+import * as card from "./api/card.js"
+
+let startNum = 0
+let endNum = 0
+let localKeyWord = ""
 
 document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem('clickedmenu', ".side_cardlist");
+    startNum = 1
+    endNum = 10
+    localKeyWord =""
+    addCardProductList(localKeyWord)
+
+    // 다른 페이지에서 router 되는 카드 키워드 검색
+    const searchWord = localStorage.getItem("searchWord")
+    if(searchWord) {
+        startNum = 1
+        endNum = 10
+        localKeyWord = searchWord
+        localStorage.setItem("searchWord", "")
+        while (cardListContainer.firstChild) {
+            cardListContainer.removeChild(cardListContainer.firstChild);
+        }
+        addCardProductList()
+    }
 })
 
 const cardListContainer = document.querySelector(".card-info-list");
 
 // 카드 아이템 hover 시 title 색상에 하이라이팅
 cardListContainer.addEventListener("mouseover", (event) => {
-    if (event.target.classList.contains("card-list")) {
-        const cardTitle = event.target.querySelector(".card-title");
+    const cardListItem = event.target.closest(".card-list");
+    if (cardListItem) {
+        const cardTitle = cardListItem.querySelector(".card-title");
         cardTitle.style.color = "#9288dd";
     }
 });
 
 cardListContainer.addEventListener("mouseout", (event) => {
-    if (event.target.classList.contains("card-list")) {
-        const cardTitle = event.target.querySelector(".card-title");
+    const cardListItem = event.target.closest(".card-list");
+    if (cardListItem) {
+        const cardTitle = cardListItem.querySelector(".card-title");
         cardTitle.style.color = "#3b3a45";
     }
 });
 
-
 // 카드 아이템 10개 추가 ( 무한 스크롤 )
 const addCardButton = document.querySelector(".add_card_list_btn")
 
-addCardButton.addEventListener("click", () => {
-    data.forEach(card => {
+const addCardProductList = async () => {
+    const extraCardtProductList = await card.getCardProductList(startNum, endNum, localKeyWord)
+
+    extraCardtProductList.forEach(card => {
         const cardList = document.createElement('div');
         cardList.classList.add('card-list');
         cardListContainer.appendChild(cardList);
@@ -107,7 +79,7 @@ addCardButton.addEventListener("click", () => {
 
         const feeInfo = document.createElement('div');
         feeInfo.classList.add('card-info');
-        feeInfo.textContent = card.membershipFee;
+        feeInfo.textContent =`#${card.membershipFee}`;
         benefitInfo.appendChild(feeInfo);
 
         const categoryInfo = document.createElement('div');
@@ -118,7 +90,41 @@ addCardButton.addEventListener("click", () => {
         benefitInfo.appendChild(categoryInfo);
 
         cardTextInfo.appendChild(benefitInfo);
-    });
+    })
+    startNum += 10
+    endNum += 10
+}
+
+addCardButton.addEventListener("click", () => {addCardProductList()})
+
+// 카드 키워드 검색
+const hdCardSearch = document.querySelector("#hd_card_search")
+
+hdCardSearch.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && hdCardSearch.value) {
+        startNum = 1
+        endNum = 10
+        localKeyWord = hdCardSearch.value
+        while (cardListContainer.firstChild) {
+            cardListContainer.removeChild(cardListContainer.firstChild);
+        }
+        addCardProductList()
+        hdCardSearch.value = ""
+    }
+});
+
+
+const hdSearchImage = document.querySelector(".hd_search_image")
+
+hdSearchImage.addEventListener("click", () => {
+    if (hdCardSearch.value) {
+        startNum = 1
+        endNum = 10
+        localKeyWord = hdCardSearch.value
+        while (cardListContainer.firstChild) {
+            cardListContainer.removeChild(cardListContainer.firstChild);
+        }
+        addCardProductList()
+        hdCardSearch.value = ""
+    }
 })
-
-

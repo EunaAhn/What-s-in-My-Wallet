@@ -84,3 +84,26 @@ function handleCheckboxChange() {
 checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', handleCheckboxChange);
 });
+
+
+// 카드 키워드 검색
+const hdCardSearch = document.querySelector("#hd_card_search")
+
+hdCardSearch.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && hdCardSearch.value) {
+        localStorage.setItem("searchWord", hdCardSearch.value)
+        window.location.href = "cardlist"
+        hdCardSearch.value = ""
+    }
+});
+
+
+const hdSearchImage = document.querySelector(".hd_search_image")
+
+hdSearchImage.addEventListener("click", () => {
+    if (hdCardSearch.value) {
+        localStorage.setItem("searchWord", hdCardSearch.value)
+        window.location.href = "cardlist"
+        hdCardSearch.value = ""
+    }
+})

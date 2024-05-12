@@ -2,6 +2,10 @@ package kr.or.kosa.nux2.domain.expenditure.service;
 
 import kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto;
 import kr.or.kosa.nux2.domain.expenditure.repository.ExpenditureRepository;
+import kr.or.kosa.nux2.domain.registrationcard.dto.RegistrationCardDto;
+import kr.or.kosa.nux2.domain.registrationcard.service.RegistrationCardServiceImpl;
+import kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataTransanctionHistoryDto;
+import kr.or.kosa.nux2.domain.virtualmydata.service.MyDataTransHistorySevice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,23 +20,29 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ExpenditureServiceImpl implements ExpenditureService{
     private final ExpenditureRepository expenditureRepository;
+    private final MyDataTransHistorySevice myDataTransHistorySevice;
+    private final RegistrationCardServiceImpl registrationCardService;
 
     @Override
-    public List<ExenditureDto.Response> showMemberMonthlyExpenditures() {
+    public List<ExenditureDto.Response>  showMemberMonthlyExpenditures(ExenditureDto.YearAndMonthRequest request) {
         //멤버아이디 컨텍스트에서 받아오기
         //연월을 클라이언트로 부터 받아오기
         // 해당 쿼리를 불러오기
-        LocalDate today = LocalDate.now();
-        // 포맷 정의
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");         // 포맷 적용        String formatedNow = now.format(formatter);
-        String nowDate = today.format(formatter);
-
         String memberId = "dnwo1111";
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", memberId);
-        map.put("nowDate", nowDate);
+        map.put("nowDate", request.getYearAndMonth());
+        System.out.println(request.getYearAndMonth());
 
         List<ExenditureDto.Response> expenditureList = expenditureRepository.findAllExpenditure(map);
+        List<List<ExenditureDto.CategoryName>> categoryNames = expenditureRepository.findCategoryListOfDailyExpenditure(map);
+
+
+
+        for(int i = 0; i < expenditureList.size(); i++) {
+            expenditureList.get(i).setExpenditureCategoryList(categoryNames.get(i));
+        }
+
         return expenditureList;
     }
 
@@ -118,7 +128,72 @@ public class ExpenditureServiceImpl implements ExpenditureService{
     }
 
     @Override
-    public int insertExpenditure(List<ExenditureDto.InsertRequest> expenditureList) {
+    public int insertExpenditure() {
+        String memberId = "dnwo1111";
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("memberId", memberId);
+        List<RegistrationCardDto.Response> registeredCard = registrationCardService.showAllRegisteredCardByMemberId(memberId);
+        for(RegistrationCardDto.Response card : registeredCard) {
+            System.out.println(card.getCardNumber());
+            List<MyDataTransanctionHistoryDto.Response> transactions = myDataTransHistorySevice.findMemberTransactions(memberId, card.getCardNumber());
+            System.out.println(transactions.size());
+            if(transactions.size() != 0) {
+                map.put("list", transactions);
+                expenditureRepository.insertExpenditures(map);
+            }
+        }
+
         return 0;
+    }
+
+    // 소비성향에서 낮,밤시간대 지출 횟수 통계
+    @Override
+    public ExenditureDto.TotalCount showExpenditureTotalCount(ExenditureDto.TotalExpenditureCountByTimePeriodRequest request) {
+        Map<String, Object> map = new HashMap<>();
+        /*
+         member_id = #{memberId}
+            and
+            to_char(expenditure_datetime, 'YYYY-MM') = #{yearAndMonth}
+            and
+            to_char(expenditure_datetime, 'HH24') between #{startHour} and #{endHour}
+         */
+
+        map.put("memberId", "dnwo1111");
+        map.put("yearAndMonth", request.getYearAndMonth());
+        map.put("startHour", request.getStartHour());
+        map.put("endHour", request.getEndHour());
+        System.out.println(request.getEndHour());
+        ExenditureDto.TotalCount result = expenditureRepository.findExpenditureTotalCount(map);
+        return result;
+    }
+
+    @Override
+    public ExenditureDto.TendencyAnalysis findExpendiutreTendencyAnalysis(ExenditureDto.YearAndMonthRequest request) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("memberId","dnwo1111");
+        map.put("yearAndMonth", request.getYearAndMonth());
+
+        ExenditureDto.TendencyAnalysis response = expenditureRepository.findExpendiutreTendencyAnalysis(map);
+       return  response;
+    }
+
+    @Override
+    public boolean updateDailyExpenditureMemo(ExenditureDto.UpdateMemoRequest request) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("memoId", request.getMemoId());
+        map.put("expenditureMemo", request.getMemo());
+        map.put("memberId", "dnwo1111");
+        if(checkExistMemo(map) == 1) {
+            expenditureRepository.updateExpenditureMemo(map);
+        }   else {
+            expenditureRepository.insertExpenditureMemo(map);
+        }
+        return true;
+    }
+
+    @Override
+    public int checkExistMemo(Map<String, Object> map) {
+        return expenditureRepository.isExistMemo(map);
     }
 }

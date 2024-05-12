@@ -2,9 +2,11 @@ package kr.or.kosa.nux2.domain.expenditure.repository;
 
 import kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto;
 import kr.or.kosa.nux2.domain.expenditure.mapper.ExpenditureMapper;
+import kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataTransanctionHistoryDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,12 +24,16 @@ public class ExpenditureRepository {
         return expenditureMapper.findAllExpenditure(columns);
     };
 
+    public List<List<ExenditureDto.CategoryName>> findCategoryListOfDailyExpenditure(Map<String, Object> columns){
+        return expenditureMapper.findCategoryListOfDailyExpenditure(columns);
+    }
+
     public ExenditureDto.DetailsReponse findAllExpenditureDetails(Map<String, Object> columns){
         return expenditureMapper.findAllExpenditureDetails(columns);
     };
 
-    int insertExpenditures(List<ExenditureDto.InsertRequest> expenditureList){
-        return expenditureMapper.insertExpenditures(expenditureList);
+    public int insertExpenditures(Map<String, Object> map){
+        return expenditureMapper.insertExpenditures(map);
     };
 
     public void updateExpenditureMemo(Map<String, Object> map){
@@ -49,4 +55,20 @@ public class ExpenditureRepository {
     public Map<String, Object> findAverageExpenditureForMonthByYear(Map<String, Object> map){
         return expenditureMapper.findAverageExpenditureForMonthByYear(map);
     };
+
+    public ExenditureDto.TotalCount findExpenditureTotalCount(Map<String, Object>  map){
+        return expenditureMapper.findExpenditureTotalCount(map);
+    }
+
+    public ExenditureDto.TendencyAnalysis findExpendiutreTendencyAnalysis(Map<String, Object> map) {
+        return expenditureMapper.findExpendiutreTendencyAnalysis(map);
+    }
+
+    public int isExistMemo(Map<String, Object> map) {
+        return expenditureMapper.isExistMemo(map);
+    }
+
+    public void  insertExpenditureMemo(Map<String, Object> map){
+        expenditureMapper.insertExpenditureMemo(map);
+    }
 }

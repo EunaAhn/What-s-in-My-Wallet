@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const cardListContainer = document.querySelector(".card-info-list");
 
-// 카드 아이템 hover 시 title 색상에 하이라이팅
 cardListContainer.addEventListener("mouseover", (event) => {
     const cardListItem = event.target.closest(".card-list");
     if (cardListItem) {

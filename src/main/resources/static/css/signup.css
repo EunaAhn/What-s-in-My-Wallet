@@ -97,6 +97,7 @@ button:hover {
     min-width: 23%; /* 최소 너비를 설정합니다. */
     box-sizing: border-box; /* 내부 패딩과 경계 상자를 포함하여 요소의 크기를 계산합니다. */
     text-align: center;
+    font-family: Inter;
 }
 
 .category-box::placeholder {
@@ -123,7 +124,10 @@ button:hover {
     background-color: #ffffff;
     width: 39%;
     height: 90%;
+    max-width: 600px;
     min-width: 450px;
+    max-height: 870px;
+    min-height: 870px;
     top: 0;
     bottom: 0;
     left: 0;

@@ -65,7 +65,10 @@ button:hover {
     background-color: #ffffff;
     width: 33%;
     height: 80%;
+    max-width: 550px;
     min-width: 450px;
+    max-height: 700px;
+    min-height: 700px;
     top: 0;
     bottom: 0;
     left: 0;
@@ -161,6 +164,7 @@ button#signin {
     font-size: 13px;
     padding: 5px 10px;
     box-sizing: border-box;
+    font-family: Inter;
 
 }
 
@@ -209,4 +213,6 @@ button#signin {
     white-space: nowrap; /* 텍스트의 줄바꿈을 제한합니다. */
 }
 
-snslogin_image
+.snslogin_image{
+
+}

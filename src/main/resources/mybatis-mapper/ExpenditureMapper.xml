@@ -1,24 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!--        private String expenditureDate;-->
+<!--        private Long expenditureId;-->
+<!--        private List<ExenditureDto.CategoryName> expenditureCategoryList;-->
+<!--    private Long expenditureAmount;-->
+
+
 <mapper namespace="kr.or.kosa.nux2.domain.expenditure.mapper.ExpenditureMapper">
-    <select id="findAllExpenditures" parameterType="map" resultType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$Response">
-        select
-            expenditure_amount as expenditureAmount,
-            expenditure_category_name as expenditureCategoryList,
-            expenditure_history_id as expenditureId,
-            to_char(expenditure_datetime, 'YYYY-MM') as expenditureDate
-        from
-            expenditure_history eh
-            join
-                expenditure_category ec
-            on eh.expenditurecategory_id = ec.expenditure_category_id
-        where
-            member_id = #{memberId}
-            and
-            to_char(expenditure_datetime, 'YYYY-MM') = #{nowDate}
+
+<!--    <resultMap id="expenditureResultMap" type="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$Response">-->
+<!--        <result property="expenditureAmount" column="expenditure_amount"/>-->
+<!--        <result property="expenditureDate" column="expenditureDate"/>-->
+<!--        <collection property="expenditureCategoryList" ofType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$CategoryName">-->
+<!--            <result property="expenditureCategoryName" column="expenditure_category_name"/>-->
+<!--        </collection>-->
+<!--    </resultMap>-->
+
+
+    <select id="findAllExpenditure" parameterType="map" resultType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$Response">
+
+
+                SELECT
+                    TO_CHAR(EXPENDITURE_DATETIME, 'YYYY-MM-DD') AS expenditureDate,
+                    SUM(EXPENDITURE_AMOUNT) AS expenditureAmount
+                FROM
+                    EXPENDITURE_HISTORY
+                WHERE
+                    MEMBER_ID = #{memberId}
+                AND
+                    TO_CHAR(EXPENDITURE_DATETIME, 'YYYY-MM') = #{nowDate}
+                GROUP BY
+                    TO_CHAR(EXPENDITURE_DATETIME, 'YYYY-MM-DD')
+                ORDER BY
+                    TO_CHAR(EXPENDITURE_DATETIME, 'YYYY-MM-DD') ASC
+
     </select>
 
+
+    <select id="findCategoryListOfDailyExpenditure" resultType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$CategoryName">
+        select ec.expenditure_category_name as expenditureCategoryName
+        from expenditure_history eh
+        join expenditure_category ec
+        on eh.expenditurecategory_id = ec.expenditure_category_id
+        where to_char(eh.expenditure_datetime, 'YYYY-MM') = #{nowDate}
+        and eh.member_id = #{memberId}
+        group by to_char(eh.expenditure_datetime, 'YYYY-MM-DD'),ec.expenditure_category_name
+    </select>
 
     <resultMap id="summaryMap" type="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$Summary">
         <result property="expenditureId" column="expenditure_history_id"/>
@@ -64,10 +92,6 @@
         and
         member_id = #{memberId}
     </select>
-
-    <update id="updateExpenditureMemo" parameterType="map">
-        update expenditure_history_dts set expenditure_memo = #{expenditureMemo} where expenditure_history_id = #{expenditureId}
-    </update>
 
 
     <select id="findExpenditureRatioForCategoryByMonth" parameterType="map" resultType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$RatioByCategoryResponse">
@@ -168,6 +192,79 @@
         '07' as "7월", '08' as "8월", '09' as "9월",'10' as "10월",'11' as "11월",'12' as "12월")
         )
     </select>
+
+
+    <insert id="insertExpenditures" parameterType="list">
+        <foreach collection="list" item="item" index="idx" separator=" " open="INSERT ALL" close="select * from dual">
+            INTO expenditure_history (
+                expenditure_history_id,
+                reg_card_id,
+                member_id,
+                expenditurecategory_id,
+                expenditure_amount,
+                expenditure_datetime,
+                transaction_status
+                )
+                VALUES
+                (
+                #{item.transactionId},
+                #{item.cardNumber},
+                #{memberId},
+                #{item.industryCode},
+                #{item.transactionAmount},
+                #{item.transactionDateTime},
+                #{item.transactionCode}
+                )
+        </foreach>
+    </insert>
+
+
+
+    <resultMap id="totalcountmap" type="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$TotalCount">
+        <result column="expenditure_total_count" property="expenditureTotalCount"/>
+    </resultMap>
+    <select id="findExpenditureTotalCount" parameterType="map" resultMap="totalcountmap">
+        select
+            count(*) as expenditure_total_count
+        from
+            expenditure_history
+        where
+            member_id = #{memberId}
+            and
+            to_char(expenditure_datetime, 'YYYY-MM') = #{yearAndMonth}
+            and
+            to_char(expenditure_datetime, 'HH24') between #{startHour} and #{endHour}
+    </select>
+
+
+    <select id="findExpendiutreTendencyAnalysis" parameterType="map" resultType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$TendencyAnalysis">
+    <!--     private int targetExpenditure;
+        private int savingAmount;       -->
+        select
+            sub.s as totalExpenditure,
+            (nvl((select target_expenditure from member where member_id = #{memberId}),0) - sub.s) as savingAmount
+        from(
+            select sum(expenditure_amount) as s
+            from expenditure_history
+            where member_id = #{memberId}
+            and to_char(expenditure_datetime, 'YYYY-MM') = #{yearAndMonth}
+        ) sub
+
+
+    </select>
+    <update id="updateExpenditureMemo" parameterType="map">
+        update daily_expenditure_memo set expenditure_memo = #{expenditureMemo} where memo_id = #{memoId} and member_id = #{memberId}
+    </update>
+
+    <select id = "isExistMemo" parameterType="map" resultType="int">
+        select count(*) from daily_expenditure_memo where memo_id = #{memoId} and member_id = #{memberId}
+
+    </select>
+
+    <insert id="insertExpenditureMemo" parameterType="map">
+        insert into daily_expenditure_memo(memo_id, member_id, expenditure_memo) values(#{memoId}, #{memberId}, #{expenditureMemo})
+    </insert>
+
 
 
 </mapper>

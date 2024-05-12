@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +33,9 @@ public class CardProductRestController {
 
         map.put("startnum", startNum);
         map.put("endnum", endNum);
+        map.put("keyword", request.getKeyWord());
+
+
         List<CardProductDto.Response> response = cardProductService.showCardProductList(map);
 
         return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
@@ -52,5 +52,17 @@ public class CardProductRestController {
     public ResponseEntity<ApiResponse<List<CardProductDto.Response>>> memberLike() {
         List<CardProductDto.Response> responses = cardProductService.showMembersLikeCard("dnwo111");
         return new ResponseEntity<>(new ApiResponse<>(responses, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
+    }
+
+    @PostMapping("/memberlike")
+    public ResponseEntity<ApiResponse<Boolean>> clickLike (@RequestBody CardProductDto.LikeRequest request) {
+        cardProductService.clickLikeCardProduct(request);
+        return new ResponseEntity<>(new ApiResponse<>(true, SuccessCode.INSERT_SUCCESS), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/memberlike")
+    public ResponseEntity<ApiResponse<Boolean>> unClickLike (@RequestBody CardProductDto.LikeRequest request) {
+        cardProductService.unclickLikeCardProduct(request);
+        return new ResponseEntity<>(new ApiResponse<>(true, SuccessCode.INSERT_SUCCESS), HttpStatus.OK);
     }
 }

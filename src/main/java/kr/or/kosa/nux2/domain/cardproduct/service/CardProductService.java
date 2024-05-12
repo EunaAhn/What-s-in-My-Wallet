@@ -11,4 +11,6 @@ public interface CardProductService {
     CardProductDto.DetailsResponse showCardProductDetail(CardProductDto.DetailRequest request);
     List<CardProductDto.Response> showTop4CardProduct();
     List<CardProductDto.Response> showMembersLikeCard(String memberId);
+    boolean clickLikeCardProduct (CardProductDto.LikeRequest request);
+    boolean unclickLikeCardProduct(CardProductDto.LikeRequest request);
 }

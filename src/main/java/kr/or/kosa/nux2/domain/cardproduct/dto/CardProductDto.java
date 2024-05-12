@@ -65,5 +65,12 @@ public class CardProductDto {
     public static class ListRequest{
         int startNum;
         int endNum;
+        String keyWord = null;
+    }
+
+    @Getter
+    @Setter
+    public static class LikeRequest {
+        Long cardId;
     }
 }

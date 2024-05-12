@@ -7,6 +7,7 @@ import kr.or.kosa.nux2.web.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,13 @@ import java.util.Map;
 public class ExpenditureRestController {
     private final ExpenditureService expenditureService;
 
+    @GetMapping("/monthly")
+    public ResponseEntity<ApiResponse<List<ExenditureDto.Response>>> memberMonthlyExpenditures(@RequestBody  ExenditureDto.YearAndMonthRequest request) {
+        List<ExenditureDto.Response>response = expenditureService.showMemberMonthlyExpenditures(request);
+
+        return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
+    }
+
 
     @GetMapping("/daily")
     public ResponseEntity<ApiResponse<ExenditureDto.DetailsReponse>> memberDailyExpenditureDetail(@RequestBody ExenditureDto.ExpenditureDetailRequest request) {
@@ -32,6 +40,7 @@ public class ExpenditureRestController {
         return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
 
+    // 월별지출횟수
     @GetMapping("/totalexpenditure")
     public ResponseEntity<ApiResponse<List<ExenditureDto.TotalCount>>> totalExpenditure(@RequestBody ExenditureDto.TotalExpenditureCountRequest request) {
         List<ExenditureDto.TotalCount> responses = expenditureService.showTotalExpenditureByMonth(request);
@@ -40,20 +49,9 @@ public class ExpenditureRestController {
 
     }
     @GetMapping("/ratioByCategory")
-    public ResponseEntity<ApiResponse<List<ExenditureDto.RatioByCategoryResponse>>> expenditureRatioByCategory(@RequestBody ExenditureDto.MonthRequest request) {
+    public ResponseEntity<ApiResponse<List<ExenditureDto.RatioByCategoryResponse>>> expenditureRatioByCategory(@RequestBody ExenditureDto.YearAndMonthRequest request) {
         Map<String, Object> map = new HashMap<>();
-        // 현재 날짜 가져오기
-        LocalDate currentDate = LocalDate.now();
-
-        // 14개월 전 날짜 계산
-        LocalDate fourteenMonthsAgo = currentDate.minusMonths(request.getMonth());
-
-        // YYYY-MM 형식으로 변환
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
-        String formattedDate = fourteenMonthsAgo.format(formatter);
-
-
-        map.put("month", formattedDate);
+        map.put("month", request.getYearAndMonth());
         map.put("memberId", "dnwo1111");
         List<ExenditureDto.RatioByCategoryResponse> response = expenditureService.showExpenditureRatioForCategoryByMonth(map);
         return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
@@ -65,9 +63,10 @@ public class ExpenditureRestController {
         return new ResponseEntity<>(new ApiResponse<>(map, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
 
+    //월별시간대지출금액
     @GetMapping("/totalExpenditure")
-    public ResponseEntity<ApiResponse<Map<String, Object>>> test() {
-        Map<String, Object> map = expenditureService.showTotalExpenditureForMonthAndTimeByYearAndMonth("2023-05");
+    public ResponseEntity<ApiResponse<Map<String, Object>>> test(ExenditureDto.YearAndMonthRequest request) {
+        Map<String, Object> map = expenditureService.showTotalExpenditureForMonthAndTimeByYearAndMonth(request.getYearAndMonth());
         return new ResponseEntity<>(new ApiResponse<>(map, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
 
@@ -77,4 +76,27 @@ public class ExpenditureRestController {
         return new ResponseEntity<>(new ApiResponse<>(map, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
 
+    @GetMapping("/test1")
+    public ResponseEntity<ApiResponse<?>> reloadNewExpenditures() {
+        expenditureService.insertExpenditure();
+        return new ResponseEntity<>(new ApiResponse<>("insert ok", SuccessCode.INSERT_SUCCESS), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/tend2")
+    public ResponseEntity<ApiResponse<ExenditureDto.TotalCount>> totalCountByPeriod(@RequestBody ExenditureDto.TotalExpenditureCountByTimePeriodRequest request) {
+        ExenditureDto.TotalCount response = expenditureService.showExpenditureTotalCount(request);
+        return new ResponseEntity<>(new ApiResponse(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
+    }
+
+    @GetMapping("/tend3")
+    public ResponseEntity<ApiResponse<?>> updateMemo(@RequestBody ExenditureDto.UpdateMemoRequest request) {
+        expenditureService.updateDailyExpenditureMemo(request);
+        return new ResponseEntity<>(new ApiResponse("INSERTOK", SuccessCode.INSERT_SUCCESS), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/tend4")
+    public ResponseEntity<ApiResponse<?>> showSavingAmount(@RequestBody ExenditureDto.YearAndMonthRequest request) {
+        ExenditureDto.TendencyAnalysis response = expenditureService.findExpendiutreTendencyAnalysis(request);
+        return new ResponseEntity<>(new ApiResponse(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
+    }
 }

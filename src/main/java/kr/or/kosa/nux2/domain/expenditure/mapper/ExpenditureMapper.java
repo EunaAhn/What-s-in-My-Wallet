@@ -1,6 +1,7 @@
 package kr.or.kosa.nux2.domain.expenditure.mapper;
 
 import kr.or.kosa.nux2.domain.expenditure.dto.*;
+import kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataTransanctionHistoryDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,16 +15,17 @@ public interface ExpenditureMapper {
     List<ExenditureDto.TotalCount> findTotalExpenditureByStartAndEndDate(Map<String, Object> map);
 
     // 동적 쿼리 : 소비카테고리, 월, 카드 별 검색
-    List<ExenditureDto.Response> findAllExpenditure (Map<String, Object> columns);
+    List<ExenditureDto.Response>  findAllExpenditure (Map<String, Object> columns);
 
     // 상세조회
     // 파라미터 형식 string인지 date인지 고민하기
     ExenditureDto.DetailsReponse findAllExpenditureDetails(Map<String , Object> columns);
 
 
+    List<List<ExenditureDto.CategoryName>>  findCategoryListOfDailyExpenditure(Map<String, Object> columns);
     // 현재 사용자의 마지막 id값보다 높은 값을 가지는 마이데이터소비내역을 조회해서 insert한다.
     // 다건 삽입 방법 성능 고민
-    int insertExpenditures(List<ExenditureDto.InsertRequest> expenditureList);
+    int insertExpenditures(Map<String, Object> map);
 
     // 소비 상세 내역 메모 수정하기
     void updateExpenditureMemo(Map<String, Object> columns);
@@ -48,9 +50,15 @@ public interface ExpenditureMapper {
     // 아침형 : 06~18
     // 시작시간, 종료시간, 년월을 넘겨줘야한다.
     // 소비성향을 넘겨서 매퍼가 로직을 처리하는 것 보다는 서비스레이어가 로직을 처리하는 편이 더 바람직하다고 판단하여 조건만 넘ㅡ
-    ExenditureDto.TotalCount findExpenditureTotalCount(int startTime, int endTime, String yearAndMonth);
+    ExenditureDto.TotalCount findExpenditureTotalCount(Map<String, Object>  map);
 
 
     // member-expenditure 조인 쿼리
-    ExenditureDto.TendencyAnalysis findExpendiutreTendencyAnalysis(int year, int month);
+    ExenditureDto.TendencyAnalysis findExpendiutreTendencyAnalysis(Map<String, Object> map);
+
+    int isExistMemo(Map<String, Object> map) ;
+
+    void insertExpenditureMemo(Map<String, Object> map);
 }
+
+

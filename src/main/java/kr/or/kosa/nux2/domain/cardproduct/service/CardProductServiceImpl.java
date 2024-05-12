@@ -15,16 +15,13 @@ public class CardProductServiceImpl implements CardProductService {
     private final CardProductRepository cardProductRepository;
     @Override
     public List<CardProductDto.Response> showCardProductList(Map<String, Object> map) {
-
         List<CardProductDto.Response> responses = cardProductRepository.findAllCards(map);
-        //페이지네이션
         return responses;
     }
 
     @Override
     public CardProductDto.DetailsResponse showCardProductDetail(CardProductDto.DetailRequest request) {
         Long cardProductId = request.getCardId();
-        System.out.println(cardProductId);
         CardProductDto.DetailsResponse response = cardProductRepository.findCardDetails(cardProductId);
         return response;
     }
@@ -38,6 +35,24 @@ public class CardProductServiceImpl implements CardProductService {
     @Override
     public List<CardProductDto.Response> showMembersLikeCard(String memberId) {
         return cardProductRepository.findMemberLikeCard(memberId);
+    }
+
+    @Override
+    public boolean clickLikeCardProduct(CardProductDto.LikeRequest request) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("memberId", "dnwo1111");
+        map.put("cardId", request.getCardId());
+        cardProductRepository.insertMemberLikeCard(map);
+        return true;
+    }
+
+    @Override
+    public boolean unclickLikeCardProduct(CardProductDto.LikeRequest request) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("memberId", "dnwo1111");
+        map.put("cardId", request.getCardId());
+        cardProductRepository.deleteMemberLikeCard(map);
+        return true;
     }
 
 }

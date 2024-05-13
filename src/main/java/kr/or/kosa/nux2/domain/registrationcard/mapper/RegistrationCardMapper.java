@@ -1,6 +1,7 @@
 package kr.or.kosa.nux2.domain.registrationcard.mapper;
 
 import kr.or.kosa.nux2.domain.registrationcard.dto.RegistrationCardDto;
+import kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataCardDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,9 +13,9 @@ public interface RegistrationCardMapper {
     List <RegistrationCardDto.Response> findAllRegistrationCardByMemberId(@Param("memberId") String memberId);
     // 삭제, 삽입 개수 반환
     // 등록 카드 삭제
-    int deleteRegistrationCard(@Param("registeredCardId") int registeredCardId);
+    int deleteRegistrationCard(@Param("registeredCardId") String registeredCardId);
     // 등록카드에 추가
-    int insertRegistrationCard(RegistrationCardDto.InsertRequest registrationCard);
+    int insertRegistrationCard(MyDataCardDto.Response registrationCard);
 
     // 마이데이터에 카드가 등록될 수 있어야한다.
     // 마이데이터 카드 테이블을 이용하여

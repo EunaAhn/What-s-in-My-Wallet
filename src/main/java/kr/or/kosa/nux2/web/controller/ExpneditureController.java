@@ -18,8 +18,8 @@ public class ExpneditureController {
 
     @GetMapping("/monthly")
     public String memberMonthlyExpenditures(Model model) {
-        List<ExenditureDto.Response> response = expenditureService.showMemberMonthlyExpenditures();
-        model.addAttribute("expenditureList", response);
+//        List<ExenditureDto.Response> response = expenditureService.showMemberMonthlyExpenditures();
+//        model.addAttribute("expenditureList", response);
 
         return "history";
     }

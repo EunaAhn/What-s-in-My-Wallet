@@ -1,7 +1,6 @@
 package kr.or.kosa.nux2.domain.member.dto;
 
 
-import kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.*;
@@ -18,7 +17,6 @@ public class MemberDto {
 
     }
 
-
     @Setter
     @Getter
     @NoArgsConstructor
@@ -28,34 +26,82 @@ public class MemberDto {
     public static class UserDto {
         private String memberId;
         private String memberPassword; //암호화
-        private String memberEmail;
         private String memberName;
         private String role;
         private String provider;
-        private String providerId;
         private String socialToken;
+        private String targetExpenditure;
+        private int status;
 
-        public static UserDto of(String registrationId, String memberId, String memberName, String email, String password, String providerId, String socialToken){
+        //todo targetexpenditure 추가해서 코드변경해야함
+        public static UserDto of(String registrationId, String memberId, String memberName,String socialToken){
             if(registrationId.equals("google")){
-                return ofGoogle(memberId,memberName, email, password, providerId,socialToken);
+                return ofGoogle(memberId,memberName,socialToken);
             }
             return null;
         }
 
-        private static UserDto ofGoogle(String memberId, String memberName, String email, String password, String providerId, String socialToken) {
+        private static UserDto ofGoogle(String memberId, String memberName, String socialToken) {
 
             return UserDto.builder()
                     .memberId(memberId)
                     .memberName(memberName)
-                    .memberEmail(email)
-                    .memberPassword(password)
                     .provider("google")
-                    .providerId(providerId)
                     .role(Role.USER.getRoles())
                     .socialToken(socialToken)
+                    .status(0)
                     .build();
         }
 
 
     }
+    @Builder
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class SignInRequest{
+        private String memberId;
+        private String memberPassword; //암호화
+        private String memberName;
+        private String role;
+        private List<MemberConsCategoryDto> memberConsCategoryDtoList;
+        private String targetExpenditure;
+
+    }
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    public static class MemberIdRequest {
+        private String memberId;
+    }
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    public static class AuthenticationRequest{
+        private String memberId;
+        private String authenticationNumber;
+    }
+
+    @Getter
+    public static class AuthenticationResponse{
+        private String authenticationNumber;
+    }
+    @AllArgsConstructor
+    @Getter
+    @NoArgsConstructor
+    public static class checkMemberIdResponse{
+        private boolean isExistMember;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    @NoArgsConstructor
+    public static class checkAuthenticationNumberResponse{
+        private boolean isSameNumber;
+    }
+
+
 }

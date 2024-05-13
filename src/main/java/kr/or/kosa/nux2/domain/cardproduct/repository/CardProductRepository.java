@@ -13,6 +13,14 @@ import java.util.Map;
 public class CardProductRepository {
     private final CardProductMapper cardProductMapper;
 
+    public void deleteMemberLikeCard(Map<String, Object> map){
+        cardProductMapper.deleteMemberLikeCard(map);
+    }
+
+    public void insertMemberLikeCard(Map<String, Object> map) {
+        cardProductMapper.insertMemberLikeCard(map);
+    }
+
     public CardProductDto.DetailsResponse findCardDetails(Long cardProductId){
         return cardProductMapper.findCardDetail(cardProductId);
     }

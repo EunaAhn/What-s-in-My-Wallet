@@ -63,7 +63,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**")
                         .permitAll()
-                        .requestMatchers("/user","/login/**","/auth/**","/oauth2/**")
+                        .requestMatchers("/email/**","/user","/login/**","/auth/**","/oauth2/**","/signIn")
                         .permitAll()
                         .requestMatchers("/analyze/**","/carddetail/**", "/cardlist/**","/cardregistration/**","/history/**","/onboarding/**", "/profile/**","/signup/**","/suggestion/**")
                         .permitAll()
@@ -75,14 +75,14 @@ public class SecurityConfig {
                         //.logout((logout)->logout.logoutUrl("/logout").logoutSuccessUrl("/login"));
 
         http
-                .formLogin((auth) -> auth.loginPage("/login").permitAll());
+                .formLogin((auth)->auth.loginPage("/login").defaultSuccessUrl("/main").permitAll());
         http
                 .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(principleOauth2UserService))
                         .loginPage("/login")
+                        .defaultSuccessUrl("/oauth/profile")
                         .successHandler(new OAuthSuccessHandler(jwtUtils))
-
                 );
         http
                 .exceptionHandling((exceptions) -> exceptions.authenticationEntryPoint(jwtAuthenticationEntryPoint));

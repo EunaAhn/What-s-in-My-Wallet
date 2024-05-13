@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface ExpenditureCategoryMapper {
+public interface MemberExpenditureCategoryMapper {
     // 관심사 등록을 위한 소비카테고리 조회
     List<ExpenditureCategoryDto> findAllConsumptionCategory();
     // 회원의 소비카테고리관심사 목록 조회

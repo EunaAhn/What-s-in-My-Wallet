@@ -14,11 +14,18 @@ public class MemberRepository {
         return memberMapper.findById(memberId);
     }
 
-    public int save(MemberDto.UserDto userDto){
-        return memberMapper.save(userDto);
+    public int insertOAuthMember(MemberDto.UserDto userDto){
+        return memberMapper.insertOAuthMember(userDto);
     }
     public int updateSocialToken(MemberDto.UpdateSocialTokenRequest request){
         return memberMapper.updateSocialToken(request);
     }
+    public int insertMember(MemberDto.SignInRequest signInRequest){
+        return memberMapper.insertMember(signInRequest);
+    }
+    public boolean isExistMemberId(MemberDto.MemberIdRequest request){
+        return memberMapper.isExistMemberId(request);
+    }
+
 
 }

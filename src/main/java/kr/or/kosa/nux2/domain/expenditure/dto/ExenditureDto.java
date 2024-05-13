@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Map;
 
 public class ExenditureDto {
     // insert, update 용 DTO도 정의해야한다.
@@ -14,11 +15,12 @@ public class ExenditureDto {
                                           일반 RESPONSE DTO
       ========================================================================================
      */
+    @Getter
+    @Setter
     public static class Response {
         // 달력 한칸에 표현되는 지출 DTO -> 30~31개의 idx를 갖는 List로 Wrapping되는 DTO
         private String expenditureDate;
-        private Long expenditureId;
-        private List<ExenditureDto.CategoryName> expenditureCategoryList;
+//        private List<ExenditureDto.CategoryName> expenditureCategoryList;
         private Long expenditureAmount;
     }
     @Getter
@@ -39,11 +41,18 @@ public class ExenditureDto {
         private String expenditureDatetime;
         private String storeAddress;
     }
-
+    @Getter
     public static class CategoryName {
         // 달력 한칸에 표현되는 지출 카테고리명
         private String expenditureCategoryName;
     }
+
+    @Getter
+    public static class CategoryList {
+        private String expenditureDatetime;
+        private List<Map<String, Object>> categoryNameList;
+    }
+
 
     /*
       ========================================================================================
@@ -75,10 +84,10 @@ public class ExenditureDto {
         private List<Integer> expenditureCountList;
     }
 
-
+    @Getter
     public static class RatioByCategoryResponse {
         // 카테고리별 지출 비율 응답 DTO
-        private ExenditureDto.CategoryName categoryName;
+        private String categoryName;
         private Float expenditrueRatio;
     }
 
@@ -89,14 +98,15 @@ public class ExenditureDto {
      */
 
     //    int expenditureConutByTime;
+    @Getter
     public static class TendencyAnalysis {
-        private MemberTargetExpenditureDto targetExpenditure;
-        private int savingAmount;
+        private Long totalExpenditure;
+        private Long savingAmount;
     }
 
     @Getter
     public static class TotalCount{
-        private int expenditureTotalCount;
+        private Long expenditureTotalCount;
     }
 
     /*
@@ -113,7 +123,10 @@ public class ExenditureDto {
         private String expenditureDateTime;
     }
 
+    @Getter
+    @Setter
     public static class UpdateMemoRequest{
+        private String memoId;
         private String memo;
     }
 
@@ -122,5 +135,34 @@ public class ExenditureDto {
     public static class ExpenditureDetailRequest {
         String expenditureId;
         String nowDate;
+    }
+
+    @Getter
+    @Setter
+    public static class YearRequest {
+        int year;
+    }
+
+
+    @Getter
+    @Setter
+    public static class TotalExpenditureCountRequest {
+        String nowDate;
+    }
+
+
+    @Getter
+    @Setter
+    public static class TotalExpenditureCountByTimePeriodRequest {
+        String yearAndMonth;
+        String startHour;
+        String endHour;
+    }
+
+    @Getter
+    @Setter
+    public static class YearAndMonthRequest {
+        String yearAndMonth;
+        String keyword;
     }
 }

@@ -16,6 +16,6 @@ public interface MyDataTransHistoryMapper {
     // 즉, select, insert 용 테이블
 
     // 아이디보다 큰 아이디 값, 카드번호
-    public List<MyDataTransanctionHistoryDto.Response> findAllTransHistory(@Param("transactionId") Long transactionId, @Param("cardNumber") String cardNumber);
+    public List<MyDataTransanctionHistoryDto.Response> findAllTransHistory(@Param("memberId") String memberId, @Param("cardNumber") String cardNumber);
     public int insertTransHistory(MyDataTransanctionHistoryDto.InsertRequest insertRequest);
 }

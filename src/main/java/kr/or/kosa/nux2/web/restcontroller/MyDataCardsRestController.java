@@ -6,12 +6,21 @@ import kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto;
 import kr.or.kosa.nux2.domain.expenditure.repository.ExpenditureRepository;
 import kr.or.kosa.nux2.domain.memberexpendituretend.repository.MemberExpenditureTendRepository;
 import kr.or.kosa.nux2.domain.registrationcard.repository.RegistrationCardRepository;
+import kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataCardDto;
+import kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataTransanctionHistoryDto;
 import kr.or.kosa.nux2.domain.virtualmydata.repository.MyDataCardRepository;
 import kr.or.kosa.nux2.domain.virtualmydata.repository.MyDataTransHistoryRepository;
+import kr.or.kosa.nux2.domain.virtualmydata.service.MyDataCardServiceImpl;
+import kr.or.kosa.nux2.domain.virtualmydata.service.MyDataTransHistorySevice;
+import kr.or.kosa.nux2.web.common.code.SuccessCode;
+import kr.or.kosa.nux2.web.common.response.ApiResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -27,8 +36,9 @@ public class MyDataCardsRestController {
     private final MemberExpenditureTendRepository memberExpenditureTendRepository;
     private final CardProductRepository cardProductRepository;
     private final ExpenditureRepository expenditureRepository;
-
-    @GetMapping("/mydatatest")
+    private final MyDataTransHistorySevice myDataTransHistorySevice;
+    private final MyDataCardServiceImpl myDataCardService;
+    @GetMapping("/api/mydata")
     public ResponseEntity<?> test(){
 
 //        MyDataCardDto.AuthenticationRequest auth = new MyDataCardDto.AuthenticationRequest("김우재", "01089387607");
@@ -48,11 +58,18 @@ public class MyDataCardsRestController {
 //        Map<String, Object> map = new HashMap<>();
 //        map.put("benefit", "주유");
 
-        Map<String, Object> map = new HashMap();
-        map.put("startdate", "2024-05-01");
-        map.put("enddate", "2024-05-02");
-        map.put("memberId", "dnwo1111");
-        ExenditureDto.DetailsReponse responses = expenditureRepository.findAllExpenditureDetails(map);
+
+        List<MyDataTransanctionHistoryDto.Response> responses = myDataTransHistorySevice.findMemberTransactions("dnwo1111", "5654338751249986");
         return new ResponseEntity<>(responses, HttpStatusCode.valueOf(200));
+    }
+
+
+
+    @PostMapping("/mycard")
+    public ResponseEntity<ApiResponse<?>> showMyCard(@RequestBody MyDataCardDto.AuthenticationRequest request){
+        List<MyDataCardDto.Response> responses = myDataCardService.showAllMyDataCard(request);
+
+
+        return new ResponseEntity<>(new ApiResponse(responses, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
 }

@@ -22,10 +22,12 @@ public class MyDataCardDto {
         private String memberContactNumber;
         private String cardCompanyCode;
     }
-    @AllArgsConstructor
+
     @Getter
+    @Setter
     public static class AuthenticationRequest {
         private String memberName;
         private String memberContactNumber;
+        // email로 변경하기
     }
 }

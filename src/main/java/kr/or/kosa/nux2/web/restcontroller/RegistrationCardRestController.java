@@ -7,16 +7,13 @@ import kr.or.kosa.nux2.web.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/registeredcard")
+@RequestMapping("/api/registrationcard")
 
 public class RegistrationCardRestController {
     private final RegistrationCardServiceImpl registrationCardService;
@@ -30,14 +27,14 @@ public class RegistrationCardRestController {
     }
 
 
-    @GetMapping("/delete")
+    @DeleteMapping("/delete")
     public  ResponseEntity<ApiResponse<?>> deleteCard(@RequestBody RegistrationCardDto.InsertControllerRequest request) {
         registrationCardService.deleteRegistrationCard(request.getCardNumber());
 
         return null;
     }
 
-    @GetMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<?> registerCard(@RequestBody List<RegistrationCardDto.InsertControllerRequest> requests) {
         registrationCardService.insertRegistrationCard(requests);
 

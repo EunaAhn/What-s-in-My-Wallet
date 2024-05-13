@@ -13,12 +13,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/expendituretend")
+@RequestMapping("/api/expendituretendency")
 public class MemberExpenditureTendRestController {
     private final MemberExpenditureTendServiceImpl memberExpenditureTendService;
 
 
-    @GetMapping("/")
+    @PostMapping("/")
     public ResponseEntity<ApiResponse<List<MemberExpenditureTendDto.Response>>> showExpenditureTend(@RequestBody MemberExpenditureTendDto.ExpenditureTendRequest request) {
         List<MemberExpenditureTendDto.Response> responses =  memberExpenditureTendService.findMemberExpenditureTend(request.getYearAndMonth());
        return new ResponseEntity<>(new ApiResponse<>(responses, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);

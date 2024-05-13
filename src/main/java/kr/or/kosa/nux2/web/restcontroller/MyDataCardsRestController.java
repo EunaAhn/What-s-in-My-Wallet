@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,7 +38,7 @@ public class MyDataCardsRestController {
     private final ExpenditureRepository expenditureRepository;
     private final MyDataTransHistorySevice myDataTransHistorySevice;
     private final MyDataCardServiceImpl myDataCardService;
-    @GetMapping("/mydatatest")
+    @GetMapping("/api/mydata")
     public ResponseEntity<?> test(){
 
 //        MyDataCardDto.AuthenticationRequest auth = new MyDataCardDto.AuthenticationRequest("김우재", "01089387607");
@@ -64,7 +65,7 @@ public class MyDataCardsRestController {
 
 
 
-    @GetMapping("/mycard")
+    @PostMapping("/mycard")
     public ResponseEntity<ApiResponse<?>> showMyCard(@RequestBody MyDataCardDto.AuthenticationRequest request){
         List<MyDataCardDto.Response> responses = myDataCardService.showAllMyDataCard(request);
 

@@ -4,7 +4,7 @@
 <mapper namespace="kr.or.kosa.nux2.domain.registrationcard.mapper.RegistrationCardMapper">
     <select id="findAllRegistrationCardByMemberId" parameterType="String" resultType="kr.or.kosa.nux2.domain.registrationcard.dto.RegistrationCardDto$Response">
         select
-            reg_card_id as cardId,
+            reg_card_id as registerdCardId,
             card_company_id as cardCompanyName,
             card_number as cardNumber,
             card_nickname as cardNickName

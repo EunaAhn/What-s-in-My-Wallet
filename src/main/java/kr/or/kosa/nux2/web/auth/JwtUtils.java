@@ -107,7 +107,7 @@ public class JwtUtils {
         log.info("method = {}","getAuthentication");
         String userPrincipal = extractAllClaims(token).getSubject();
         UserDetails userDetails = userDetailsService.loadUserByUsername(userPrincipal);
-        return new JwtAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+        return new JwtAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
     //토큰 추출
     public String findToken(HttpServletRequest request) {

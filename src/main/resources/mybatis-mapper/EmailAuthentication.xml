@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.kosa.nux2.domain.member.mapper.EmailAuthenticationMapper">
+    <insert id="insertAuthenticationInfo" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$AuthenticationRequest">
+        insert into email_authentication
+        (member_id, authentication_number)
+        values
+        (#{memberId},#{authenticationNumber})
+    </insert>
+    <select id="findAuthenticationNumberByMemberIdAndTimeDiffLessThanFiveMinute" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$AuthenticationRequest" resultType="kr.or.kosa.nux2.domain.member.dto.MemberDto$AuthenticationResponse">
+        SELECT authentication_number authenticationNumber
+        FROM email_authentication
+        WHERE create_time >= (SYSTIMESTAMP - INTERVAL '5' MINUTE) AND member_id = #{memberId}
+
+    </select>
+    <delete id="deleteAuthenticationInfoByMemberId" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$MemberIdRequest">
+        delete from email_authentication
+        where member_id = #{memberId}
+    </delete>
+</mapper>

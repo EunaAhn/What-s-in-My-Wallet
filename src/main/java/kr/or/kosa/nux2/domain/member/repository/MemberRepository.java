@@ -1,6 +1,5 @@
 package kr.or.kosa.nux2.domain.member.repository;
 
-import kr.or.kosa.nux2.domain.member.dto.ExpenditureCategoryDto;
 import kr.or.kosa.nux2.domain.member.dto.MemberDto;
 import kr.or.kosa.nux2.domain.member.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +22,9 @@ public class MemberRepository {
     }
     public int insertMember(MemberDto.SignInRequest signInRequest){
         return memberMapper.insertMember(signInRequest);
+    }
+    public boolean isExistMemberId(MemberDto.MemberIdRequest request){
+        return memberMapper.isExistMemberId(request);
     }
 
 

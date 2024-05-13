@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.kosa.nux2.domain.member.mapper.MemberExpenditureCategoryMapper">
+    <insert id="insertMemberConsCategory" parameterType="list">
+        <foreach collection="list" item="item" index="idx" separator=" " open="INSERT ALL" close="select * from dual">
+        into member_expenditure_category
+        (member_id, expenditure_category_id) values
+            (#{item.memberId},#{item.expenditureCategoryId})
+        </foreach>
+    </insert>
+
+
+
+</mapper>

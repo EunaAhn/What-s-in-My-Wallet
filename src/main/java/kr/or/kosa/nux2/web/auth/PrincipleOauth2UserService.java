@@ -24,18 +24,15 @@ public class PrincipleOauth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
-        String providerId = oAuth2User.getAttribute("sub");
-        String memberId = registrationId+"-"+providerId;
-        String email = oAuth2User.getAttribute("email");
-        String password = bCryptPasswordEncoder.encode("구글");
+        String memberId = oAuth2User.getAttribute("email");
         String socialToken = userRequest.getAccessToken().getTokenValue();
         String memberName = oAuth2User.getAttribute("name");
 
 
         MemberDto.UserDto userDto = memberRepository.findById(memberId);
         if(userDto==null){
-            userDto = MemberDto.UserDto.of(registrationId,memberId,memberName,email,password,providerId,socialToken);
-            memberRepository.save(userDto);
+            userDto = MemberDto.UserDto.of(registrationId,memberId,memberName,socialToken);
+            memberRepository.insertOAuthMember(userDto);
         }else{
             userDto.setSocialToken(socialToken);
             memberRepository.updateSocialToken(new MemberDto.UpdateSocialTokenRequest(memberId,socialToken));

@@ -65,7 +65,7 @@ public class MemberDto {
         private String memberPassword; //암호화
         private String memberName;
         private String role;
-        private List<MemberConsCategoryDto> memberConsCategoryDtoList;
+        private List<MemberConsCategoryDto.MemberConsCategoryRequest> memberConsCategoryDtoList;
         private String targetExpenditure;
 
     }
@@ -92,15 +92,28 @@ public class MemberDto {
     @AllArgsConstructor
     @Getter
     @NoArgsConstructor
-    public static class checkMemberIdResponse{
+    public static class CheckMemberIdResponse {
         private boolean isExistMember;
     }
 
     @AllArgsConstructor
     @Getter
     @NoArgsConstructor
-    public static class checkAuthenticationNumberResponse{
+    public static class CheckAuthenticationNumberResponse {
         private boolean isSameNumber;
+    }
+    @Builder
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @ToString
+    public static class ProfileResponse{
+        private String memberId;
+        private String memberName;
+        private List<MemberConsCategoryDto.MemberConsCategoryResponse> memberConsCategoryDtoList;
+        private String targetExpenditure;
+
     }
 
 

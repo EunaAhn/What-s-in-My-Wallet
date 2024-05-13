@@ -16,5 +16,6 @@ public interface MemberMapper {
     int updateSocialToken(MemberDto.UpdateSocialTokenRequest request);
 
     boolean isExistMemberId(MemberDto.MemberIdRequest request);
+    MemberDto.ProfileResponse selectMemberDetail(MemberDto.MemberIdRequest request);
 
 }

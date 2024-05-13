@@ -1,5 +1,4 @@
 import * as auth from "./api/auth.js"
-import {postEamilAuthentication} from "./api/auth.js";
 
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 const categoryList = document.querySelectorAll('.form-input-date-picker-default3');
@@ -39,14 +38,16 @@ const moneyGoal = document.querySelector("#signin-moneygoal")
 let emailauthentication = false;
 
 const signUp = () => {
-    if (!userID.value) {alert("이메일을 입력해주세요.") ; return false}
-    if (!userName.value) {alert("이름을 입력해주세요.") ; return false}
-    if (!password.value) {alert("비밀번호를 입력해주세요.") ; return false}
-    if (!passwordCheck.value) {alert("확인비밀번호를 입력해주세요.") ; return false}
-    if (!moneyGoal.value) {alert("목표 지출액을 입력해주세요.") ; return false}
-    if (selectedCategories.length === 0 ) {alert("관심 카테고리를 1개이상 선택해주세요") ; return false}
-    if (selectedCategories.length > 3 ) {alert("3개를 초과하실 수 없습니다.") ; return false}
-
+    // if (!userID.value) {alert("이메일을 입력해주세요.") ; return false}
+    // if (!userName.value) {alert("이름을 입력해주세요.") ; return false}
+    // if (!password.value) {alert("비밀번호를 입력해주세요.") ; return false}
+    // if (!passwordCheck.value) {alert("확인비밀번호를 입력해주세요.") ; return false}
+    // if (!moneyGoal.value) {alert("목표 지출액을 입력해주세요.") ; return false}
+    // if (selectedCategories.length === 0 ) {alert("관심 카테고리를 1개이상 선택해주세요") ; return false}
+    // if (selectedCategories.length > 3 ) {alert("3개를 초과하실 수 없습니다.") ; return false}
+    //
+    //
+    // if(!emailauthentication) {alert("이메일 인증을 진행해주세요.")}
     // location.href = "/login";
 }
 
@@ -121,10 +122,8 @@ const authenticationModalInput = document.querySelector(".authentication_modal_i
 
 authenticationModalButton.addEventListener("click", async() => {
     emailauthentication = await auth.postEamilAuthentication(userID.value,authenticationModalInput.value)
-    console.log(emailauthentication)
     if(emailauthentication === true) {
         clearInterval(timerInterval);
         authenticationModal.close();
     }
 })
-

@@ -260,11 +260,13 @@ button:hover {
 
 .idbox, .pwdbox, #categorybox1, #categorybox5, .namebox{
     flex: 1; /* 각 요소를 동일한 너비로 설정합니다. */
+    font-family: var(--h6-reguler-font-family, 'Inter-Regular', sans-serif);
 }
 
 .phonebox, .pwdagain, #categorybox2, #categorybox3, #categorybox4, #categorybox6, #categorybox7, #categorybox8{
     flex: 1;
     margin-left: 10px;
+    font-family: var(--h6-reguler-font-family, 'Inter-Regular', sans-serif);
 }
 
 .start-date {
@@ -301,7 +303,7 @@ header h2 {
 }
 
 /* SECTION */
-section {
+form {
     margin: 4% 0 2% 0;
     width: 100%;
 }

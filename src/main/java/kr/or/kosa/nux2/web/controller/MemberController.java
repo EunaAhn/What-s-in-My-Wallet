@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -45,14 +46,12 @@ public class MemberController {
         session.invalidate();
         return memberService.logout(customUserDetails);
     }
+
     @Operation(summary = "controller", description = "controller.")
     @PostMapping("/signIn")
-    public String signIn(@RequestBody MemberDto.SignInRequest request){
+    public String signIn(MemberDto.SignInRequest request){
+        System.out.println(request);
         memberService.signIn(request);
         return "cardlist";
     }
-
-
-
-
 }

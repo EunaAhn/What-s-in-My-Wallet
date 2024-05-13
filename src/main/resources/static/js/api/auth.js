@@ -48,7 +48,6 @@ export const postEmailRequest = async (email) => {
 }
 
 export const postEamilAuthentication = async (email, checkNumber) => {
-    myHeaders.append("Content-Type", "application/json");
     const raw = JSON.stringify({
         memberId: email,
         authenticationNumber : checkNumber
@@ -63,7 +62,7 @@ export const postEamilAuthentication = async (email, checkNumber) => {
         const response = await fetch(`/email/authentication`, requestOptions);
         if(response && response.status === 200) {
             const result = await response.json()
-            console.log(result)
+            return result.result.sameNumber
         }
     } catch (error) {
         console.log("postLogin error : ",error)

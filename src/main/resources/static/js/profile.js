@@ -107,3 +107,17 @@ hdSearchImage.addEventListener("click", () => {
         hdCardSearch.value = ""
     }
 })
+
+
+
+// 현재 페이지 URL 가져오기
+var urlString = window.location.href;
+
+// URL에서 쿼리 문자열 파싱
+var url = new URL(urlString);
+
+// 쿼리 매개변수 추출
+var statusParam = url.searchParams.get("status");
+
+// 결과 출력
+console.log("status 파라미터 값:", statusParam);

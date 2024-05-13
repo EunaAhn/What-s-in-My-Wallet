@@ -77,11 +77,12 @@ public class SecurityConfig {
                 .formLogin((auth)->auth.loginPage("/login").defaultSuccessUrl("/main").permitAll());
         http
                 .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/profile",true)
+                        .successHandler(new OAuthSuccessHandler(jwtUtils))
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(principleOauth2UserService))
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/oauth/profile")
-                        .successHandler(new OAuthSuccessHandler(jwtUtils))
+
                 );
         http
                 .exceptionHandling((exceptions) -> exceptions.authenticationEntryPoint(jwtAuthenticationEntryPoint));

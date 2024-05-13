@@ -60,6 +60,7 @@ public class MemberDto {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class SignInRequest{
         private String memberId;
         private String memberPassword; //암호화

@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 public class EmailAuthenticationRepository {
     private final EmailAuthenticationMapper emailAuthenticationMapper;
 
-    public int insertAuthenticationInfo(MemberDto.AuthenticationRequest request){
-        return emailAuthenticationMapper.insertAuthenticationInfo(request);
+    public int insertOrUpdateAuthenticationInfo(MemberDto.AuthenticationRequest request){
+        return emailAuthenticationMapper.insertOrUpdateAuthenticationInfo(request);
     }
     public MemberDto.AuthenticationResponse findAuthenticationNumberByMemberIdAndTimeDiffLessThanFiveMinute(MemberDto.AuthenticationRequest request){
         return emailAuthenticationMapper.findAuthenticationNumberByMemberIdAndTimeDiffLessThanFiveMinute(request);

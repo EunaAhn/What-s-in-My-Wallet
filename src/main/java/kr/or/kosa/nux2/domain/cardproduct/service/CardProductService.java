@@ -9,4 +9,8 @@ import java.util.Map;
 public interface CardProductService {
     List<CardProductDto.Response> showCardProductList(Map<String, Object> map);
     CardProductDto.DetailsResponse showCardProductDetail(CardProductDto.DetailRequest request);
+    List<CardProductDto.Response> showTop4CardProduct();
+    List<CardProductDto.Response> showMembersLikeCard(String memberId);
+    boolean clickLikeCardProduct (CardProductDto.LikeRequest request);
+    boolean unclickLikeCardProduct(CardProductDto.LikeRequest request);
 }

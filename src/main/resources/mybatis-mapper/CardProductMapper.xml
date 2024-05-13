@@ -30,7 +30,7 @@
 
         </collection>
     </resultMap>
-    <select id="findCardDetail" parameterType="map" resultMap="cardListResult">
+    <select id="findCardDetail" parameterType="java.lang.Long" resultMap="cardListResult">
         select
             cp.card_product_id,
             cp.card_company_id,
@@ -38,13 +38,12 @@
             cp.card_product_image,
             cp.membership_fee,
             cp.benefit_summary,
-            cbc.benefit_code_id,
             cbc.benefit_name,
             cbd.benefit_details,
             (select count(member_id) from member_like_card) as likeCount
         from
             card_product cp
-            right join
+            join
             card_benefit_code cbc
             on cp.card_product_id = cbc.card_product_id
             join
@@ -77,70 +76,142 @@
         <result property="benefitName" column="benefit_name"/>
     </resultMap>
     <select id="findAllCards" parameterType="map" resultMap="cardListResultSumm">
-        select
-            cp.card_product_id,
-            cp.card_company_id,
-            cp.card_product_name,
-            cp.card_product_image,
-            cp.membership_fee,
-            cp.benefit_summary,
-            cbc.benefit_code_id,
-            cbc.benefit_name,
-            (select count(member_id) from member_like_card) as likeCount
-        from
-            (
-                select * from
-                    (select
-                        card_product_id,
-                        card_company_id,
-                        card_product_name,
-                        card_product_image,
-                        membership_fee,
-                        benefit_summary,
-                        row_number() over(order by card_product_id) as row_num
-                    from card_product) where row_num between #{startnum} and #{endnum}
-            ) cp
-            left join
-                card_benefit_code cbc
-            on cp.card_product_id = cbc.card_product_id
-<!--            <choose>-->
-<!--                <when test="cardCompanyName != null">-->
-<!--                    where cp.card_company_id = #{cardCompanyName}-->
-<!--                </when>-->
-<!--                <when test="cardName != null">-->
-<!--                    where cp.card_product_name = #{cardName}-->
-<!--                </when>-->
-<!--                <when test="benefit != null">-->
-<!--                    where cbc.benefit_name = #{benefit}-->
-<!--                </when>-->
-<!--            </choose>-->
-    </select>
 
-
-    <select id="findTop4LikeCard" resultMap="cardListResultSumm">
-        select * from  (
-            select
-            cp.card_product_id,
-            cp.card_company_id,
-            cp.card_product_name,
-            cp.card_product_image,
-            cp.membership_fee,
-            cp.benefit_summary,
-            cbc.benefit_code_id,
-            cbc.benefit_name,
-            (select count(member_id) from member_like_card) as likeCount
-            from
-                card_product cp
-                right join
+        <choose>
+            <when test="keyword != null">
+                SELECT
+                cp.card_product_id,
+                cp.card_company_id,
+                cp.card_product_name,
+                cp.card_product_image,
+                cp.membership_fee,
+                cp.benefit_summary,
+                cbc.benefit_code_id,
+                cbc.benefit_name,
+                (SELECT COUNT(member_id) FROM member_like_card) AS likeCount
+                FROM
+                (
+                SELECT * FROM
+                (
+                SELECT
+                card_product_id AS card_product_id,
+                card_company_id AS card_company_id,
+                card_product_name AS card_product_name,
+                card_product_image AS card_product_image,
+                membership_fee AS membership_fee,
+                benefit_summary AS benefit_summary,
+                row_number() OVER(ORDER BY card_product_id) AS row_num
+                FROM
+                card_product
+                        WHERE
+                        card_company_id LIKE '%' || #{keyword} || '%'
+                        OR
+                        card_product_name LIKE '%' || #{keyword} || '%'
+                        OR
+                        card_product_id in (select card_product_id from card_benefit_code where benefit_name LIKE '%' || #{keyword} || '%')
+                    )a  where row_num between #{startnum} and #{endnum}
+                ) cp
+                left join
                 card_benefit_code cbc
                 on cp.card_product_id = cbc.card_product_id
-            order by likeCount
-        ) where
-            <![CDATA[rownum < 5]]>
+                ORDER BY
+                cp.card_product_id
+            </when>
+            <otherwise>
+                select
+                cp.card_product_id,
+                cp.card_company_id,
+                cp.card_product_name,
+                cp.card_product_image,
+                cp.membership_fee,
+                cp.benefit_summary,
+                cbc.benefit_code_id,
+                cbc.benefit_name,
+                (select count(member_id) from member_like_card) as likeCount
+                from
+                (
+                select * from
+                (select
+                card_product_id,
+                card_company_id,
+                card_product_name,
+                card_product_image,
+                membership_fee,
+                benefit_summary,
+                row_number() over(order by card_product_id) as row_num
+                from card_product
+                ) a where row_num between #{startnum} and #{endnum}
+                ) cp
+                left join
+                card_benefit_code cbc
+                on cp.card_product_id = cbc.card_product_id
+                order by cp.card_product_id
+
+            </otherwise>
+        </choose>
+
+
+    </select>
+<!--    "cardCompanyId": null,-->
+<!--    "cardName": null,-->
+<!--    "cardImageFileName": null,-->
+<!--    "membershipFee": null,-->
+<!--    "benefitSummary": null,-->
+<!--    "likeCount": 1,-->
+<!--    "benefitCategoryList": []-->
+
+    <select id="findTop4LikeCard" resultMap="cardListResultSumm">
+        SELECT
+            subquery.cpi as card_product_id,
+            subquery.cci as card_company_id,
+            subquery.cpn as card_product_name,
+            subquery.cpim as card_product_image,
+            subquery.mf as membership_fee,
+            subquery.bs as benefit_summary,
+            subquery.bci as benefit_code_id,
+            subquery.bn as benefit_name,
+            (select count(member_id) from member_like_card where card_product_id = subquery.cpi group by card_product_id) likecount
+        FROM (
+            SELECT
+            cp.card_product_id cpi,
+            cp.card_company_id cci,
+            cp.card_product_name cpn,
+            cp.card_product_image cpim,
+            cp.membership_fee mf,
+            cp.benefit_summary bs,
+            cbc.benefit_code_id bci,
+            cbc.benefit_name bn
+            FROM
+            card_product cp
+            RIGHT JOIN
+            card_benefit_code cbc ON cp.card_product_id = cbc.card_product_id
+            ) subquery
+        WHERE
+            subquery.cpi IN (
+            SELECT card_product_id FROM (
+            SELECT card_product_id, count(member_id) FROM member_like_card  GROUP BY card_product_id order by count(member_id) desc
+            ) likes where  <![CDATA[rownum < 5]]> )
+        order by likecount desc
+
     </select>
 
 
     <select id="findMemberLikeCard" parameterType="String" resultMap="cardListResultSumm">
+<!--        select-->
+<!--            cp.card_product_id,-->
+<!--            cp.card_company_id,-->
+<!--            cp.card_product_name,-->
+<!--            cp.card_product_image,-->
+<!--            cp.membership_fee,-->
+<!--            cp.benefit_summary,-->
+<!--            //benefit_code_id,-->
+<!--            (select count(member_id) from member_like_card) as likeCount-->
+<!--        from-->
+<!--            card_product cp-->
+<!--        join-->
+<!--            member_like_card mlc-->
+<!--        on cp.card_product_id = mlc.card_product_id-->
+<!--        where mlc.member_id = #{memberId}-->
         select
             cp.card_product_id,
             cp.card_company_id,
@@ -148,13 +219,34 @@
             cp.card_product_image,
             cp.membership_fee,
             cp.benefit_summary,
+            cbc.benefit_code_id,
+            cbc.benefit_name,
             (select count(member_id) from member_like_card) as likeCount
         from
-            card_product cp
-        join
-            member_like_card mlc
-        on cp.card_product_id = mlc.card_product_id
-        where mlc.member_id = #{memberId}
+        (
+            select * from
+            (select
+            card_product_id,
+            card_company_id,
+            card_product_name,
+            card_product_image,
+            membership_fee,
+            benefit_summary
+            from card_product
+            where card_product_id in (select card_product_id from member_like_card where member_id = #{memberId})
+            ) s
+        ) cp
+        left join
+        card_benefit_code cbc
+        on cp.card_product_id = cbc.card_product_id
+        order by cp.card_product_id
     </select>
 
+    <insert id="insertMemberLikeCard" parameterType="map">
+        insert into member_like_card(card_product_id, member_id) values(#{cardId}, #{memberId})
+    </insert>
+
+    <delete id="deleteMemberLikeCard" parameterType="map">
+        delete from member_like_card where member_id = #{memberId} and card_product_id = #{cardId}
+    </delete>
 </mapper>

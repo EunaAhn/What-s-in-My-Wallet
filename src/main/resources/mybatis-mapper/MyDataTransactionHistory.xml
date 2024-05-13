@@ -3,7 +3,7 @@
 
 <mapper namespace="kr.or.kosa.nux2.domain.virtualmydata.mapper.MyDataTransHistoryMapper">
     <select id="findAllTransHistory" parameterType="map" resultType="kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataTransanctionHistoryDto$Response">
-        select
+        SELECT
             transaction_id as transactionId,
             transaction_code as transactionCode,
             transaction_datetime as transactionDateTime,
@@ -13,12 +13,20 @@
             store_name as storeName,
             store_address as storeAddress,
             industry_code as industryCode
-        from
+        FROM
             my_data_transactions
-        where
-            transaction_id > #{transactionId}
-            and
-            card_number = #{cardNumber}
+        WHERE
+                transaction_id > NVL((
+                SELECT
+                MAX(expenditure_history_id)
+                FROM
+                expenditure_history
+                WHERE
+                member_id = #{memberId}
+                ), 0)
+        and
+                card_number = #{cardNumber}
+
     </select>
 
     <insert id = "insertTransHistory" parameterType="kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataTransanctionHistoryDto$InsertRequest">

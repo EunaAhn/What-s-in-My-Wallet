@@ -2,6 +2,7 @@ package kr.or.kosa.nux2.domain.registrationcard.repository;
 
 import kr.or.kosa.nux2.domain.registrationcard.dto.RegistrationCardDto;
 import kr.or.kosa.nux2.domain.registrationcard.mapper.RegistrationCardMapper;
+import kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataCardDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -14,10 +15,10 @@ public class RegistrationCardRepository {
     public List<RegistrationCardDto.Response> findAllRegistrationCardByMemberId(String memberId){
         return registrationCardMapper.findAllRegistrationCardByMemberId(memberId);
     };
-    public int deleteRegistrationCard(int registrationId){
+    public int deleteRegistrationCard(String registrationId){
         return registrationCardMapper.deleteRegistrationCard(registrationId);
     };
-    public int insertRegistrationCard(RegistrationCardDto.InsertRequest registrationCard){
+    public int insertRegistrationCard(MyDataCardDto.Response registrationCard){
         return registrationCardMapper.insertRegistrationCard(registrationCard);
     };
 }

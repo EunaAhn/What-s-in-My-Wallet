@@ -7,15 +7,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Repository
 @AllArgsConstructor
 public class MemberExpenditureTendRepository {
 
     private final MemberExpenditureTendMapper memberExpenditureTendMapper;
-    public List<MemberExpenditureTendDto.ServiceResponse> findMemberExpenditureTendMapper(Map<String, Object> columns){
-        return memberExpenditureTendMapper.findMemberExpenditureTendMapper(columns);
+    public List<MemberExpenditureTendDto.Response> findMemberExpenditureTendMapper(Map<String, Object> columns){
+        return memberExpenditureTendMapper.findMemberExpenditureTend(columns);
     };
 
 }

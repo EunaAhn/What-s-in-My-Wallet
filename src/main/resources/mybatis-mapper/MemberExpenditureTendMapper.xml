@@ -2,7 +2,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.or.kosa.nux2.domain.memberexpendituretend.mapper.MemberExpenditureTendMapper">
-    <select id="findMemberExpenditureTendMapper" parameterType="map" resultType="kr.or.kosa.nux2.domain.memberexpendituretend.dto.MemberExpenditureTendDto$ServiceResponse">
+    <select id="findMemberExpenditureTend" parameterType="map" resultType="kr.or.kosa.nux2.domain.memberexpendituretend.dto.MemberExpenditureTendDto$Response">
         select
             expenditure_tend_id as expenditureTendencyId,
             expenditure_tend as memberExpenditureTendency
@@ -11,6 +11,6 @@
         where
             member_id = #{memberId}
             and
-            update_code = #{updateCode}
+            update_code = #{yearAndMonth}
     </select>
 </mapper>

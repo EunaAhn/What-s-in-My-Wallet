@@ -56,7 +56,6 @@ public class SecurityConfig {
 //                .formLogin((auth) -> auth.permitAll());
         http
                 .httpBasic((auth) -> auth.disable());
-
         http
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/test/*", "/api/expenditure/*", "/api/cardproduct/*").permitAll());
         http

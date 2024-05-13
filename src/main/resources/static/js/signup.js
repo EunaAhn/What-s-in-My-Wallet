@@ -1,3 +1,6 @@
+import * as auth from "./api/auth.js"
+import {postEamilAuthentication} from "./api/auth.js";
+
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 const categoryList = document.querySelectorAll('.form-input-date-picker-default3');
 let selectedCategories = []
@@ -33,6 +36,7 @@ const userName = document.querySelector("#username")
 const password = document.querySelector("#signin-pw")
 const passwordCheck = document.querySelector("#signin-pw-again")
 const moneyGoal = document.querySelector("#signin-moneygoal")
+let emailauthentication = false;
 
 const signUp = () => {
     if (!userID.value) {alert("이메일을 입력해주세요.") ; return false}
@@ -74,3 +78,53 @@ document.addEventListener('keydown', (event) => {
 });
 
 signUpButton.addEventListener('click',  signUp);
+
+// email 인증 요청
+const checknumButton = document.querySelector(".checknum")
+const authenticationModal = document.querySelector(".authentication_modal")
+
+checknumButton.addEventListener("click", async () => {
+    if (!userID.value) {alert("이메일을 올바르게 입력해주세요.") ; return false}
+    const display = document.querySelector('.authentication_modal_timer');
+    startTimer(60 * 5, display);
+    authenticationModal.showModal();
+    const emailRequest = await auth.postEmailRequest(userID.value)
+})
+
+let timer, timerInterval ;
+const startTimer = (duration, display) => {
+    timer = duration;
+    let minutes;
+    let seconds;
+    timerInterval = setInterval(() => {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        display.textContent = minutes + " : " + seconds;
+        if (--timer < 0) {
+            clearInterval(timer);
+            authenticationModal.close(); // 타이머가 종료되면 모달을 닫습니다.
+        }
+    }, 1000);
+};
+
+const closeButton = document.querySelector('.close_btn')
+closeButton.addEventListener('click', () => {
+    clearInterval(timerInterval);
+    authenticationModal.close();
+})
+
+// email 인증 번호 확인
+const authenticationModalButton = document.querySelector(".authentication_modal_button")
+const authenticationModalInput = document.querySelector(".authentication_modal_input")
+
+authenticationModalButton.addEventListener("click", async() => {
+    emailauthentication = await auth.postEamilAuthentication(userID.value,authenticationModalInput.value)
+    console.log(emailauthentication)
+    if(emailauthentication === true) {
+        clearInterval(timerInterval);
+        authenticationModal.close();
+    }
+})
+

@@ -102,6 +102,4 @@ public class MemberDto {
     public static class checkAuthenticationNumberResponse{
         private boolean isSameNumber;
     }
-
-
 }

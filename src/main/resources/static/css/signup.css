@@ -34,6 +34,87 @@ button {
     padding-right: 3%;
 }
 
+.close_btn{
+    position: absolute;
+    top: 10px;
+    right: 8px;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.close_btn:hover{
+    background-color: transparent;
+}
+
+.close_image{
+    height: 20px;
+    width: 20px;
+}
+
+.authentication_modal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 200px;
+    border: none;
+    padding: 20px 35px;
+    background-color: white;
+    border-radius: 10px;
+    font-family: 'WooridaumB';
+    transform: translate(-150px,-150px);
+    box-shadow: 1px 1px 12px 0 rgba(0, 0, 0, 0.12);
+}
+
+.authentication_modal_box{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.authentication_modal_input{
+    width: 100%;
+    height: 45px;
+    padding-left: 10px;
+    color: #383838;
+    font-family: 'WooridaumB';
+    font-weight: 100;
+    border: 1px solid #3b3a45;
+    border-radius: 7px;
+    margin: 10px 0 ;
+}
+
+.authentication_modal_button{
+    width: 100%;
+    height: 45px;
+    color: black;
+    font-weight: 700;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    border: 1px solid #3b3a45;
+    background-color: white;
+}
+
+.authentication_modal_button:hover{
+    color: white;
+    background-color: #3b3a45;
+}
+
+.authentication_modal_timer{
+    font-size: 18px;
+    font-family: 'WooridaumB';
+}
+
+.authentication_modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(1px);
+}
+
 button:focus-visible {
     outline: 0px solid;
     background-color: #8B81D4;
@@ -120,8 +201,8 @@ button:hover {
     background-color: #ffffff;
     width: 39%;
     height: 80%;
-    max-width: 600px;
-    min-width: 450px;
+    max-width: 550px;
+    min-width: 400px;
     max-height: 700px;
     min-height: 700px;
     top: 0;
@@ -196,6 +277,7 @@ button:hover {
 }
 
 .content {
+    position: relative;
     width: 87%;
     display: flex;
     flex-direction: column;
@@ -320,3 +402,4 @@ section {
     color: red;
     font-family: 'Montserrat', 'Pretendard', sans-serif;
 }
+

@@ -14,6 +14,16 @@
     <div class="background"></div>
     <div class="container">
         <div class="content">
+            <dialog class="authentication_modal">
+                <div class="authentication_modal_box">
+                    <button class="close_btn">
+                        <img class="close_image" th:src="@{/img/common/closebtn.png}" alt="close_button" />
+                    </button>
+                    <input type="number" class="authentication_modal_input" placeholder="인증 번호를 입력해주세요">
+                    <button class="authentication_modal_button" >인증하기</button>
+                    <p class="authentication_modal_timer">05 : 00</p>
+                </div>
+            </dialog>
             <!-- HEADER -->
             <header>
                 <h2>회원가입</h2>

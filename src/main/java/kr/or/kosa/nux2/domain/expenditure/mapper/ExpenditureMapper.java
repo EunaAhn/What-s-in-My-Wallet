@@ -59,6 +59,9 @@ public interface ExpenditureMapper {
     int isExistMemo(Map<String, Object> map) ;
 
     void insertExpenditureMemo(Map<String, Object> map);
+
+    List<ExenditureDto.CategoryList> findAllCategoryList (Map<String, Object> map);
+
 }
 
 

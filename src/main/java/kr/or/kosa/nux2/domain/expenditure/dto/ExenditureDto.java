@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Map;
 
 public class ExenditureDto {
     // insert, update 용 DTO도 정의해야한다.
@@ -19,7 +20,7 @@ public class ExenditureDto {
     public static class Response {
         // 달력 한칸에 표현되는 지출 DTO -> 30~31개의 idx를 갖는 List로 Wrapping되는 DTO
         private String expenditureDate;
-        private List<ExenditureDto.CategoryName> expenditureCategoryList;
+//        private List<ExenditureDto.CategoryName> expenditureCategoryList;
         private Long expenditureAmount;
     }
     @Getter
@@ -45,6 +46,13 @@ public class ExenditureDto {
         // 달력 한칸에 표현되는 지출 카테고리명
         private String expenditureCategoryName;
     }
+
+    @Getter
+    public static class CategoryList {
+        private String expenditureDatetime;
+        private List<Map<String, Object>> categoryNameList;
+    }
+
 
     /*
       ========================================================================================
@@ -131,8 +139,8 @@ public class ExenditureDto {
 
     @Getter
     @Setter
-    public static class MonthRequest {
-        int month;
+    public static class YearRequest {
+        int year;
     }
 
 
@@ -155,5 +163,6 @@ public class ExenditureDto {
     @Setter
     public static class YearAndMonthRequest {
         String yearAndMonth;
+        String keyword;
     }
 }

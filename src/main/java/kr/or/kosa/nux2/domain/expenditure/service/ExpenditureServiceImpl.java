@@ -24,7 +24,7 @@ public class ExpenditureServiceImpl implements ExpenditureService{
     private final RegistrationCardServiceImpl registrationCardService;
 
     @Override
-    public List<ExenditureDto.Response>  showMemberMonthlyExpenditures(ExenditureDto.YearAndMonthRequest request) {
+    public Map<String, Object> showMemberMonthlyExpenditures(ExenditureDto.YearAndMonthRequest request) {
         //멤버아이디 컨텍스트에서 받아오기
         //연월을 클라이언트로 부터 받아오기
         // 해당 쿼리를 불러오기
@@ -32,18 +32,21 @@ public class ExpenditureServiceImpl implements ExpenditureService{
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", memberId);
         map.put("nowDate", request.getYearAndMonth());
+        map.put("keyword", request.getKeyword());
         System.out.println(request.getYearAndMonth());
 
         List<ExenditureDto.Response> expenditureList = expenditureRepository.findAllExpenditure(map);
-        List<List<ExenditureDto.CategoryName>> categoryNames = expenditureRepository.findCategoryListOfDailyExpenditure(map);
+        List<ExenditureDto.CategoryList> categoryNames = expenditureRepository.findAllCategoryList(map);
 
 
 
-        for(int i = 0; i < expenditureList.size(); i++) {
-            expenditureList.get(i).setExpenditureCategoryList(categoryNames.get(i));
-        }
-
-        return expenditureList;
+//        for(int i = 0; i < expenditureList.size(); i++) {
+//            //expenditureList.get(i).setExpenditureCategoryList(categoryNames.get(i));
+//        }
+        Map<String, Object> responses = new HashMap<>();
+        responses.put("expenditureList", expenditureList);
+        responses.put("categoryList", categoryNames);
+        return responses;
     }
 
     @Override
@@ -84,24 +87,13 @@ public class ExpenditureServiceImpl implements ExpenditureService{
     }
 
     @Override
-    public List<Map<String, Object>>  showExpenditureCountForCategoryByMonth(int month) {
-        // 현재 날짜 가져오기
-        LocalDate currentDate = LocalDate.now();
-
-        // 14개월 전 날짜 계산
-        LocalDate fourteenMonthsAgo = currentDate.minusMonths(month+1);
-
-        // YYYY-MM 형식으로 변환
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
-        String formattedDate = fourteenMonthsAgo.format(formatter);
-
+    public List<Map<String, Object>>  showExpenditureCountForCategoryByMonth(String yearAndMonth) {
         Map<String, Object> map = new HashMap<>();
-        map.put("targetDate", formattedDate);
+        map.put("yearAndMonth", yearAndMonth);
         map.put("memberId", "dnwo1111");
 
 
         List<Map<String, Object>> result = expenditureRepository.findExpenditureCountForCategoryByMonth(map);
-
         return result;
     }
 

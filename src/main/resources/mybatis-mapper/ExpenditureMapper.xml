@@ -9,43 +9,80 @@
 
 <mapper namespace="kr.or.kosa.nux2.domain.expenditure.mapper.ExpenditureMapper">
 
-<!--    <resultMap id="expenditureResultMap" type="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$Response">-->
-<!--        <result property="expenditureAmount" column="expenditure_amount"/>-->
-<!--        <result property="expenditureDate" column="expenditureDate"/>-->
-<!--        <collection property="expenditureCategoryList" ofType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$CategoryName">-->
+    <resultMap id="expenditureResultMap" type="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$Response">
+        <result property="expenditureDate" column="expenditureDate"/>
+        <result property="expenditureAmount" column="expenditureAmount"/>
+<!--        <collection property="expenditureCategoryList" ofType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$CategoryName" javaType="List">-->
 <!--            <result property="expenditureCategoryName" column="expenditure_category_name"/>-->
 <!--        </collection>-->
-<!--    </resultMap>-->
+    </resultMap>
 
 
-    <select id="findAllExpenditure" parameterType="map" resultType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$Response">
-
-
+    <select id="findAllExpenditure" parameterType="map" resultMap = "expenditureResultMap">
                 SELECT
-                    TO_CHAR(EXPENDITURE_DATETIME, 'YYYY-MM-DD') AS expenditureDate,
-                    SUM(EXPENDITURE_AMOUNT) AS expenditureAmount
+                    TO_CHAR(eh.EXPENDITURE_DATETIME, 'YYYY-MM-DD') AS expenditureDate,
+                    SUM(eh.EXPENDITURE_AMOUNT) AS expenditureAmount
                 FROM
-                    EXPENDITURE_HISTORY
+                    EXPENDITURE_HISTORY eh
+                join
+                    expenditure_category ec
+                    on eh.expenditurecategory_id=ec.expenditure_category_id
                 WHERE
-                    MEMBER_ID = #{memberId}
+                    eh.MEMBER_ID = #{memberId}
                 AND
-                    TO_CHAR(EXPENDITURE_DATETIME, 'YYYY-MM') = #{nowDate}
+                    TO_CHAR(eh.EXPENDITURE_DATETIME, 'YYYY-MM') = #{nowDate}
+                <choose>
+                <when test="keyword != null">
+                    and
+                        ec.expenditure_category_name = #{keyword}
+                </when>
+                </choose>
                 GROUP BY
-                    TO_CHAR(EXPENDITURE_DATETIME, 'YYYY-MM-DD')
+                    TO_CHAR(eh.EXPENDITURE_DATETIME, 'YYYY-MM-DD')
                 ORDER BY
-                    TO_CHAR(EXPENDITURE_DATETIME, 'YYYY-MM-DD') ASC
-
+                    TO_CHAR(eh.EXPENDITURE_DATETIME, 'YYYY-MM-DD') ASC
     </select>
 
 
-    <select id="findCategoryListOfDailyExpenditure" resultType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$CategoryName">
-        select ec.expenditure_category_name as expenditureCategoryName
+<!--    <select id="findAllCategoryList" resultType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$CategoryList" parameterType="map">-->
+<!--        select ec.expenditure_category_name as categoryNameList,-->
+<!--        to_char(eh.expenditure_datetime, 'YYYY-MM-DD') as expenditureDatetime-->
+<!--        from expenditure_history eh-->
+<!--        join expenditure_category ec-->
+<!--        on eh.expenditurecategory_id = ec.expenditure_category_id-->
+<!--        where to_char(eh.expenditure_datetime, 'YYYY-MM') = #{nowDate}-->
+<!--        and eh.member_id = #{memberId}-->
+<!--        group by to_char(eh.expenditure_datetime, 'YYYY-MM-DD'), ec.expenditure_category_name-->
+<!--    </select>-->
+<!--    @Getter-->
+<!--    public static class CategoryList {-->
+<!--    private String expenditureDatetime;-->
+<!--    private List<Map<String, Object>> categoryNameList;-->
+<!--    }-->
+
+    <resultMap id="categoryListMap" type="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$CategoryList">
+        <result property="expenditureDatetime" column="expenditureDatetime"/>
+        <collection property="categoryNameList" ofType="map">
+            <result property="categoryName" column="expenditure_category_name"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAllCategoryList" resultMap="categoryListMap" parameterType="map">
+        select ec.expenditure_category_name as expenditure_category_name,
+        to_char(eh.expenditure_datetime, 'YYYY-MM-DD') as expenditureDatetime
         from expenditure_history eh
         join expenditure_category ec
         on eh.expenditurecategory_id = ec.expenditure_category_id
         where to_char(eh.expenditure_datetime, 'YYYY-MM') = #{nowDate}
         and eh.member_id = #{memberId}
+        <choose>
+            <when test="keyword != null">
+                and
+                ec.expenditure_category_name = #{keyword}
+            </when>
+        </choose>
         group by to_char(eh.expenditure_datetime, 'YYYY-MM-DD'),ec.expenditure_category_name
+        order by to_char(eh.expenditure_datetime, 'YYYY-MM-DD') asc
     </select>
 
     <resultMap id="summaryMap" type="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$Summary">
@@ -125,7 +162,7 @@
         on
             eh.expenditurecategory_id = ec.expenditure_category_id
         where
-        <![CDATA[to_char(eh.expenditure_datetime,'YYYY-MM') > #{targetDate}]]>
+        <![CDATA[to_char(eh.expenditure_datetime,'YYYY-MM') > #{yearAndMonth}]]>
             and
             member_id = #{memberId}
         group by

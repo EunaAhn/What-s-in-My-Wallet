@@ -71,4 +71,8 @@ public class ExpenditureRepository {
     public void  insertExpenditureMemo(Map<String, Object> map){
         expenditureMapper.insertExpenditureMemo(map);
     }
+
+    public List<ExenditureDto.CategoryList> findAllCategoryList (Map<String, Object> map){
+        return expenditureMapper.findAllCategoryList(map);
+    }
 }

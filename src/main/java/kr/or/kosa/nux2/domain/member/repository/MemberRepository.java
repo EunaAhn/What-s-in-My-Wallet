@@ -27,5 +27,7 @@ public class MemberRepository {
         return memberMapper.isExistMemberId(request);
     }
 
-
+    public MemberDto.ProfileResponse selectMemberDetail(MemberDto.MemberIdRequest request){
+        return memberMapper.selectMemberDetail(request);
+    }
 }

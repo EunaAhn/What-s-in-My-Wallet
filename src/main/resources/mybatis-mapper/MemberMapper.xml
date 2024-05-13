@@ -37,14 +37,15 @@
         END AS member_id_exists
         FROM DUAL
     </select>
-<!--    <select id="">-->
-<!--        select m.member_id, c.expenditure_category-->
-<!--        from member1 m-->
-<!--        join member_expenditure_category c-->
-<!--        on m.member_id = c.member_id-->
-<!--        join expenditure_category-->
-<!--        where m.member_id = #{memberId}-->
+    <select id="selectMemberDetail" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$MemberIdRequest" resultType="kr.or.kosa.nux2.domain.member.dto.MemberDto$ProfileResponse">
+        select
+            member_id memberId,
+            member_name memberName,
+            target_expenditure targetExpenditure
+        from member1
+        where
+            member_id = #{memberId}
 
-<!--    </select>-->
+    </select>
 
 </mapper>

@@ -44,24 +44,9 @@ public class MemberController {
     @PostMapping("/signIn")
     public String signIn(@RequestBody MemberDto.SignInRequest request){
         memberService.signIn(request);
-        return "main";
-    }
-    @PostMapping("/email")
-    public ResponseEntity<ApiResponse<MemberDto.checkMemberIdResponse>> checkMemberIdAuthentication(@RequestBody MemberDto.MemberIdRequest request) {
-        MemberDto.checkMemberIdResponse response = new MemberDto.checkMemberIdResponse(memberService.checkMemberId(request));
-        return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
-    }
-    @PostMapping("/email/authentication")
-    public ResponseEntity<ApiResponse<MemberDto.checkAuthenticationNumberResponse>> checkAuthenticationNumber(@RequestBody MemberDto.AuthenticationRequest request){
-        MemberDto.checkAuthenticationNumberResponse response = new MemberDto.checkAuthenticationNumberResponse(memberService.validateAuthenticationNumber(request));
-        return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
+        return "cardlist";
     }
 
-    @GetMapping("/profile")
-    public String editProfile(){
-
-        return "profile";
-    }
 
 
 

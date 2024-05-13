@@ -11,6 +11,7 @@ public interface MemberService {
     public boolean checkMemberId(MemberDto.MemberIdRequest request);
     public void sendEmail(MemberDto.MemberIdRequest request);
     public String generateAuthenticationNumber();
-    public int insertAuthenticationInfo(MemberDto.AuthenticationRequest request);
+    public int insertOrUpdateAuthenticationInfo(MemberDto.AuthenticationRequest request);
     public boolean validateAuthenticationNumber(MemberDto.AuthenticationRequest request);
+    public MemberDto.ProfileResponse showMemberProfile(MemberDto.MemberIdRequest request);
 }

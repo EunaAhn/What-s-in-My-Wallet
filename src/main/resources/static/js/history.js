@@ -1,3 +1,18 @@
+import * as history from "./api/history.js"
+import {getStoreAddressList} from "./api/history.js";
+
+const nowDate = "2023-05-04";
+const addDailyExpenditureList = async () => {
+    const dailyList = await history.getDailyExpenditureList(nowDate);
+    const expenditureSummaryDtoList = await history.getExpenditureSummaryDtoList(nowDate);
+    const addressList = await history.getStoreAddressList(nowDate);
+    //console.log(expenditureSummaryDtoList)
+    createItems(dailyList);
+    createExpenseItems(expenditureSummaryDtoList);
+    //console.log(addressList);
+    //console.log(dailyList);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem('clickedmenu', ".side_history");
 })
@@ -107,116 +122,257 @@ nextBtn.addEventListener('click', () => {
 });
 
 // 모달창
-const dialog = document.querySelector('dialog');
-const datelist = document.querySelectorAll('.date')
+    const dialog = document.querySelector('dialog');
+    const datelist = document.querySelectorAll('.date')
 
-if(datelist.length > 0){
-    datelist.forEach(item => {
-        item.addEventListener('click', event => {
-            dialog.showModal();
-            map.relayout()
+    if (datelist.length > 0) {
+        datelist.forEach(item => {
+            item.addEventListener('click', event => {
+                dialog.showModal();
+                //alert("모달창이 열렸습니다."); // 모달창이 열릴 때마다 알림창을 띄웁니다.
+                map.relayout(); // map.relayout() 함수 호출
+                setBounds(); // 지도를 재배치합니다.
+            });
         });
-    });
-}
+    }
 
-const closeButton = document.querySelector('.close_btn')
-closeButton.addEventListener('click', () => {
-    dialog.close();
-})
-
-
-// 기본적으로 중심 좌표를 설정하여 지도를 생성합니다.
-var container = document.getElementById('map'); // 지도를 담을 영역의 DOM 요소를 가져옵니다.
-var options = {
-    center: new kakao.maps.LatLng(37.583584616776854, 127.00193938906052), // 기본적인 중심 좌표를 설정합니다.
-    level: 5 // 지도의 확대 레벨을 설정합니다. (낮을수록 확대 수준이 높습니다.)
-};
-var map = new kakao.maps.Map(container, options); // 지도를 생성합니다.
-
-// document.addEventListener("DOMContentLoaded", function () {
-//     var REST_API_KEY = "846a14217115ae6027031b39e790b997"; // 여기에 발급받은 Kakao REST API 키를 입력하세요.
-//     var query = "서울 종로구 창경궁로 239 다이소 혜화점"; // 검색할 장소의 이름
-//
-//     // 카카오 지도 API를 통해 다이소 혜화역점의 위치를 검색
-//     fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(query)}&x=127.06283102249932&y=37.514322572335935&radius=20000`, {
-//         headers: {
-//             "Authorization": `KakaoAK ${REST_API_KEY}`
-//         }
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//             console.log(data); // API 응답을 콘솔에 출력하여 확인합니다.
-//             if (data.documents.length > 0) { // 검색 결과가 있는지 확인합니다.
-//                 // 검색 결과 중에서 0번째 장소의 위치 정보를 가져옵니다.
-//                 var firstPlace = data.documents[0];
-//
-//                 // 마커가 표시될 위치입니다
-//                 var markerPosition = new kakao.maps.LatLng(firstPlace.y, firstPlace.x);
-//
-//                 // 기존 지도에 마커를 추가합니다.
-//                 var marker = new kakao.maps.Marker({
-//                     position: markerPosition
-//                 });
-//
-//                 // 기존 지도에 마커를 표시합니다.
-//                 marker.setMap(map);
-//
-//                 // 마커 클릭 이벤트 리스너 추가
-//                 kakao.maps.event.addListener(marker, 'click', function() {
-//                     // 마커 클릭 시 실행할 동작을 여기에 작성합니다.
-//                     window.open(firstPlace.place_url);
-//                 });
-//             } else {
-//                 console.error('검색 결과가 없습니다.'); // 검색 결과가 없는 경우 에러 메시지를 출력합니다.
-//             }
-//         })
-//         .catch(error => console.error('Error:', error));
-// });
+    const closeButton = document.querySelector('.close_btn')
+    closeButton.addEventListener('click', () => {
+        dialog.close();
+    })
 
 
-// const BaseUrl = "http://localhost:8090"; // 포트에 대한 프로토콜을 추가해야 합니다.
-// const myHeaders = new Headers();
-// myHeaders.append("Content-Type", "application/json");
-//
-// const raw = JSON.stringify({
-//     "nowDate": "2023-05-04"
-// });
-//
-// // GET 요청에는 body를 포함시킬 수 없습니다. 따라서 requestOptions에서 body 속성을 제거해야 합니다.
-// const requestOptions = {
-//     method: "GET",
-//     headers: myHeaders,
-//     redirect: "follow"
-// };
-//
-// // 쿼리 매개변수로 데이터를 전달합니다.
-// const queryParams = new URLSearchParams({ "nowDate": "2023-05-04" });
-// const url = `${BaseUrl}/api/expenditure/daily?${queryParams}`;
-//
-// fetch(url, requestOptions)
-//     .then((response) => response.text())
-//     .then((result) => console.log(result))
-//     .catch((error) => console.error(error));
+var map;
+var points = [];
 
+window.addEventListener('popstate', async function (event) {
+    // 페이지 이동을 감지하여 처리하는 코드 작성
+    // 페이지가 돌아왔을 때 initMap 함수를 다시 호출하여 지도를 재설정합니다.
+    console.log(points)
+    await initMap();
+});
 
-const BaseUrl = "localhost:8090"
-const myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
+document.addEventListener("DOMContentLoaded", async function () {
+    // 초기화 함수를 호출합니다.
+    await initMap();
+});
 
-const getCardProductList  = () => {
-    const raw = JSON.stringify({
-        "cardCompanyName": null,
-        "benefit": "",
-        "cardName": ""
-    });
-    const requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow"
+async function initMap() {
+    var REST_API_KEY = "846a14217115ae6027031b39e790b997"; // 여기에 발급받은 Kakao REST API 키를 입력하세요.
+
+    const addressList = await getStoreAddressList(nowDate);
+    //console.log(addressList);
+
+    // 기본적으로 중심 좌표를 설정하여 지도를 생성합니다.
+    var container = document.getElementById('map'); // 지도를 담을 영역의 DOM 요소를 가져옵니다.
+    var options = {
+        center: new kakao.maps.LatLng(37.583584616776854, 127.00193938906052), // 기본적인 중심 좌표를 설정합니다.
+        level: 5 // 지도의 확대 레벨을 설정합니다. (낮을수록 확대 수준이 높습니다.)
     };
-    fetch(`${BaseUrl}/mydatatest`, requestOptions)
-        .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.error(error));
+    map = new kakao.maps.Map(container, options); // 지도를 생성합니다.
+
+    // 주소 목록에 있는 각 주소에 대해 처리합니다.
+    await Promise.all(addressList.map(async (item) => {
+        var query = item;
+        var response = await fetch(`https://dapi.kakao.com/v2/local/search/address.json?query=${encodeURIComponent(query)}`, {
+            headers: {
+                "Authorization": `KakaoAK ${REST_API_KEY}`
+            }
+        });
+        var data = await response.json();
+        //console.log(data); // API 응답을 콘솔에 출력하여 확인합니다.
+        if (data.documents.length > 0) { // 검색 결과가 있는지 확인합니다.
+            // 검색 결과 중에서 0번째 장소의 위치 정보를 가져옵니다.
+            var firstPlace = data.documents[0];
+
+            // 위도와 경도를 배열에 추가합니다.
+            var latitude = parseFloat(firstPlace.address.y);
+            var longitude = parseFloat(firstPlace.address.x);
+
+            // LatLng 객체를 생성하여 points 배열에 추가합니다.
+            var point = new kakao.maps.LatLng(latitude, longitude);
+            points.push(point);
+
+            // 마커가 표시될 위치입니다
+            var markerPosition = new kakao.maps.LatLng(latitude, longitude);
+
+            // 기존 지도에 마커를 추가합니다.
+            var marker = new kakao.maps.Marker({
+                position: markerPosition
+            });
+
+            // 기존 지도에 마커를 표시합니다.
+            marker.setMap(map);
+
+            // 마커 클릭 이벤트 리스너 추가
+            kakao.maps.event.addListener(marker, 'click', function () {
+                // 마커 클릭 시 실행할 동작을 여기에 작성합니다.
+                console.log(firstPlace);
+            });
+        } else {
+            console.error('검색 결과가 없습니다.'); // 검색 결과가 없는 경우 에러 메시지를 출력합니다.
+        }
+    }));
+
+    // 모든 주소를 처리한 후에 지도 범위를 재설정합니다.
+    setBounds();
+
+    // 선을 그립니다.
+    drawLine();
+
+    // 포인터 배열 확인을 위해 alert 함수 호출
+    //alertPointsArray();
 }
+
+// 포인터 배열 확인 함수
+// function alertPointsArray() {
+//     // 포인터 배열이 비어있는지 확인합니다.
+//     if (points.length > 0) {
+//         // 포인터 배열의 내용을 문자열로 변환하여 알림창에 표시합니다.
+//         var pointsString = points.map(point => `Latitude: ${point.getLat()}, Longitude: ${point.getLng()}`).join('\n');
+//         window.alert("포인터 배열 내용:\n" + pointsString);
+//     } else {
+//         window.alert("포인터 배열이 비어 있습니다.");
+//     }
+// }
+
+function setBounds() {
+    // points 배열이 비어있는지 확인합니다.
+    //console.log(points)
+
+    // LatLngBounds 객체를 생성하고 points 배열에 저장된 좌표들을 기준으로 범위를 설정합니다.
+    var bounds = new kakao.maps.LatLngBounds();
+    points.forEach(point => bounds.extend(point));
+
+    // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+    // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
+    map.setBounds(bounds);
+}
+
+function drawLine() {
+    // Polyline을 생성하고, points 배열에 저장된 좌표들을 연결합니다.
+    var polyline = new kakao.maps.Polyline({
+        path: points, // 선을 구성하는 좌표 배열입니다
+        strokeWeight: 3, // 선의 두께입니다
+        strokeColor: '#47acd5', // 선의 색깔입니다
+        strokeOpacity: 0.7, // 선의 불투명도입니다
+        strokeStyle: 'solid' // 선의 스타일입니다
+    });
+
+    // 지도에 선을 표시합니다
+    polyline.setMap(map);
+}
+
+
+
+// expenditureSummaryDtoList를 반복하면서 동적으로 expense_item을 생성하는 함수
+function createItems(dailyList) {
+    const main = document.querySelector('.main');
+    const memo  =  document.querySelector('.memo_box');
+
+    const boxprice = document.createElement('div');
+    boxprice.classList.add('main_box', 'price'); // Add classes 'main_box' and 'price'
+
+    const titleElement = document.createElement('p');
+    titleElement.classList.add('title');
+    titleElement.textContent = `총 지출금액`;
+    boxprice.appendChild(titleElement);
+
+    const contentElement = document.createElement('div');
+    contentElement.classList.add('content');
+    contentElement.textContent = `${dailyList.expenditureTotalAmount}원`;
+    boxprice.appendChild(contentElement); // Append contentElement, not titleElement
+
+//--------------------------
+
+    const cardinfo = document.createElement('div');
+    cardinfo.classList.add('main_box', 'cardinfo'); // Add classes 'main_box' and 'price'
+
+    const expendNumTitleElement = document.createElement('p');
+    expendNumTitleElement.classList.add('title');
+    expendNumTitleElement.textContent = `결제 횟수`;
+    cardinfo.appendChild(expendNumTitleElement);
+
+    const expendContentElement = document.createElement('div');
+    expendContentElement.classList.add('content');
+    expendContentElement.textContent = `${dailyList.totalExpenditureCount}회`;
+    cardinfo.appendChild(expendContentElement); // Append contentElement, not titleElement
+
+    //--------------------------
+
+    const memoTitleElement = document.createElement('p');
+    memoTitleElement.classList.add('title');
+    memoTitleElement.textContent = `메모`;
+    memo.appendChild(memoTitleElement);
+
+    const memoContentElement = document.createElement('input');
+    memoContentElement.classList.add('content', 'memo_content');
+    memoContentElement.type = 'text';
+    memoContentElement.value = `${dailyList.memo}`;
+    memo.appendChild(memoContentElement); // Append contentElement, not titleElement
+
+    main.appendChild(boxprice);
+    main.appendChild(cardinfo);
+
+}
+
+
+// expenditureSummaryDtoList를 반복하면서 동적으로 expense_item을 생성하는 함수
+function createExpenseItems(expenditureSummaryDtoList) {
+    const expenseList = document.querySelector('.expense_list'); // expense_list 요소를 선택합니다.
+
+
+    expenditureSummaryDtoList.forEach(item => { // expenditureSummaryDtoList를 반복합니다.
+        // expense_item 요소를 생성합니다.
+        const expenseItem = document.createElement('div');
+        expenseItem.classList.add('expense_item');
+
+        // 소비 금액을 나타내는 요소를 생성하고 추가합니다.
+        const priceElement = document.createElement('p');
+        priceElement.classList.add('expense_price');
+        priceElement.textContent = `-${item.expenditureAmount}원`;
+        expenseItem.appendChild(priceElement);
+
+        // 가게 이름을 나타내는 요소를 생성하고 추가합니다.
+        const placeElement = document.createElement('p');
+        placeElement.classList.add('expense_place');
+        placeElement.textContent = item.storeName;
+        expenseItem.appendChild(placeElement);
+
+        // 소비 일시와 카드 정보를 나타내는 요소를 생성하고 추가합니다.
+        const dateCardElement = document.createElement('p');
+        dateCardElement.classList.add('expense_date_card');
+        dateCardElement.textContent = item.expenditureDatetime;
+        expenseItem.appendChild(dateCardElement);
+
+        // expenseList에 생성된 expense_item을 추가합니다.
+        expenseList.appendChild(expenseItem);
+    });
+}
+
+
+// addDailyExpenditureList 함수를 호출하여 데이터를 가져와서 expense_item을 동적으로 생성합니다.
+addDailyExpenditureList();
+
+
+// 카드 키워드 검색
+const hdCardSearch = document.querySelector("#hd_card_search")
+
+hdCardSearch.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && hdCardSearch.value) {
+        localStorage.setItem("searchWord", hdCardSearch.value)
+        window.location.href = "cardlist"
+        hdCardSearch.value = ""
+    }
+});
+
+
+const hdSearchImage = document.querySelector(".hd_search_image")
+
+hdSearchImage.addEventListener("click", () => {
+    if (hdCardSearch.value) {
+        localStorage.setItem("searchWord", hdCardSearch.value)
+        window.location.href = "cardlist"
+        hdCardSearch.value = ""
+    }
+})

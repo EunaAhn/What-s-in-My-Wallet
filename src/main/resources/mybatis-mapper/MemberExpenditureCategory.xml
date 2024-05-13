@@ -11,5 +11,16 @@
     </insert>
 
 
+    <select id="selectMemberConsCategories" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$MemberIdRequest" resultType="kr.or.kosa.nux2.domain.member.dto.MemberConsCategoryDto$MemberConsCategoryResponse">
+        select e.expenditure_category_name expenditureCategoryName
+        from  expenditure_category e
+        join member_expenditure_category c
+        on e.expenditure_category_id = c.expenditure_category_id
+        join member1 m
+        on m.member_id = c.member_id
+        where c.member_id = #{memberId}
+    </select>
+
+
 
 </mapper>

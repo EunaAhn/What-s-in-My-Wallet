@@ -58,7 +58,7 @@ public class SecurityConfig {
                 .httpBasic((auth) -> auth.disable());
 
         http
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/test/*", "/api/expenditure/*").permitAll());
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/test/*", "/api/expenditure/*", "/api/cardproduct/*").permitAll());
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**")
@@ -75,26 +75,25 @@ public class SecurityConfig {
                         //.logout((logout)->logout.logoutUrl("/logout").logoutSuccessUrl("/login"));
 
         http
+                .formLogin((auth) -> auth.loginPage("/login").permitAll());
+        http
                 .oauth2Login(oauth2 -> oauth2
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(principleOauth2UserService))
+                        .loginPage("/login")
                         .successHandler(new OAuthSuccessHandler(jwtUtils))
 
                 );
         http
                 .exceptionHandling((exceptions) -> exceptions.authenticationEntryPoint(jwtAuthenticationEntryPoint));
-//        http
-//                .addFilterBefore(new JwtFilter(jwtUtils), JwtLoginFilter.class);
-//        http
-//                .addFilterAt(new JwtLoginFilter(authenticationManager(), jwtUtils), UsernamePasswordAuthenticationFilter.class);
+        http
+                .addFilterBefore(new JwtFilter(jwtUtils), JwtLoginFilter.class);
+        http
+                .addFilterAt(new JwtLoginFilter(authenticationManager(), jwtUtils), UsernamePasswordAuthenticationFilter.class);
         http
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-
-
         return http.build();
     }
-
-
 }

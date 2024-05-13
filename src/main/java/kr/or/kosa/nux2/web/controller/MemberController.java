@@ -46,7 +46,6 @@ public class MemberController {
         return "login";
     }
 
-
     @PostMapping("/logout/1")
     public String logout(HttpServletRequest request,@AuthenticationPrincipal CustomUserDetails customUserDetails){
         HttpSession session = request.getSession();

@@ -6,7 +6,8 @@
         select
             card_number as cardNumber,
             member_name as memberName,
-            card_company as cardCompanyCode
+            card_company as cardCompanyCode,
+            card_name as cardName
         from
             my_data_cards
         where
@@ -26,7 +27,8 @@
         select
             card_number as cardNumber,
             member_name as memberName,
-            card_company as cardCompanyCode
+            card_company as cardCompanyCode,
+            card_name as cardName
         from
             my_data_cards
     </select>
@@ -35,7 +37,8 @@
         select
         card_number as cardNumber,
         member_name as memberName,
-        card_company as cardCompanyCode
+        card_company as cardCompanyCode,
+        card_name as cardName
         from
         my_data_cards
         where card_number = #{cardNumber}

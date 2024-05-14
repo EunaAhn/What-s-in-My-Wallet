@@ -101,7 +101,7 @@
                 membership_fee AS membership_fee,
                 benefit_summary AS benefit_summary,
                 row_number() OVER(ORDER BY card_product_id) AS row_num
-                FROM
+                FROM card_product
                 WHERE
                 card_company_id LIKE '%' || #{keyword} || '%'
                 OR
@@ -122,8 +122,7 @@
 <!--                    </when>-->
 <!--                </choose>-->
                 ORDER BY
-                cp.card_product_id         card_product
-
+                cp.card_product_id
             </when>
             <otherwise>
                 select
@@ -151,7 +150,8 @@
                 <choose>
                     <when test="list != null">
                         where card_product_id in
-                        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                        <foreach item="item" index="index" collection="
+                        list" open="(" separator="," close=")">
                             #{item}
                         </foreach>
                     </when>
@@ -161,7 +161,6 @@
                 left join
                 card_benefit_code cbc
                 on cp.card_product_id = cbc.card_product_id
-
                 order by cp.card_product_id
 
             </otherwise>

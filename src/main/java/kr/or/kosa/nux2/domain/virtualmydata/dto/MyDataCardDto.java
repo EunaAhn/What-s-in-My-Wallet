@@ -9,6 +9,7 @@ public class MyDataCardDto {
         private String cardNumber;
         private String cardCompanyCode;
         private String memberName;
+        private String cardName;
     }
 
     @AllArgsConstructor

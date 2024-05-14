@@ -47,7 +47,7 @@ export const getCardProductTop = async () => {
 }
 
 // 내 카드 목록 조회
-export const getMyCardProduct = async () => {
+export const getMyCard = async () => {
     const raw = JSON.stringify({
         "memberName": "김우재",
         "memberContactNumber": "01089387607"
@@ -56,20 +56,41 @@ export const getMyCardProduct = async () => {
     const requestOptions = {
         method: "POST",
         headers: myHeaders,
-        body: raw,
+        body: raw
     };
     try {
-        const response = await fetch(`/api/mydata/mycard`, requestOptions);
+        const response = await fetch(`/mycard`, requestOptions);
         const result = await response.json();
         return result.result;
 
     } catch (error) {
-        console.log("getMyCardProduct error : ",error)
+        console.log("getMyCard error : ",error)
         return null
     }
 }
 
-// 카드 등록 시 내 카드 목록 불러오기
+// 등록된 내 카드 목록 조회
+export const postRegistrationcardRegister = async (selectedCardIdList) => {
+    const raw = JSON.stringify(selectedCardIdList);
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw
+    };
+    try {
+        const response = await fetch(`/api/registrationcard/register`, requestOptions);
+        console.log(response)
+        // const result = await response.json();
+        // return result.result;
+
+    } catch (error) {
+        console.log("postRegistrationcardRegister error : ",error)
+        return null
+    }
+}
+
+// 등록된 내 카드 불러오기
 export const getRegistrationCardList = async () => {
     const requestOptions = {
         method: "GET",
@@ -86,24 +107,3 @@ export const getRegistrationCardList = async () => {
     }
 }
 
-// 카드 등록 시 내 가드 목록 불러오기
-export const postRegistrationCardListRegister = async () => {
-    const raw = JSON.stringify({
-        "cardNumber" : "5654338751249986"
-    });
-
-    const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-    };
-    try {
-        const response = await fetch(`/api/registrationcard/register`, requestOptions);
-        const result = await response.json();
-        return result.result;
-
-    } catch (error) {
-        console.log("postRegistrationCardListRegister error : ",error)
-        return null
-    }
-}

@@ -68,8 +68,6 @@ public class MyDataCardsRestController {
     @PostMapping("/mycard")
     public ResponseEntity<ApiResponse<?>> showMyCard(@RequestBody MyDataCardDto.AuthenticationRequest request){
         List<MyDataCardDto.Response> responses = myDataCardService.showAllMyDataCard(request);
-
-
         return new ResponseEntity<>(new ApiResponse(responses, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
 }

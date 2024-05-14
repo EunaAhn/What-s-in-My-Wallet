@@ -4,7 +4,6 @@ import kr.or.kosa.nux2.web.common.code.SuccessCode;
 import lombok.Builder;
 import lombok.Getter;
 
-
 @Getter
 public class ApiResponse<T> {
     // API 응답 결과 Response

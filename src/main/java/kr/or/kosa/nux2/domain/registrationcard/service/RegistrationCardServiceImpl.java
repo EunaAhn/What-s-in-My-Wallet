@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class RegistrationCardServiceImpl implements RegistrationCardService{
+public class RegistrationCardServiceImpl implements RegistrationCardService {
     private final RegistrationCardRepository registrationCardRepository;
     private final MyDataCardRepository myDataCardRepository;
 
@@ -54,7 +54,6 @@ public class RegistrationCardServiceImpl implements RegistrationCardService{
             map.put("memberId", "dnwo1111");
             registrationCardRepository.insertRegistrationCard(map);
         }
-
         return 0;
     }
 }

@@ -22,5 +22,4 @@ public class CardRecoRestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
 }

@@ -1,6 +1,5 @@
 package kr.or.kosa.nux2.web.auth.config;
 
-
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -12,12 +11,11 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 
-
 @Configuration
 @OpenAPIDefinition
 public class SwaggerConfig {
     @Bean
-    public OpenAPI openAPI(){
+    public OpenAPI openAPI() {
         SecurityScheme securityScheme = new SecurityScheme()
                 .type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")
                 .in(SecurityScheme.In.HEADER).name("Authorization");

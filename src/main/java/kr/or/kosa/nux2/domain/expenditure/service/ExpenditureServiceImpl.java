@@ -9,16 +9,13 @@ import kr.or.kosa.nux2.domain.virtualmydata.service.MyDataTransHistorySevice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.security.Key;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class ExpenditureServiceImpl implements ExpenditureService{
+public class ExpenditureServiceImpl implements ExpenditureService {
     private final ExpenditureRepository expenditureRepository;
     private final MyDataTransHistorySevice myDataTransHistorySevice;
     private final RegistrationCardServiceImpl registrationCardService;
@@ -38,11 +35,6 @@ public class ExpenditureServiceImpl implements ExpenditureService{
         List<ExenditureDto.Response> expenditureList = expenditureRepository.findAllExpenditure(map);
         List<ExenditureDto.CategoryList> categoryNames = expenditureRepository.findAllCategoryList(map);
 
-
-
-//        for(int i = 0; i < expenditureList.size(); i++) {
-//            //expenditureList.get(i).setExpenditureCategoryList(categoryNames.get(i));
-//        }
         Map<String, Object> responses = new HashMap<>();
         responses.put("expenditureList", expenditureList);
         responses.put("categoryList", categoryNames);
@@ -75,23 +67,19 @@ public class ExpenditureServiceImpl implements ExpenditureService{
         return response;
     }
 
-    @Override
-    public void modifyExpenditureMemo(Map<String, Object> map) {
 
-    }
 
     @Override
     public List<ExenditureDto.RatioByCategoryResponse> showExpenditureRatioForCategoryByMonth(Map<String, Object> map) {
-        List<ExenditureDto.RatioByCategoryResponse>  response = expenditureRepository.findExpenditureRatioForCategoryByMonth(map);
+        List<ExenditureDto.RatioByCategoryResponse> response = expenditureRepository.findExpenditureRatioForCategoryByMonth(map);
         return response;
     }
 
     @Override
-    public List<Map<String, Object>>  showExpenditureCountForCategoryByMonth(String yearAndMonth) {
+    public List<Map<String, Object>> showExpenditureCountForCategoryByMonth(String yearAndMonth) {
         Map<String, Object> map = new HashMap<>();
         map.put("yearAndMonth", yearAndMonth);
         map.put("memberId", "dnwo1111");
-
 
         List<Map<String, Object>> result = expenditureRepository.findExpenditureCountForCategoryByMonth(map);
         return result;
@@ -126,11 +114,11 @@ public class ExpenditureServiceImpl implements ExpenditureService{
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", memberId);
         List<RegistrationCardDto.Response> registeredCard = registrationCardService.showAllRegisteredCardByMemberId(memberId);
-        for(RegistrationCardDto.Response card : registeredCard) {
+        for (RegistrationCardDto.Response card : registeredCard) {
             System.out.println(card.getCardNumber());
             List<MyDataTransanctionHistoryDto.Response> transactions = myDataTransHistorySevice.findMemberTransactions(memberId, card.getCardNumber());
             System.out.println(transactions.size());
-            if(transactions.size() != 0) {
+            if (transactions.size() != 0) {
                 map.put("list", transactions);
                 expenditureRepository.insertExpenditures(map);
             }
@@ -163,11 +151,11 @@ public class ExpenditureServiceImpl implements ExpenditureService{
     @Override
     public ExenditureDto.TendencyAnalysis findExpendiutreTendencyAnalysis(ExenditureDto.YearAndMonthRequest request) {
         Map<String, Object> map = new HashMap<>();
-        map.put("memberId","dnwo1111");
+        map.put("memberId", "dnwo1111");
         map.put("yearAndMonth", request.getYearAndMonth());
 
         ExenditureDto.TendencyAnalysis response = expenditureRepository.findExpendiutreTendencyAnalysis(map);
-       return  response;
+        return response;
     }
 
     @Override
@@ -176,9 +164,9 @@ public class ExpenditureServiceImpl implements ExpenditureService{
         map.put("memoId", request.getMemoId());
         map.put("expenditureMemo", request.getMemo());
         map.put("memberId", "dnwo1111");
-        if(checkExistMemo(map) == 1) {
+        if (checkExistMemo(map) == 1) {
             expenditureRepository.updateExpenditureMemo(map);
-        }   else {
+        } else {
             expenditureRepository.insertExpenditureMemo(map);
         }
         return true;

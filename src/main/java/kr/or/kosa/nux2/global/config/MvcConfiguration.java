@@ -1,15 +1,19 @@
 package kr.or.kosa.nux2.global.config;
 
+import kr.or.kosa.nux2.web.auth.interceptor.MemberInterceptor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.resource.VersionResourceResolver;
 
 @Configuration
 @EnableWebMvc
+@RequiredArgsConstructor
 public class MvcConfiguration implements WebMvcConfigurer {
+    private final MemberInterceptor interceptor;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         /* '/js/**'로 호출하는 자원은 '/static/js/' 폴더 아래에서 찾는다. */
@@ -26,5 +30,12 @@ public class MvcConfiguration implements WebMvcConfigurer {
 //                .addResourceLocations("classpath:/static/")
 //                .resourceChain(true)
 //                .addResolver(new VersionResourceResolver().addContentVersionStrategy("/**"));
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(interceptor)
+                //TODO excludeURL 좀더 고민해보기
+                .excludePathPatterns("/email/**", "/user", "/login/**", "/auth/**", "/oauth2/**", "/signIn", "/profile");
     }
 }

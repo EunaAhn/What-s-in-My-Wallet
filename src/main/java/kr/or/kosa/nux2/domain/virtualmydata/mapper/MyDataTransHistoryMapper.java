@@ -1,7 +1,6 @@
 package kr.or.kosa.nux2.domain.virtualmydata.mapper;
 
 import kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataTransanctionHistoryDto;
-import lombok.AllArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,5 +16,6 @@ public interface MyDataTransHistoryMapper {
 
     // 아이디보다 큰 아이디 값, 카드번호
     public List<MyDataTransanctionHistoryDto.Response> findAllTransHistory(@Param("memberId") String memberId, @Param("cardNumber") String cardNumber);
+
     public int insertTransHistory(MyDataTransanctionHistoryDto.InsertRequest insertRequest);
 }

@@ -1,9 +1,11 @@
-package kr.or.kosa.nux2.web.auth;
+package kr.or.kosa.nux2.web.auth.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import kr.or.kosa.nux2.web.auth.JwtUtils;
+import kr.or.kosa.nux2.web.auth.authentication.JwtAuthenticationToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -22,7 +24,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        log.info("method = {}","attemptAuthentication");
+        log.info("method = {}", "attemptAuthentication");
         String username = obtainUsername(request);
         String password = obtainPassword(request);
         JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(username, password);
@@ -31,14 +33,14 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        log.info("method = {}","successfulAuthentication");
+        log.info("method = {}", "successfulAuthentication");
         String token = jwtUtils.createAccessToken(authResult);
         response.addHeader(HttpHeaders.AUTHORIZATION, token);
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        log.info("method = {}","unsuccessfulAuthentication");
+        log.info("method = {}", "unsuccessfulAuthentication");
         response.setStatus(401);
     }
 }

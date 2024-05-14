@@ -2,7 +2,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.or.kosa.nux2.domain.member.mapper.EmailAuthenticationMapper">
-    <insert id="insertOrUpdateAuthenticationInfo" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$AuthenticationRequest">
+    <insert id="insertOrUpdateAuthenticationInfo" parameterType="map">
         MERGE INTO email_authentication
         USING dual
         ON (member_id = #{memberId})
@@ -16,7 +16,7 @@
         values
             (#{memberId},#{authenticationNumber})
     </insert>
-    <select id="findAuthenticationNumberByMemberIdAndTimeDiffLessThanFiveMinute" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$AuthenticationRequest" resultType="kr.or.kosa.nux2.domain.member.dto.MemberDto$AuthenticationResponse">
+    <select id="findAuthenticationNumberByMemberIdAndTimeDiffLessThanFiveMinute" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$MemberIdRequest" resultType="kr.or.kosa.nux2.domain.member.dto.MemberDto$AuthenticationDto">
         SELECT authentication_number authenticationNumber
         FROM email_authentication
         WHERE create_time >= (SYSTIMESTAMP - INTERVAL '5' MINUTE) AND member_id = #{memberId}

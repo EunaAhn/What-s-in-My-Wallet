@@ -7,10 +7,8 @@ import kr.or.kosa.nux2.web.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 @RequiredArgsConstructor
 @RestController
 public class MemberRestController {
@@ -22,14 +20,30 @@ public class MemberRestController {
         MemberDto.CheckMemberIdResponse response = new MemberDto.CheckMemberIdResponse(memberService.checkMemberId(request));
         return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
+
     @PostMapping("/email/authentication")
-    public ResponseEntity<ApiResponse<MemberDto.CheckAuthenticationNumberResponse>> checkAuthenticationNumber(@RequestBody MemberDto.AuthenticationRequest request){
+    public ResponseEntity<ApiResponse<MemberDto.CheckAuthenticationNumberResponse>> checkAuthenticationNumber(@RequestBody MemberDto.AuthenticationDto request) {
         MemberDto.CheckAuthenticationNumberResponse response = new MemberDto.CheckAuthenticationNumberResponse(memberService.validateAuthenticationNumber(request));
         return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
+
     @PostMapping("/api/member/profile")
-    public ResponseEntity<ApiResponse<MemberDto.ProfileResponse>> profile(@RequestBody MemberDto.MemberIdRequest request){
-        MemberDto.ProfileResponse response = memberService.showMemberProfile(request);
+    public ResponseEntity<ApiResponse<MemberDto.ProfileResponse>> profile() {
+        MemberDto.ProfileResponse response = memberService.showMemberProfile();
+        System.out.println("response" + response);
         return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
+
+    @PostMapping("/api/member/profile/edit")
+    public ResponseEntity<ApiResponse<MemberDto.ProfileResponse>> editMemberInfo(@RequestBody MemberDto.UpdateMemberInfoRequest request) {
+        MemberDto.ProfileResponse response = memberService.updateMemberInfo(request);
+        System.out.println("response" + response);
+        return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
+    }
+
+    @PostMapping("/api/member/profile/password")
+    public boolean editPassword(@RequestBody MemberDto.UpdatePasswordRequest request) {
+        return memberService.updatePassword(request);
+    }
+
 }

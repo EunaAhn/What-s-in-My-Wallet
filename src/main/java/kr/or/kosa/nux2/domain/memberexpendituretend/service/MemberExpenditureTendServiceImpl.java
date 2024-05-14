@@ -11,16 +11,14 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class MemberExpenditureTendServiceImpl implements  MemberExpenditureTendService{
+public class MemberExpenditureTendServiceImpl implements MemberExpenditureTendService {
     private final MemberExpenditureTendRepository memberExpenditureTendRepository;
-
 
     @Override
     public List<MemberExpenditureTendDto.Response> findMemberExpenditureTend(String yearAndMonth) {
         Map<String, Object> map = new HashMap<>();
         map.put("yearAndMonth", yearAndMonth);
         map.put("memberId", "dnwo1111");
-
 
         List<MemberExpenditureTendDto.Response> responses = memberExpenditureTendRepository.findMemberExpenditureTendMapper(map);
         return responses;

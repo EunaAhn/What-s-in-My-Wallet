@@ -8,9 +8,8 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class RestTempleteConfig {
 
-
     @Bean
-    public RestTemplate restTemplate (RestTemplateBuilder builder) {
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.
                 rootUri("127.0.0.1:5000")
                 .build();

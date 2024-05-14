@@ -17,10 +17,9 @@ import java.util.List;
 public class MemberExpenditureTendRestController {
     private final MemberExpenditureTendServiceImpl memberExpenditureTendService;
 
-
     @PostMapping("/")
     public ResponseEntity<ApiResponse<List<MemberExpenditureTendDto.Response>>> showExpenditureTend(@RequestBody MemberExpenditureTendDto.ExpenditureTendRequest request) {
-        List<MemberExpenditureTendDto.Response> responses =  memberExpenditureTendService.findMemberExpenditureTend(request.getYearAndMonth());
-       return new ResponseEntity<>(new ApiResponse<>(responses, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
+        List<MemberExpenditureTendDto.Response> responses = memberExpenditureTendService.findMemberExpenditureTend(request.getYearAndMonth());
+        return new ResponseEntity<>(new ApiResponse<>(responses, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
 }

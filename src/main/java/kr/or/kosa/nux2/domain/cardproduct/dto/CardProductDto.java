@@ -16,7 +16,6 @@ public class CardProductDto {
         private String membershipFee;
         private String benefitSummary;
 
-
         // 아래 조인 테이블 데이터 DTO 및 속성
         private Long likeCount; // 어쩔수 없이 N+1 쿼리 수행
         private List<BenefitCategoryDetails> benefitCategoryList;
@@ -62,7 +61,7 @@ public class CardProductDto {
 
     @Getter
     @Setter
-    public static class ListRequest{
+    public static class ListRequest {
         int startNum;
         int endNum;
         String keyWord = null;

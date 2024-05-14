@@ -6,7 +6,10 @@ import java.util.List;
 
 public interface MyDataCardService {
     List<MyDataCardDto.Response> showAllMyDataCard(MyDataCardDto.AuthenticationRequest authenticationRequest);
+
     void createMyDataCard(MyDataCardDto.InsertRequest insertRequest);
+
     List<MyDataCardDto.Response> showAllMyDataCard();
+
     MyDataCardDto.Response findMyDataCardByCardNumber(String cardNumber);
 }

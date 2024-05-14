@@ -102,20 +102,28 @@
                 benefit_summary AS benefit_summary,
                 row_number() OVER(ORDER BY card_product_id) AS row_num
                 FROM
-                card_product
-                        WHERE
-                        card_company_id LIKE '%' || #{keyword} || '%'
-                        OR
-                        card_product_name LIKE '%' || #{keyword} || '%'
-                        OR
-                        card_product_id in (select card_product_id from card_benefit_code where benefit_name LIKE '%' || #{keyword} || '%')
-                    )a  where row_num between #{startnum} and #{endnum}
+                WHERE
+                card_company_id LIKE '%' || #{keyword} || '%'
+                OR
+                card_product_name LIKE '%' || #{keyword} || '%'
+                OR
+                card_product_id in (select card_product_id from card_benefit_code where benefit_name LIKE '%' || #{keyword} || '%')
+                )a  where row_num between #{startnum} and #{endnum}
                 ) cp
                 left join
                 card_benefit_code cbc
                 on cp.card_product_id = cbc.card_product_id
+<!--                <choose>-->
+<!--                    <when test="cardProductId != null">-->
+<!--                        where cp.card_product_id in-->
+<!--                        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">-->
+<!--                            #{item}-->
+<!--                        </foreach>-->
+<!--                    </when>-->
+<!--                </choose>-->
                 ORDER BY
-                cp.card_product_id
+                cp.card_product_id         card_product
+
             </when>
             <otherwise>
                 select
@@ -140,11 +148,20 @@
                 benefit_summary,
                 row_number() over(order by card_product_id) as row_num
                 from card_product
+                <choose>
+                    <when test="list != null">
+                        where card_product_id in
+                        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                            #{item}
+                        </foreach>
+                    </when>
+                </choose>
                 ) a where row_num between #{startnum} and #{endnum}
                 ) cp
                 left join
                 card_benefit_code cbc
                 on cp.card_product_id = cbc.card_product_id
+
                 order by cp.card_product_id
 
             </otherwise>

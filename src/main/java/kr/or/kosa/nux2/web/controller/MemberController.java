@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -34,20 +35,22 @@ public class MemberController {
         return "index";
     }
 
+    @GetMapping("/oauth")
+    public String login(){
+        return "login";
+    }
+
     @PostMapping("/logout/1")
     public String logout(HttpServletRequest request,@AuthenticationPrincipal CustomUserDetails customUserDetails){
         HttpSession session = request.getSession();
         session.invalidate();
         return memberService.logout(customUserDetails);
     }
+
     @Operation(summary = "controller", description = "controller.")
     @PostMapping("/signIn")
     public String signIn(@RequestBody MemberDto.SignInRequest request){
         memberService.signIn(request);
         return "cardlist";
     }
-
-
-
-
 }

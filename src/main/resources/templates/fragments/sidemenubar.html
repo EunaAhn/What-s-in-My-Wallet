@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <script type="text/javascript" th:src="@{/js/sidemenubar.js}" defer></script>
+    <script type="module" th:src="@{/js/sidemenubar.js}" defer></script>
     <script src="https://kit.fontawesome.com/e2b1540441.js" crossorigin="anonymous" defer></script>
     <div class="side_menubar">
         <a href="cardlist">
@@ -13,16 +13,15 @@
 
         <div class="side_main_menu">메인 메뉴</div>
         <a href="cardlist">
-
             <div class="side_menu side_cardlist">
                 <i class="fa-solid fa-house"></i>
                 <p class="side_menu_word">카드리스트</p>
             </div>
         </a>
-        <a href="history">
-            <div class="side_menu side_history">
-                <i class="fa-solid fa-calendar"></i>
-                <p class="side_menu_word">소비내역</p>
+        <a href="suggestion">
+            <div class="side_menu side_suggestion">
+                <i class="fa-solid fa-bolt"></i>
+                <p class="side_menu_word">카드추천</p>
             </div>
         </a>
         <a href="analyze">
@@ -31,10 +30,10 @@
                 <p class="side_menu_word">성향분석</p>
             </div>
         </a>
-        <a href="suggestion">
-            <div class="side_menu side_suggestion">
-                <i class="fa-solid fa-bolt"></i>
-                <p class="side_menu_word">카드추천</p>
+        <a href="history">
+            <div class="side_menu side_history">
+                <i class="fa-solid fa-calendar"></i>
+                <p class="side_menu_word">소비내역</p>
             </div>
         </a>
         <a href="profile">

@@ -7,7 +7,8 @@
     <th:block layout:fragment="head">
         <link th:href="@{/css/history.css}" rel="stylesheet" />
         <link th:href="@{/css/common.css}" rel="stylesheet" />
-        <script type="text/javascript" th:src="@{/js/history.js}" defer></script>
+        <script type="module" th:src="@{/js/api/history.js}" defer></script>
+        <script type="module" th:src="@{/js/history.js}" defer></script>
         <script type="text/javascript" th:src="@{https://dapi.kakao.com/v2/maps/sdk.js?appkey=a08fa71444d38274914841776a047866}"></script>
     </th:block>
     <body>
@@ -15,7 +16,7 @@
     <th:block layout:fragment="sidemenubar" th:include="@{/fragments/sidemenubar}"></th:block>
     <dialog>
         <div class="modal_header">
-            <p>2024.05.05 이눅스님의 소비내역</p>
+            <p>이눅스님의 소비내역</p>
             <button class="close_btn">
                 <img class="close_image" th:src="@{/img/common/closebtn.png}" alt="close_button" />
             </button>
@@ -23,72 +24,30 @@
 
         <div class="modal_box scrollBar">
             <div class="main">
-                <div class="main_box price">
-                    <p class="title">총 지출금액</p>
-                    <div class="content">10,000원</div>
-                </div>
-                <div class="main_box cardinfo">
-                    <p class="title">결제 횟수</p>
-                    <div class="content">5회</div>
-                </div>
+<!--            <div class="main_box price">-->
+<!--                    <p class="title">총 지출금액</p>-->
+<!--                    <div class="content">10,000원</div>-->
+<!--                </div>-->
+<!--                <div class="main_box cardinfo">-->
+<!--                    <p class="title">결제 횟수</p>-->
+<!--                    <div class="content">5회</div>-->
+<!--                </div>-->
             </div>
             <div class="memo_box">
-                <p class="title">메모</p>
-                <input class="content memo_content" type="text" value=""/>
+<!--                <p class="title">메모</p>-->
+<!--                <input class="content memo_content" type="text" value=""/>-->
             </div>
             <div class="map_box">
-                <p class="title">오늘의 소비지도</p>
-                <div id="map"></div>
+<!--                <p class="title">오늘의 소비지도</p>-->
+<!--                <div id="map"></div>-->
             </div>
 
             <div class="expense_list">
-                <div class="expense_item">
-                    <p class="expense_price">-5,000원</p>
-                    <p class="expense_place">다이소 혜화역점</p>
-                    <p class="expense_date_card">2024-05-05 13:04 하나카드</p>
-                </div>
-                <div class="expense_item">
-                    <p class="expense_price">-5,000원</p>
-                    <p class="expense_place">다이소 혜화역점</p>
-                    <p class="expense_date_card">2024-05-05 13:04 하나카드</p>
-                </div>
-                <div class="expense_item">
-                    <p class="expense_price">-5,000원</p>
-                    <p class="expense_place">다이소 혜화역점</p>
-                    <p class="expense_date_card">2024-05-05 13:04 하나카드</p>
-                </div><div class="expense_item">
-                    <p class="expense_price">-5,000원</p>
-                    <p class="expense_place">다이소 혜화역점</p>
-                    <p class="expense_date_card">2024-05-05 13:04 하나카드</p>
-                </div><div class="expense_item">
-                    <p class="expense_price">-5,000원</p>
-                    <p class="expense_place">다이소 혜화역점</p>
-                    <p class="expense_date_card">2024-05-05 13:04 하나카드</p>
-                </div><div class="expense_item">
-                    <p class="expense_price">-5,000원</p>
-                    <p class="expense_place">다이소 혜화역점</p>
-                    <p class="expense_date_card">2024-05-05 13:04 하나카드</p>
-                </div><div class="expense_item">
-                    <p class="expense_price">-5,000원</p>
-                    <p class="expense_place">다이소 혜화역점</p>
-                    <p class="expense_date_card">2024-05-05 13:04 하나카드</p>
-                </div><div class="expense_item">
-                    <p class="expense_price">-5,000원</p>
-                    <p class="expense_place">다이소 혜화역점</p>
-                    <p class="expense_date_card">2024-05-05 13:04 하나카드</p>
-                </div><div class="expense_item">
-                    <p class="expense_price">-5,000원</p>
-                    <p class="expense_place">다이소 혜화역점</p>
-                    <p class="expense_date_card">2024-05-05 13:04 하나카드</p>
-                </div><div class="expense_item">
-                    <p class="expense_price">-5,000원</p>
-                    <p class="expense_place">다이소 혜화역점</p>
-                    <p class="expense_date_card">2024-05-05 13:04 하나카드</p>
-                </div><div class="expense_item">
-                    <p class="expense_price">-5,000원</p>
-                    <p class="expense_place">다이소 혜화역점</p>
-                    <p class="expense_date_card">2024-05-05 13:04 하나카드</p>
-                </div>
+<!--                <div class="expense_item">-->
+<!--                    <p class="expense_price">-5,000원</p>-->
+<!--                    <p class="expense_place">다이소 혜화역점</p>-->
+<!--                    <p class="expense_date_card">2024-05-05 13:04 하나카드</p>-->
+<!--                </div>-->
             </div>
         </div>
         <button class="modal_save">

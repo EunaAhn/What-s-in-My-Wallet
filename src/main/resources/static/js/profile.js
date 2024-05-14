@@ -84,3 +84,40 @@ function handleCheckboxChange() {
 checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', handleCheckboxChange);
 });
+
+
+// 카드 키워드 검색
+const hdCardSearch = document.querySelector("#hd_card_search")
+
+hdCardSearch.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && hdCardSearch.value) {
+        localStorage.setItem("searchWord", hdCardSearch.value)
+        window.location.href = "cardlist"
+        hdCardSearch.value = ""
+    }
+});
+
+
+const hdSearchImage = document.querySelector(".hd_search_image")
+
+hdSearchImage.addEventListener("click", () => {
+    if (hdCardSearch.value) {
+        localStorage.setItem("searchWord", hdCardSearch.value)
+        window.location.href = "cardlist"
+        hdCardSearch.value = ""
+    }
+})
+
+
+
+// 현재 페이지 URL 가져오기
+var urlString = window.location.href;
+
+// URL에서 쿼리 문자열 파싱
+var url = new URL(urlString);
+
+// 쿼리 매개변수 추출
+var statusParam = url.searchParams.get("status");
+
+// 결과 출력
+console.log("status 파라미터 값:", statusParam);

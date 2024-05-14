@@ -1,12 +1,19 @@
 package kr.or.kosa.nux2;
 
 import jakarta.servlet.http.HttpServletRequest;
+import kr.or.kosa.nux2.domain.member.dto.MemberDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@RequestMapping("/test")
 public class HomeController {
+
+    private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 
     @RequestMapping(value = "/onboarding", method= RequestMethod.GET)
     public String goOnBoarding(HttpServletRequest request) {
@@ -17,7 +24,9 @@ public class HomeController {
     public String goLogin(HttpServletRequest request) {return "login";}
 
     @RequestMapping(value = "/signup", method= RequestMethod.GET)
-    public String goSignup(HttpServletRequest request) {
+    public String goSignup(HttpServletRequest request, Model model) {
+        MemberDto.SignInRequest r = new MemberDto.SignInRequest();
+        model.addAttribute("model", r);
         return "signup";
     }
 

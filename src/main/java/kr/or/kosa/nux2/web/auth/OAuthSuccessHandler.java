@@ -25,6 +25,12 @@ public class OAuthSuccessHandler implements AuthenticationSuccessHandler {
         String accessToken = jwtUtils.createAccessToken(authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         response.addHeader(HttpHeaders.AUTHORIZATION, accessToken);
-    }
 
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        if(customUserDetails.getUserDto().getStatus()==0) {
+            response.sendRedirect("/test/profile?status=0");
+        }else{
+            response.sendRedirect("/main");
+        }
+    }
 }

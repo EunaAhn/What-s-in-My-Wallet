@@ -15,9 +15,11 @@ public class Interceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("method = {}","preHandle");
         if(!SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")){
+            log.info("안녕1");
             CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             if(customUserDetails.getUserDto().getStatus()==0) {
-                response.sendRedirect("/profile");
+                log.info("잘가1");
+                response.sendRedirect("/profile?status=0");
                 return false;
             }
         }

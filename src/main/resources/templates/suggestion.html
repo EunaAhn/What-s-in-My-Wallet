@@ -7,55 +7,47 @@
     <th:block layout:fragment="head">
         <link th:href="@{/css/suggestion.css}" rel="stylesheet" />
         <link th:href="@{/css/common.css}" rel="stylesheet" />
-        <script type="text/javascript" th:src="@{/js/suggestion.js}" defer></script>
+        <script type="module" th:src="@{/js/api/suggestion.js}" defer></script>
+        <script type="module" th:src="@{/js/suggestion.js}" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     </th:block>
     <body>
     <th:block layout:fragment="header" th:include="@{/fragments/header}"></th:block>
     <th:block layout:fragment="sidemenubar" th:include="@{/fragments/sidemenubar}"></th:block>
     <div class="container">
-        <div class="card-recommend-title">이눅스님에게 딱 맞는 카드 추천 Top6</div>
+        <div class="section section_up">
+            <div class="title">이눅스님에게 딱 맞는 카드 추천 Top6</div>
 
-        <div class="favorite-card-list">
-            <div class="favorite-list">
-                <img class="favorite-card-list-img" src="/img/cardlist/card1.png">
-                <div class="favorite">신한카드</div>
+            <div class="content_box">
+                <div class="content time_content">
+                    <img class="img" src="/img/cardlist/card1.png">
+                    <p class="expense_type">총 7,976원 혜택</p>
+                    <p class="type_description">피킹률: 0.52%</p>
+                    <p class="type_description">지출 횟수가 30회 이상이시군요!</p>
+                </div>
+                <div  class="content price_content">
+                    <img class="img" src="/img/cardlist/card2.png">
+                    <p class="expense_type">총 67,783원 혜택</p>
+                    <p class="type_description">피킹률: 4.43%</p>
+                    <p class="type_description">목표 지출금액보다 15만원 절약하셨어요</p>
+                </div>
             </div>
-            <div class="favorite-list">
-                <img class="favorite-card-list-img" src="/img/cardlist/card2.png">
-                <div class="favorite">신한카드</div>
-            </div>
-            <div class="favorite-list">
-                <img class="favorite-card-list-img" src="/img/cardlist/card3.png">
-                <div class="favorite">신한카드</div>
-            </div>
-            <div class="favorite-list">
-                <img class="favorite-card-list-img" src="/img/cardlist/card4.png">
-                <div class="favorite">신한카드</div>
-            </div>
-            <div class="favorite-list">
-                <img class="favorite-card-list-img" src="/img/cardlist/card4.png">
-                <div class="favorite">신한카드</div>
-            </div>
-            <div class="favorite-list">
-                <img class="favorite-card-list-img" src="/img/cardlist/card4.png">
-                <div class="favorite">신한카드</div>
-            </div>
+
         </div>
 
-        <div class="graph-container">
-            <div class="graph-list">
-                <div class="graph-detail">
-                    <div>소비 카테고리별 지출액</div>
-                    <div id="pie-chart"></div>
-                </div>
-
-                <div class="graph-detail">
-                    <div>소비 카테고리별 지출횟수</div>
-                    <div id="line-chart"></div>
+        <div class="section section_down">
+            <div class="chart">
+                <p class="chart_title">소비 카테고리별 지출액</p>
+                <div class="time_chart_wrapper">
+                    <div id="pie-chart" class="time_chart"></div>
                 </div>
             </div>
-
+            <div  class="chart">
+                <p class="chart_title">소비 카테고리 별 지출횟수</p>
+                <div class="price_chart_wrapper">
+                    <div id="line-chart" class="price_chart"></div>
+                </div>
+            </div>
         </div>
 
     </div>

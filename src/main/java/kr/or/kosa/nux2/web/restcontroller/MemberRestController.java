@@ -20,27 +20,29 @@ public class MemberRestController {
         MemberDto.CheckMemberIdResponse response = new MemberDto.CheckMemberIdResponse(memberService.checkMemberId(request));
         return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
+
     @PostMapping("/email/authentication")
-    public ResponseEntity<ApiResponse<MemberDto.CheckAuthenticationNumberResponse>> checkAuthenticationNumber(@RequestBody MemberDto.AuthenticationDto request){
+    public ResponseEntity<ApiResponse<MemberDto.CheckAuthenticationNumberResponse>> checkAuthenticationNumber(@RequestBody MemberDto.AuthenticationDto request) {
         MemberDto.CheckAuthenticationNumberResponse response = new MemberDto.CheckAuthenticationNumberResponse(memberService.validateAuthenticationNumber(request));
         return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
+
     @PostMapping("/api/member/profile")
-    public ResponseEntity<ApiResponse<MemberDto.ProfileResponse>> profile(){
+    public ResponseEntity<ApiResponse<MemberDto.ProfileResponse>> profile() {
         MemberDto.ProfileResponse response = memberService.showMemberProfile();
-        System.out.println("response"+response);
+        System.out.println("response" + response);
         return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
 
     @PostMapping("/api/member/profile/edit")
-    public ResponseEntity<ApiResponse<MemberDto.ProfileResponse>> editMemberInfo(@RequestBody MemberDto.UpdateMemberInfoRequest request){
+    public ResponseEntity<ApiResponse<MemberDto.ProfileResponse>> editMemberInfo(@RequestBody MemberDto.UpdateMemberInfoRequest request) {
         MemberDto.ProfileResponse response = memberService.updateMemberInfo(request);
-        System.out.println("response"+response);
+        System.out.println("response" + response);
         return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
 
     @PostMapping("/api/member/profile/password")
-    public boolean editPassword(@RequestBody MemberDto.UpdatePasswordRequest request){
+    public boolean editPassword(@RequestBody MemberDto.UpdatePasswordRequest request) {
         return memberService.updatePassword(request);
     }
 

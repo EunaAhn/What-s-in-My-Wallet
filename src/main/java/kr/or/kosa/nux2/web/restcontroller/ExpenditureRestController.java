@@ -7,11 +7,8 @@ import kr.or.kosa.nux2.web.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +20,7 @@ public class ExpenditureRestController {
     private final ExpenditureService expenditureService;
 
     @PostMapping("/list")
-    public ResponseEntity<ApiResponse<Map<String, Object>>> memberMonthlyExpenditures(@RequestBody  ExenditureDto.YearAndMonthRequest request) {
+    public ResponseEntity<ApiResponse<Map<String, Object>>> memberMonthlyExpenditures(@RequestBody ExenditureDto.YearAndMonthRequest request) {
         Map<String, Object> response = expenditureService.showMemberMonthlyExpenditures(request);
 
         return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
@@ -45,6 +42,7 @@ public class ExpenditureRestController {
         return new ResponseEntity<>(new ApiResponse<>(responses, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
 
     }
+
     @PostMapping("/ratioByCategory")
     public ResponseEntity<ApiResponse<List<ExenditureDto.RatioByCategoryResponse>>> expenditureRatioByCategory(@RequestBody ExenditureDto.YearAndMonthRequest request) {
         Map<String, Object> map = new HashMap<>();

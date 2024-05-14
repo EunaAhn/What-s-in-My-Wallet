@@ -8,7 +8,9 @@ import java.util.Map;
 
 @Mapper
 public interface EmailAuthenticationMapper {
-    int insertOrUpdateAuthenticationInfo(Map<String,Object> paramMap);
+    int insertOrUpdateAuthenticationInfo(Map<String, Object> paramMap);
+
     MemberDto.AuthenticationDto findAuthenticationNumberByMemberIdAndTimeDiffLessThanFiveMinute(MemberDto.MemberIdRequest request);
+
     int deleteAuthenticationInfoByMemberId(MemberDto.MemberIdRequest request);
 }

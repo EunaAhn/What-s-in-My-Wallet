@@ -3,7 +3,6 @@ package kr.or.kosa.nux2.domain.virtualmydata.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 public class MyDataTransanctionHistoryDto {
@@ -19,6 +18,7 @@ public class MyDataTransanctionHistoryDto {
         private String storeAddress;
         private String industryCode;
     }
+
     @Getter
     @AllArgsConstructor
     public static class InsertRequest {

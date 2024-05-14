@@ -19,9 +19,10 @@ public class ExenditureDto {
     public static class Response {
         // 달력 한칸에 표현되는 지출 DTO -> 30~31개의 idx를 갖는 List로 Wrapping되는 DTO
         private String expenditureDate;
-//        private List<ExenditureDto.CategoryName> expenditureCategoryList;
+        //        private List<ExenditureDto.CategoryName> expenditureCategoryList;
         private Long expenditureAmount;
     }
+
     @Getter
     public static class DetailsReponse {
         // 달력에서 일자별 지출을 클릭했을때 표현되는 지출상세 DTO
@@ -40,6 +41,7 @@ public class ExenditureDto {
         private String expenditureDatetime;
         private String storeAddress;
     }
+
     @Getter
     public static class CategoryName {
         // 달력 한칸에 표현되는 지출 카테고리명
@@ -104,7 +106,7 @@ public class ExenditureDto {
     }
 
     @Getter
-    public static class TotalCount{
+    public static class TotalCount {
         private Long expenditureTotalCount;
     }
 
@@ -124,7 +126,7 @@ public class ExenditureDto {
 
     @Getter
     @Setter
-    public static class UpdateMemoRequest{
+    public static class UpdateMemoRequest {
         private String memoId;
         private String memo;
     }
@@ -142,13 +144,11 @@ public class ExenditureDto {
         int year;
     }
 
-
     @Getter
     @Setter
     public static class TotalExpenditureCountRequest {
         String nowDate;
     }
-
 
     @Getter
     @Setter

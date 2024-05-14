@@ -14,22 +14,23 @@ import java.util.Map;
 public class MemberExpenditureCategoryRepository {
     private final MemberExpenditureCategoryMapper memberExpenditureCategoryMapper;
 
-//    public int insertMemberConsCategory(List<MemberConsCategoryDto.MemberConsCategoryIdDto> memberConsCategoryDtoList){
-//        return memberExpenditureCategoryMapper.insertMemberConsCategory(memberConsCategoryDtoList);
-//    }
-    public int insertMemberConsCategory(Map<String,Object> paramMap){
+    public int insertMemberConsCategory(Map<String, Object> paramMap) {
         return memberExpenditureCategoryMapper.insertMemberConsCategory(paramMap);
     }
-    public List<MemberConsCategoryDto.MemberConsCategoryResponse> selectMemberConsCategoryNames(MemberDto.MemberIdRequest request){
+
+    public List<MemberConsCategoryDto.MemberConsCategoryResponse> selectMemberConsCategoryNames(MemberDto.MemberIdRequest request) {
         return memberExpenditureCategoryMapper.selectMemberConsCategoryNames(request);
     }
-    public int updateMemberConsCategoryList(Map<String, Object> paramMap){
+
+    public int updateMemberConsCategoryList(Map<String, Object> paramMap) {
         return memberExpenditureCategoryMapper.updateMemberConsCategoryList(paramMap);
     }
-    public List<MemberConsCategoryDto.MemberConsCategoryIdDto> selectMemberConsCategoryIds(Map<String,Object> paramMap){
+
+    public List<MemberConsCategoryDto.MemberConsCategoryIdDto> selectMemberConsCategoryIds(Map<String, Object> paramMap) {
         return memberExpenditureCategoryMapper.selectMemberConsCategoryIds(paramMap);
     }
-    public int deleteMemberConsCategory(Map<String, Object> paramMap){
+
+    public int deleteMemberConsCategory(Map<String, Object> paramMap) {
         return memberExpenditureCategoryMapper.deleteMemberConsCategory(paramMap);
     }
 }

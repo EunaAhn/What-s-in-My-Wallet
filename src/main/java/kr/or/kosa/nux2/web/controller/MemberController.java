@@ -25,18 +25,19 @@ public class MemberController {
     public String hello() {
         return "hello";
     }
+
     @GetMapping("/")
-    public String index(){
+    public String index() {
         return "index";
     }
 
     @GetMapping("/oauth")
-    public String login(){
+    public String login() {
         return "login";
     }
 
     @PostMapping("/logout/1")
-    public String logout(HttpServletRequest request,@AuthenticationPrincipal CustomUserDetails customUserDetails){
+    public String logout(HttpServletRequest request, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         HttpSession session = request.getSession();
         session.invalidate();
         return memberService.logout(customUserDetails);
@@ -44,7 +45,7 @@ public class MemberController {
 
     @Operation(summary = "controller", description = "controller.")
     @PostMapping("/signUp")
-    public String signUp(@RequestBody MemberDto.SignUpRequest request){
+    public String signUp(@RequestBody MemberDto.SignUpRequest request) {
         memberService.signUp(request);
         return "cardlist";
     }
@@ -52,8 +53,6 @@ public class MemberController {
 //    public String oAuthMyPage(){
 //        return "profile";
 //    }
-
-
 
 
 }

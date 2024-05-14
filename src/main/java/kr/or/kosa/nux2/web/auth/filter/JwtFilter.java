@@ -13,6 +13,9 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,7 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        log.info("method = {}","doFilterInternal");
+        log.info("method = {}", "doFilterInternal");
         String token = jwtUtils.findToken(request);
 
         if (token != null && jwtUtils.validateToken(token)) { //토큰이 유효할때
@@ -42,7 +45,7 @@ public class JwtFilter extends OncePerRequestFilter {
             if (userName != null && !userName.equalsIgnoreCase("")) { //유저 아이디 있을때
                 log.info("set authentication");
                 SecurityContextHolder.getContext().setAuthentication(jwtUtils.getAuthentication(token));
-            }else {
+            } else {
                 log.info("not exist userName");
             }
 

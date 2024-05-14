@@ -39,81 +39,81 @@ public class JwtUtils {
 
     private final CustomUserDetailsService userDetailsService;
 
-
     /*
     Access 토큰 생성
      */
     public String createAccessToken(Authentication authentication) {
-        log.info("method = {}","createAccessToken");
+        log.info("method = {}", "createAccessToken");
         Claims claims = Jwts.claims().setSubject(authentication.getName());
         Date now = new Date();
         Date expireDate = new Date(now.getTime() + accessExpirationTime);
 
-        return prefix+" "+Jwts.builder()
+        return prefix + " " + Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setIssuer("2nux")
                 .setExpiration(expireDate)
-                .signWith(createSecretKey(secretKey),SignatureAlgorithm.HS256)
+                .signWith(createSecretKey(secretKey), SignatureAlgorithm.HS256)
                 .compact();
     }
-
 
     /*
     Refresh 토큰 생성
      */
     public String createRefreshToken(Authentication authentication) {
-        log.info("method = {}","createRefreshToken");
+        log.info("method = {}", "createRefreshToken");
         Claims claims = Jwts.claims().setSubject(authentication.getName());
         Date now = new Date();
         Date expireDate = new Date(now.getTime() + refreshExpirationTime);
 
-        return prefix+" "+Jwts.builder()
+        return prefix + " " + Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setIssuer("2nux")
                 .setExpiration(expireDate)
-                .signWith(createSecretKey(secretKey),SignatureAlgorithm.HS256)
+                .signWith(createSecretKey(secretKey), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public Key createSecretKey(String secretKey){
-        log.info("method = {}","createSecretKey");
+    public Key createSecretKey(String secretKey) {
+        log.info("method = {}", "createSecretKey");
         SecretKey key = Keys.hmacShaKeyFor(secretKey.getBytes());
         return key;
     }
 
-    public String extractUsername(String token){
-        log.info("method = {}","extractUsername");
+    public String extractUsername(String token) {
+        log.info("method = {}", "extractUsername");
         return extractClaim(token, Claims::getSubject);
     }
 
-    private <T> T extractClaim(String token, Function<Claims,T> claimsResolver){
-        log.info("method = {}","extractClaim");
+    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        log.info("method = {}", "extractClaim");
         Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
-    public Claims extractAllClaims(String token){
-        log.info("method = {}","extractAllClaims");
+    public Claims extractAllClaims(String token) {
+        log.info("method = {}", "extractAllClaims");
         return Jwts.parserBuilder()
                 .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8)).build()
                 .parseClaimsJws(token).getBody();
 
     }
+
     /*
     토큰으로 클레임 생성, 이를 통해 Authentication 객체 반환
      */
     public Authentication getAuthentication(String token) {
-        log.info("method = {}","getAuthentication");
+        log.info("method = {}", "getAuthentication");
         String userPrincipal = extractAllClaims(token).getSubject();
-        System.out.println("userprintl"+userPrincipal);
+        System.out.println("userprintl" + userPrincipal);
         UserDetails userDetails = userDetailsService.loadUserByUsername(userPrincipal);
         return new JwtAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
+
     //토큰 추출
     public String findToken(HttpServletRequest request) {
-        log.info("method = {}","findToken");
+        log.info("method = {}", "findToken");
         String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (bearerToken != null && !bearerToken.equalsIgnoreCase("")) {
             return bearerToken.split(" ")[1];
@@ -121,19 +121,19 @@ public class JwtUtils {
         return null;
     }
 
-    public boolean validateToken(String token){
-        log.info("method = {}","validateToken");
-        try{
+    public boolean validateToken(String token) {
+        log.info("method = {}", "validateToken");
+        try {
             Claims claims = extractAllClaims(token);
             Date expirationDate = claims.getExpiration();
             Date now = new Date();
 
-            if(expirationDate.before(now)){
+            if (expirationDate.before(now)) {
                 log.info("token expired");
                 return false;
             }
             return true;
-        } catch(JwtException e) {
+        } catch (JwtException e) {
             log.error(e.getMessage());
             return false;
         }

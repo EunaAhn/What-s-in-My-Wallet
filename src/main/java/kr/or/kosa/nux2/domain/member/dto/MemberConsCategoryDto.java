@@ -2,7 +2,6 @@ package kr.or.kosa.nux2.domain.member.dto;
 
 import lombok.*;
 
-
 public class MemberConsCategoryDto {
 
     @NoArgsConstructor

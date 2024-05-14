@@ -17,10 +17,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
-        log.info("method = {}","loadUserByUsername");
-        System.out.println("memberId"+memberId);
+        log.info("method = {}", "loadUserByUsername");
+        System.out.println("memberId" + memberId);
         MemberDto.UserDto userDto = memberRepository.findById(memberId);
-        System.out.println("userdto:"+userDto.toString());
+        System.out.println("userdto:" + userDto.toString());
         if (userDto != null) {
             return new CustomUserDetails(userDto);
         }

@@ -51,19 +51,4 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
         return Objects.hash(super.hashCode(), principal, password);
     }
 
-    /*
-     @Override
-    public void setAuthenticated(boolean authenticated) {
-        if (authenticated) {
-            throw new IllegalArgumentException("Cannot set this token to trusted.");
-        }
-        super.setAuthenticated(false);
-    }
-
-    @Override
-    public void eraseCredentials() {
-        super.eraseCredentials();
-        credentials = null;
-    }
-     */
 }

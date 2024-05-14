@@ -12,13 +12,15 @@ import java.util.Map;
 public class EmailAuthenticationRepository {
     private final EmailAuthenticationMapper emailAuthenticationMapper;
 
-    public int insertOrUpdateAuthenticationInfo(Map<String,Object> paramMap){
+    public int insertOrUpdateAuthenticationInfo(Map<String, Object> paramMap) {
         return emailAuthenticationMapper.insertOrUpdateAuthenticationInfo(paramMap);
     }
-    public MemberDto.AuthenticationDto findAuthenticationNumberByMemberIdAndTimeDiffLessThanFiveMinute(MemberDto.MemberIdRequest request){
+
+    public MemberDto.AuthenticationDto findAuthenticationNumberByMemberIdAndTimeDiffLessThanFiveMinute(MemberDto.MemberIdRequest request) {
         return emailAuthenticationMapper.findAuthenticationNumberByMemberIdAndTimeDiffLessThanFiveMinute(request);
     }
-    public int deleteAuthenticationInfoByMemberId(MemberDto.MemberIdRequest request){
+
+    public int deleteAuthenticationInfoByMemberId(MemberDto.MemberIdRequest request) {
         return emailAuthenticationMapper.deleteAuthenticationInfoByMemberId(request);
     }
 }

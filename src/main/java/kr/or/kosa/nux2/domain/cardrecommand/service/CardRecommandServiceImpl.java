@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class CardRecommandServiceImpl implements CardRecommadService{
+public class CardRecommandServiceImpl implements CardRecommadService {
     private final CardProductRepository cardProductRepository;
     private final RestTemplate restTemplate;
 
@@ -30,17 +30,17 @@ public class CardRecommandServiceImpl implements CardRecommadService{
                 .fromUriString("http://3.39.9.210:5000")
                 .path("/") // 서버 입장의 서버 Controller 부분에 존재
                 .queryParam("memberId", "dnwo1111")
-                .queryParam("date" , "2024-06")
+                .queryParam("date", "2024-06")
                 .encode()
                 .build()
                 .toUri();
 
-        ResponseEntity<CardRecommandDto.DiscountAmountByCategory[]> response =  restTemplate.getForEntity(uri, CardRecommandDto.DiscountAmountByCategory[].class);
-        CardRecommandDto.DiscountAmountByCategory[]  discountAmountByCategoryList = response.getBody();
+        ResponseEntity<CardRecommandDto.DiscountAmountByCategory[]> response = restTemplate.getForEntity(uri, CardRecommandDto.DiscountAmountByCategory[].class);
+        CardRecommandDto.DiscountAmountByCategory[] discountAmountByCategoryList = response.getBody();
 
         Map<String, Object> map = new HashMap();
         List<Integer> cardProductIdList = new ArrayList<>();
-        for(CardRecommandDto.DiscountAmountByCategory  dac : discountAmountByCategoryList) {
+        for (CardRecommandDto.DiscountAmountByCategory dac : discountAmountByCategoryList) {
             cardProductIdList.add(dac.getCardId());
         }
 

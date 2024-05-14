@@ -37,13 +37,11 @@ public class CustomUserDetails implements UserDetails, OAuth2User{
 
     @Override
     public String getPassword() {
-        //return memberAuthenticationResponse.getMemberPassword();
         return userDto.getMemberPassword();
     }
 
     @Override
     public String getUsername() {
-        //return memberAuthenticationResponse.getMemberId();
         return userDto.getMemberId();
     }
     private Collection<GrantedAuthority> createAuthorities(String roles){

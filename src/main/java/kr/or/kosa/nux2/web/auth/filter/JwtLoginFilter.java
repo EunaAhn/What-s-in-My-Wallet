@@ -24,7 +24,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        log.info("method = {}","attemptAuthentication");
+        log.info("method = {}", "attemptAuthentication");
         String username = obtainUsername(request);
         String password = obtainPassword(request);
         JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(username, password);
@@ -33,14 +33,14 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        log.info("method = {}","successfulAuthentication");
+        log.info("method = {}", "successfulAuthentication");
         String token = jwtUtils.createAccessToken(authResult);
         response.addHeader(HttpHeaders.AUTHORIZATION, token);
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        log.info("method = {}","unsuccessfulAuthentication");
+        log.info("method = {}", "unsuccessfulAuthentication");
         response.setStatus(401);
     }
 }

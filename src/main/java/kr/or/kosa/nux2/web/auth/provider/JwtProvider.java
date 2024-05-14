@@ -28,14 +28,13 @@ public class JwtProvider implements AuthenticationProvider {
      */
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        log.info("method = {}","authenticate");
+        log.info("method = {}", "authenticate");
         String memberId = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
-        System.out.println("autni crdeint"+password);
+
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(memberId);
-        System.out.println("userDaitl"+userDetails.getPassword().toString());
         if (userDetails != null && memberId.equals(userDetails.getUsername())) {
-           if (bCryptPasswordEncoder.matches(password, userDetails.getPassword())) {
+            if (bCryptPasswordEncoder.matches(password, userDetails.getPassword())) {
                 List<GrantedAuthority> authorities = new ArrayList<>();
                 return new JwtAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), authorities);
             }

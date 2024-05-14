@@ -9,11 +9,14 @@ import java.util.Map;
 
 @Mapper
 public interface MemberExpenditureCategoryMapper {
-    //int insertMemberConsCategory(List<MemberConsCategoryDto.MemberConsCategoryIdDto> memberConsCategoryDtoList);
-    int insertMemberConsCategory(Map<String,Object> paramMap);
+
+    int insertMemberConsCategory(Map<String, Object> paramMap);
+
     List<MemberConsCategoryDto.MemberConsCategoryResponse> selectMemberConsCategoryNames(MemberDto.MemberIdRequest request);
+
     int updateMemberConsCategoryList(Map<String, Object> paramMap);
-    List<MemberConsCategoryDto.MemberConsCategoryIdDto> selectMemberConsCategoryIds(Map<String,Object> paramMap);
+
+    List<MemberConsCategoryDto.MemberConsCategoryIdDto> selectMemberConsCategoryIds(Map<String, Object> paramMap);
 
     int deleteMemberConsCategory(Map<String, Object> paramMap);
 }

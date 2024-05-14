@@ -1,4 +1,4 @@
-package kr.or.kosa.nux2.web.controller;
+package kr.or.kosa.nux2.web.auth.interceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,7 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
 @Slf4j
-public class Interceptor implements HandlerInterceptor {
+public class MemberInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("method = {}","preHandle");

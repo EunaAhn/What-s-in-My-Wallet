@@ -11,11 +11,13 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
 
+
         const faSolidIcon = clickedmenu.querySelector(".fa-solid");
         const sideMenuWord = clickedmenu.querySelector(".side_menu_word");
 
         faSolidIcon.classList.add("clicked_fa-solid");
         sideMenuWord.classList.add("clicked_side_menu_word");
+
 
         sideMenus.forEach(function(menu) {
             if (menu !== clickedmenu) {

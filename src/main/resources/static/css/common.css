@@ -151,7 +151,7 @@ a{
     align-items: center;
 }
 
-.hd_card_search{
+#hd_card_search{
     height: 45px;
     width: 280px;
     font-size: 12px;

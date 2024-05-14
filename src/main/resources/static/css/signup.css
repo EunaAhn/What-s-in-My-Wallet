@@ -25,16 +25,94 @@ button {
     transition: 0.1s;
 }
 
-#checknum{
-    position: relative;
+.checknum{
+    height: 45px;
     border-radius: 14px;
     border: 1px solid #d7d7d7;
     margin-left: 10px;
-    margin-top: 3.5%;
-    margin-bottom: 2.5%;
     padding-left: 3%;
     padding-right: 3%;
+}
 
+.close_btn{
+    position: absolute;
+    top: 10px;
+    right: 8px;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.close_btn:hover{
+    background-color: transparent;
+}
+
+.close_image{
+    height: 20px;
+    width: 20px;
+}
+
+.authentication_modal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 200px;
+    border: none;
+    padding: 20px 35px;
+    background-color: white;
+    border-radius: 10px;
+    font-family: 'WooridaumB';
+    transform: translate(-150px,-150px);
+    box-shadow: 1px 1px 12px 0 rgba(0, 0, 0, 0.12);
+}
+
+.authentication_modal_box{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.authentication_modal_input{
+    width: 100%;
+    height: 45px;
+    padding-left: 10px;
+    color: #383838;
+    font-family: 'WooridaumB';
+    font-weight: 100;
+    border: 1px solid #3b3a45;
+    border-radius: 7px;
+    margin: 10px 0 ;
+}
+
+.authentication_modal_button{
+    width: 100%;
+    height: 45px;
+    color: black;
+    font-weight: 700;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    border: 1px solid #3b3a45;
+    background-color: white;
+}
+
+.authentication_modal_button:hover{
+    color: white;
+    background-color: #3b3a45;
+}
+
+.authentication_modal_timer{
+    font-size: 18px;
+    font-family: 'WooridaumB';
+}
+
+.authentication_modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(1px);
 }
 
 button:focus-visible {
@@ -50,7 +128,7 @@ button:hover {
 /* box shape input field */
 .box {
     width: 100%;
-    height: 50px;
+    height: 45px;
     box-sizing: border-box;
     padding: 5px 0 5px 15px;
     border-radius: 14px;
@@ -58,7 +136,6 @@ button:hover {
     color: #383838;
     font-weight: 400;
     font-family: 'Montserrat', 'Pretendard', sans-serif;
-    margin-bottom: 3%;
 }
 
 .box::placeholder {
@@ -97,7 +174,8 @@ button:hover {
     min-width: 23%; /* 최소 너비를 설정합니다. */
     box-sizing: border-box; /* 내부 패딩과 경계 상자를 포함하여 요소의 크기를 계산합니다. */
     text-align: center;
-    font-family: Inter;
+    font-family: var(--h6-reguler-font-family, 'Inter-Regular', sans-serif);
+    font-size: 12px;
 }
 
 .category-box::placeholder {
@@ -123,11 +201,11 @@ button:hover {
     flex-direction: column;
     background-color: #ffffff;
     width: 39%;
-    height: 90%;
-    max-width: 600px;
-    min-width: 450px;
-    max-height: 870px;
-    min-height: 870px;
+    height: 80%;
+    max-width: 550px;
+    min-width: 400px;
+    max-height: 700px;
+    min-height: 700px;
     top: 0;
     bottom: 0;
     left: 0;
@@ -147,16 +225,16 @@ button:hover {
 
 .form-input-date-picker-default {
     position: relative;
-    margin-bottom: 2%; /* 아이디와 비밀번호 입력 요소 간의 간격 조정 */
+    margin-bottom: 4%;
 }
 
 .form-input-date-picker-default1 {
     position: relative;
     display: flex;
     justify-content: space-between; /* 요소들 사이의 간격을 최대화하여 수평으로 분배합니다. */
-    margin-bottom: 2%; /* 아이디와 비밀번호 입력 요소 간의 간격 조정 */
+    align-items: end;
+    margin-bottom: 5%; /* 아이디와 비밀번호 입력 요소 간의 간격 조정 */
 }
-
 
 .form-input-date-picker-default2 {
     position: relative;
@@ -167,17 +245,13 @@ button:hover {
     position: relative;
     display: flex;
     justify-content: space-between; /* 요소들 사이의 간격을 최대화하여 수평으로 분배합니다. */
-    margin-bottom: 2%; /* 아이디와 비밀번호 입력 요소 간의 간격 조정 */
+    margin-bottom: 1%; /* 아이디와 비밀번호 입력 요소 간의 간격 조정 */
 }
 
 .form-input-date-picker-default3 input:checked + label {
     color: #ffffff;
     background: #3B3A45;
     outline: 1px solid #3B3A45;
-    padding-top: 3%;
-    padding-bottom: 3%;
-    padding-left: 3%;
-    padding-right: 3%;
 }
 
 .form-input-date-picker-default3 input {
@@ -185,17 +259,16 @@ button:hover {
     position: absolute;
 }
 
-
-
-.idbox, .pwdbox, .phonebox, #categorybox1, #categorybox5 {
+.idbox, .pwdbox, #categorybox1, #categorybox5, .namebox{
     flex: 1; /* 각 요소를 동일한 너비로 설정합니다. */
+    font-family: var(--h6-reguler-font-family, 'Inter-Regular', sans-serif);
 }
 
-.namebox, .pwdagain, #categorybox2, #categorybox3, #categorybox4, #categorybox6, #categorybox7, #categorybox8{
+.phonebox, .pwdagain, #categorybox2, #categorybox3, #categorybox4, #categorybox6, #categorybox7, #categorybox8{
     flex: 1;
     margin-left: 10px;
+    font-family: var(--h6-reguler-font-family, 'Inter-Regular', sans-serif);
 }
-
 
 .start-date {
     color: #717579;
@@ -203,12 +276,12 @@ button:hover {
     font-family: var(--h6-reguler-font-family, 'Inter-Regular', sans-serif);
     font-size: 13px;
     font-weight: 400;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
 }
 
-
 .content {
-    width: 80%;
+    position: relative;
+    width: 87%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -217,7 +290,6 @@ button:hover {
 /* HEADER */
 header {
     width: 100%;
-    margin-top: 5%;
     margin-bottom: 5%;
 }
 
@@ -238,13 +310,12 @@ section {
 }
 
 /* SUBMIT */
-button#signup {
+#signup {
     width: 100%;
-    height: 60px;
+    height: 50px;
     border-radius: 14px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     font-size: 15px;
-
 }
 
 /* RESULT */
@@ -316,3 +387,22 @@ button#signup {
     margin: 20% 10px 0 10px; /* 텍스트와 이미지 사이의 간격을 조정합니다. */
     white-space: nowrap; /* 텍스트의 줄바꿈을 제한합니다. */
 }
+
+.validation{
+    position: absolute;
+    left: 8px;
+    bottom: -17px;
+    font-size: 11px;
+    color: green;
+    font-family: 'Montserrat', 'Pretendard', sans-serif;
+}
+
+.non-validation{
+    position: absolute;
+    left: 8px;
+    bottom: -17px;
+    font-size: 11px;
+    color: red;
+    font-family: 'Montserrat', 'Pretendard', sans-serif;
+}
+

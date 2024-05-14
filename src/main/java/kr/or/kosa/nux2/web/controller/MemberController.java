@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -34,35 +35,22 @@ public class MemberController {
         return "index";
     }
 
+    @GetMapping("/oauth")
+    public String login(){
+        return "login";
+    }
+
     @PostMapping("/logout/1")
     public String logout(HttpServletRequest request,@AuthenticationPrincipal CustomUserDetails customUserDetails){
         HttpSession session = request.getSession();
         session.invalidate();
         return memberService.logout(customUserDetails);
     }
+
     @Operation(summary = "controller", description = "controller.")
     @PostMapping("/signIn")
     public String signIn(@RequestBody MemberDto.SignInRequest request){
         memberService.signIn(request);
-        return "main";
+        return "cardlist";
     }
-    @PostMapping("/email")
-    public ResponseEntity<ApiResponse<MemberDto.checkMemberIdResponse>> checkMemberIdAuthentication(@RequestBody MemberDto.MemberIdRequest request) {
-        MemberDto.checkMemberIdResponse response = new MemberDto.checkMemberIdResponse(memberService.checkMemberId(request));
-        return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
-    }
-    @PostMapping("/email/authentication")
-    public ResponseEntity<ApiResponse<MemberDto.checkAuthenticationNumberResponse>> checkAuthenticationNumber(@RequestBody MemberDto.AuthenticationRequest request){
-        MemberDto.checkAuthenticationNumberResponse response = new MemberDto.checkAuthenticationNumberResponse(memberService.validateAuthenticationNumber(request));
-        return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
-    }
-
-    @GetMapping("/profile")
-    public String editProfile(){
-
-        return "profile";
-    }
-
-
-
 }

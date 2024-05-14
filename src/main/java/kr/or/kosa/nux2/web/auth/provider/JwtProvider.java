@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtProvider implements AuthenticationProvider {
     private final CustomUserDetailsService customUserDetailsService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     /*
     필터에서 전달된 authentication에 토큰 저장되어 있음
@@ -29,10 +31,11 @@ public class JwtProvider implements AuthenticationProvider {
         log.info("method = {}","authenticate");
         String memberId = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
-
+        System.out.println("autni crdeint"+password);
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(memberId);
+        System.out.println("userDaitl"+userDetails.getPassword().toString());
         if (userDetails != null && memberId.equals(userDetails.getUsername())) {
-            if (userDetails.getPassword().equals(password)) {
+           if (bCryptPasswordEncoder.matches(password, userDetails.getPassword())) {
                 List<GrantedAuthority> authorities = new ArrayList<>();
                 return new JwtAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), authorities);
             }

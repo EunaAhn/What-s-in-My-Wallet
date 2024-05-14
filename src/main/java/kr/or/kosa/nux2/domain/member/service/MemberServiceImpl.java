@@ -1,5 +1,6 @@
 package kr.or.kosa.nux2.domain.member.service;
 
+import kr.or.kosa.nux2.domain.member.dto.MemberConsCategoryDto;
 import kr.or.kosa.nux2.domain.member.dto.MemberDto;
 import kr.or.kosa.nux2.domain.member.dto.Role;
 import kr.or.kosa.nux2.domain.member.repository.EmailAuthenticationRepository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Random;
 
 @Slf4j
@@ -56,7 +58,6 @@ public class MemberServiceImpl implements MemberService{
         memberRepository.insertMember(request);
         memberExpenditureCategoryRepository.insertMemberConsCategory(request.getMemberConsCategoryDtoList());
         return "main";
-
     }
 
     @Override
@@ -77,7 +78,9 @@ public class MemberServiceImpl implements MemberService{
         mailMessage.setText("인증번호: "+ authenticationNumber);
         mailMessage.setTo(request.getMemberId());
         javaMailSender.send(mailMessage);
-        insertAuthenticationInfo(new MemberDto.AuthenticationRequest(request.getMemberId(),authenticationNumber));
+
+
+        insertOrUpdateAuthenticationInfo(new MemberDto.AuthenticationRequest(request.getMemberId(),authenticationNumber));
     }
 
     @Override
@@ -88,8 +91,8 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int insertAuthenticationInfo(MemberDto.AuthenticationRequest request) {
-       return emailAuthenticationRepository.insertAuthenticationInfo(request);
+    public int insertOrUpdateAuthenticationInfo(MemberDto.AuthenticationRequest request) {
+       return emailAuthenticationRepository.insertOrUpdateAuthenticationInfo(request);
     }
     @Transactional
     @Override
@@ -104,6 +107,16 @@ public class MemberServiceImpl implements MemberService{
         }
         emailAuthenticationRepository.deleteAuthenticationInfoByMemberId(memberIdRequest);
         return false;
+    }
+
+    @Transactional
+    @Override
+    public MemberDto.ProfileResponse showMemberProfile(MemberDto.MemberIdRequest request) {
+        List<MemberConsCategoryDto.MemberConsCategoryResponse> memberConsCategoryDtoList = memberExpenditureCategoryRepository.selectMemberConsCategories(request);
+        MemberDto.ProfileResponse response = memberRepository.selectMemberDetail(request);
+        response.setMemberConsCategoryDtoList(memberConsCategoryDtoList);
+
+        return response;
     }
 
 }

@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Repository
 @AllArgsConstructor
@@ -18,7 +20,7 @@ public class RegistrationCardRepository {
     public int deleteRegistrationCard(String registrationId){
         return registrationCardMapper.deleteRegistrationCard(registrationId);
     };
-    public int insertRegistrationCard(MyDataCardDto.Response registrationCard){
-        return registrationCardMapper.insertRegistrationCard(registrationCard);
+    public int insertRegistrationCard(Map<String, Object> map){
+        return registrationCardMapper.insertRegistrationCard(map);
     };
 }

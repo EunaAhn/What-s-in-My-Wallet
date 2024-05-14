@@ -15,9 +15,9 @@
     </select>
 
 
-    <insert id = "insertRegistrationCard" parameterType="kr.or.kosa.nux2.domain.registrationcard.dto.RegistrationCardDto$InsertServiceRequest">
-        insert into registered_card(reg_card_id, member_id, card_company_id, card_number, card_nickname)
-        values(#{cardId}, #{memberId}, #{cardCompanyId}, #{cardNumber}, #{cardNickName})
+    <insert id = "insertRegistrationCard" parameterType="map">
+        insert into registered_card(card_number, member_id, card_company_id)
+        values(#{cardNumber}, #{memberId}, #{cardCompanyId})
     </insert>
 
     <delete id="deleteRegistrationCard" parameterType="java.lang.String">

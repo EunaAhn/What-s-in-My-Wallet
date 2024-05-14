@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -30,8 +31,8 @@ public class MyDataCardServiceImpl implements MyDataCardService {
     }
 
     @Override
-    public MyDataCardDto.Response findMyDataCardByCardNumber(String cardNumber) {
-        MyDataCardDto.Response response = myDataCardRepository.findMyDataCardByCardNumber(cardNumber);
+    public MyDataCardDto.Response findMyDataCardByCardNumber(Map<String, Object> map) {
+        MyDataCardDto.Response response = myDataCardRepository.findMyDataCardByCardNumber(map);
         return response;
     }
 }

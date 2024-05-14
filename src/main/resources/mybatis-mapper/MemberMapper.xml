@@ -7,9 +7,7 @@
         select
         member_id memberId,
         member_password memberPassword,
-        member_Email memberEmail,
         provider provider,
-        provider_id providerId,
         role role,
         social_token socialToken
         from
@@ -17,15 +15,37 @@
         where
         member_id = #{memberId}
     </select>
-    <insert id="save" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$UserDto" >
-        insert into member1 (member_id,member_name, member_password,member_email, role, provider, provider_id, social_token,status)
-        values (#{memberId},#{memberName},#{memberPassword},#{memberEmail},#{role},#{provider},#{providerId},#{socialToken},'1')
+    <insert id="insertOAuthMember" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$UserDto" >
+        insert into member1 (member_id,member_name, role, provider,social_token,status)
+        values (#{memberId},#{memberName},#{role},#{provider},#{socialToken},#{status})
     </insert>
     <update id="updateSocialToken" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$UpdateSocialTokenRequest">
         update member1
         set social_token = #{socialToken}
         where member_id = #{memberId}
     </update>
+    <insert id="insertMember" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$SignInRequest" >
+    insert into member1 (member_id,member_name, member_password, target_expenditure,role)
+    values (#{memberId},#{memberName},#{memberPassword},#{targetExpenditure},#{role})
+    </insert>
+    <select id="isExistMemberId" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$MemberIdRequest" resultType="boolean">
+        SELECT CASE
+        WHEN EXISTS (
+        SELECT 1 FROM member1 WHERE member_id = #{memberId}
+        ) THEN 1
+        ELSE 0
+        END AS member_id_exists
+        FROM DUAL
+    </select>
+    <select id="selectMemberDetail" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$MemberIdRequest" resultType="kr.or.kosa.nux2.domain.member.dto.MemberDto$ProfileResponse">
+        select
+            member_id memberId,
+            member_name memberName,
+            target_expenditure targetExpenditure
+        from member1
+        where
+            member_id = #{memberId}
 
+    </select>
 
 </mapper>

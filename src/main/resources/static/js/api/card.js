@@ -71,7 +71,9 @@ export const getMyCard = async () => {
 
 // 등록된 내 카드 목록 조회
 export const postRegistrationcardRegister = async (selectedCardIdList) => {
-    const raw = JSON.stringify(selectedCardIdList);
+    const raw = JSON.stringify(
+        selectedCardIdList
+    );
 
     const requestOptions = {
         method: "POST",
@@ -79,6 +81,7 @@ export const postRegistrationcardRegister = async (selectedCardIdList) => {
         body: raw
     };
     try {
+        console.log(raw)
         const response = await fetch(`/api/registrationcard/register`, requestOptions);
         console.log(response)
         // const result = await response.json();

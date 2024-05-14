@@ -13,27 +13,33 @@ import java.util.Map;
 public class CardProductRepository {
     private final CardProductMapper cardProductMapper;
 
-    public void deleteMemberLikeCard(Map<String, Object> map) {
-        cardProductMapper.deleteMemberLikeCard(map);
+    public boolean deleteMemberLikeCard(Map<String, Object> map) {
+        int result = cardProductMapper.deleteMemberLikeCardProduct(map);
+
+        if(result == 1) return true;
+        return false;
     }
 
-    public void insertMemberLikeCard(Map<String, Object> map) {
-        cardProductMapper.insertMemberLikeCard(map);
+    public boolean insertMemberLikeCard(Map<String, Object> map) {
+        int result = cardProductMapper.insertMemberLikeCardProduct(map);
+
+        if(result == 1) return true;
+        return false;
     }
 
     public CardProductDto.DetailsResponse findCardDetails(Long cardProductId) {
-        return cardProductMapper.findCardDetail(cardProductId);
+        return cardProductMapper.findCardProductDetail(cardProductId);
     }
 
     public List<CardProductDto.Response> findAllCards(Map<String, Object> columns) {
-        return cardProductMapper.findAllCards(columns);
+        return cardProductMapper.findAllCardProducts(columns);
     }
 
     public List<CardProductDto.Response> findTop4LikeCard() {
-        return cardProductMapper.findTop4LikeCard();
+        return cardProductMapper.findTop6LikeCardProduct();
     }
 
     public List<CardProductDto.Response> findMemberLikeCard(String memberId) {
-        return cardProductMapper.findMemberLikeCard(memberId);
+        return cardProductMapper.findMemberLikeCardProduct(memberId);
     }
 }

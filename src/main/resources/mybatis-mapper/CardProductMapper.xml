@@ -30,7 +30,7 @@
 
         </collection>
     </resultMap>
-    <select id="findCardDetail" parameterType="java.lang.Long" resultMap="cardListResult">
+    <select id="findCardProductDetail" parameterType="java.lang.Long" resultMap="cardListResult">
         select
             cp.card_product_id,
             cp.card_company_id,
@@ -75,8 +75,7 @@
         <!-- property는 도메인 클래스의 멤버변수명과 일치, column은 테이블의 컬럼명과 일치 -->
         <result property="benefitName" column="benefit_name"/>
     </resultMap>
-    <select id="findAllCards" parameterType="map" resultMap="cardListResultSumm">
-
+    <select id="findAllCardProducts" parameterType="map" resultMap="cardListResultSumm">
         <choose>
             <when test="keyword != null">
                 SELECT
@@ -176,7 +175,7 @@
 <!--    "likeCount": 1,-->
 <!--    "benefitCategoryList": []-->
 
-    <select id="findTop4LikeCard" resultMap="cardListResultSumm">
+    <select id="findTop4LikeCardProduct" resultMap="cardListResultSumm">
         SELECT
             subquery.cpi as card_product_id,
             subquery.cci as card_company_id,
@@ -212,7 +211,7 @@
     </select>
 
 
-    <select id="findMemberLikeCard" parameterType="String" resultMap="cardListResultSumm">
+    <select id="findMemberLikeCardProduct" parameterType="String" resultMap="cardListResultSumm">
 <!--        select-->
 <!--            cp.card_product_id,-->
 <!--            cp.card_company_id,-->
@@ -258,11 +257,11 @@
         order by cp.card_product_id
     </select>
 
-    <insert id="insertMemberLikeCard" parameterType="map">
-        insert into member_like_card(card_product_id, member_id) values(#{cardId}, #{memberId})
+    <insert id="insertMemberLikeCardProduct" parameterType="map">
+        insert into member_like_card(card_product_id, member_id) values(#{cardProductId}, #{memberId})
     </insert>
 
-    <delete id="deleteMemberLikeCard" parameterType="map">
-        delete from member_like_card where member_id = #{memberId} and card_product_id = #{cardId}
+    <delete id="deleteMemberLikeCardProduct" parameterType="map">
+        delete from member_like_card where member_id = #{memberId} and card_product_id = #{cardProductId}
     </delete>
 </mapper>

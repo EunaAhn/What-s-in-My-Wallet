@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 public interface CardProductService {
-    List<CardProductDto.Response> showCardProductList(Map<String, Object> map);
+    List<CardProductDto.Response> showCardProductList(CardProductDto.ListRequest request);
 
     CardProductDto.DetailsResponse showCardProductDetail(CardProductDto.DetailRequest request);
 
     List<CardProductDto.Response> showTop4CardProduct();
 
-    List<CardProductDto.Response> showMembersLikeCard(String memberId);
+    List<CardProductDto.Response> showMembersLikeCard();
 
     boolean clickLikeCardProduct(CardProductDto.LikeRequest request);
 

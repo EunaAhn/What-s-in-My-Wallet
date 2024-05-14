@@ -1,11 +1,35 @@
+import * as analyze from "./api/analyze.js"
+import {geTotalAmountBy12month, getTotalAmountBytime} from "./api/analyze.js";
+
 document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem('clickedmenu', ".side_analyze");
 })
 
+const yearAndMonth = "2024-05"
+
+const List = await getTotalAmountBytime(yearAndMonth);
+// 결과 객체에서 키를 배열로 가져옵니다.
+const keys = Object.keys(List);
+
+// 키를 오름차순으로 정렬합니다.
+keys.sort((a, b) => parseInt(a.split('-')[0]) - parseInt(b.split('-')[0]));
+
+// 정렬된 키 배열을 이용하여 결과 값을 리스트로 만듭니다.
+const sortedData = keys.map(key => ( List[key] ));
+
+
+const ListBy12month = await geTotalAmountBy12month(yearAndMonth);
+const keys2 = Object.keys(ListBy12month);
+// 키를 오름차순으로 정렬합니다.
+keys2.sort((a, b) => parseInt(a.split('월')[0]) - parseInt(b.split('월')[0]));
+
+// 정렬된 키 배열을 이용하여 결과 값을 리스트로 만듭니다.
+const sortedDataBy12month = keys2.map(key => ListBy12month[key]);
+
 var options = {
     series: [{
-        name: 'Times',
-        data: [44, 55, 41, 67, 22, 43, 21, 33, 45, 31, 87, 65]
+        name: '지출금액',
+        data: sortedData
     }],
     annotations: {
         points: [{
@@ -47,16 +71,12 @@ var options = {
         labels: {
             rotate: -45
         },
-        categories : [
-            '00 ~ 02', '02 ~ 04', '04 ~ 06', '06 ~ 08',
-            '08 ~ 10', '10 ~ 12', '12 ~ 14', '14 ~ 16',
-            '16 ~ 18', '18 ~ 20', '20 ~ 22', '22 ~ 00'
-        ],
+        categories : keys,
         // tickPlacement: 'on'
     },
     yaxis: {
         title: {
-            text: 'Times',
+            text: '지출금액',
         },
     },
     fill: {
@@ -81,7 +101,7 @@ timechart.render();
 var options = {
     series: [{
         name: "Desktops",
-        data: [10, 41, 35, 51, 49, 62, 69, 91, 91, 62, 69, 91, 91]
+        data: sortedDataBy12month
     }],
     chart: {
         height: "100%",

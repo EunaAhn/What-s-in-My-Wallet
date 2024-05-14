@@ -38,7 +38,6 @@ public class RegistrationCardRestController {
     public ResponseEntity<?> registerCard(@RequestBody List<RegistrationCardDto.InsertControllerRequest> requests) {
         registrationCardService.insertRegistrationCard(requests);
 
-
-        return null;
+        return new ResponseEntity<>("OK", HttpStatus.CREATED);
     }
 }

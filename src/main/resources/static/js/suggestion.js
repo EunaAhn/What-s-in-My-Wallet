@@ -1,21 +1,28 @@
+import * as suggestion from "./api/suggestion.js";
+import {getCategoryNameList} from "./api/suggestion.js";
+
 document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem('clickedmenu', ".side_suggestion");
 })
 
+const yearAndMonth = "2024-05"
 
+const categoryList = await suggestion.getCategoryNameList(yearAndMonth);
+const expenditureRatio = await suggestion.getExpenditureRatioList(yearAndMonth);
 
 var options_pie = {
-    series: [44, 55, 13, 43, 22],
+    series: expenditureRatio,
     chart: {
         width: 380,
         type: 'pie',
     },
-    labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+    labels: categoryList,
     responsive: [{
         breakpoint: 480,
         options_pie: {
             chart: {
-                width: 200
+                height: "100%",
+                width: "100%"
             },
             legend: {
                 position: 'bottom'
@@ -28,15 +35,19 @@ var piechart = new ApexCharts(document.querySelector("#pie-chart"), options_pie)
 piechart.render();
 
 
+const CATEGORYNAME = await suggestion.getLineCategoryNameList(yearAndMonth);
+const TOTALAMOUNT = await suggestion.getTotalAmountList(yearAndMonth);
+
 var options_line = {
     series: [
         {
             name: "Low - 2013",
-            data: [12, 11, 14, 18, 17, 13, 13]
+            data: TOTALAMOUNT
         }
     ],
     chart: {
-        height: 350,
+        height: "100%",
+        width: "100%",
         type: 'line',
         dropShadow: {
             enabled: true,
@@ -71,17 +82,17 @@ var options_line = {
         size: 1
     },
     xaxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        categories: CATEGORYNAME,
         title: {
-            text: 'Month'
+            text: '카테고리'
         }
     },
     yaxis: {
         title: {
-            text: 'Temperature'
+            text: '지출횟수'
         },
-        min: 5,
-        max: 40
+        min: 0,
+        max: 20
     },
     legend: {
         position: 'top',

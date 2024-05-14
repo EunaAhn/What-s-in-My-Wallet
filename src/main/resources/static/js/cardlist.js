@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     endNum = 10
     localKeyWord =""
     addCardProductList(localKeyWord)
+    cardProductTop()
 
     // 다른 페이지에서 router 되는 카드 키워드 검색
     const searchWord = localStorage.getItem("searchWord")
@@ -24,6 +25,11 @@ document.addEventListener("DOMContentLoaded", () => {
         addCardProductList()
     }
 })
+
+// 인기 카드 출력
+const cardProductTop = async () => {
+    console.log("여기?",await card.getCardProductTop())
+}
 
 const cardListContainer = document.querySelector(".card-info-list");
 
@@ -111,7 +117,6 @@ hdCardSearch.addEventListener("keydown", (event) => {
         hdCardSearch.value = ""
     }
 });
-
 
 const hdSearchImage = document.querySelector(".hd_search_image")
 

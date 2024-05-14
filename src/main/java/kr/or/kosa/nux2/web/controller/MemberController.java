@@ -49,8 +49,7 @@ public class MemberController {
 
     @Operation(summary = "controller", description = "controller.")
     @PostMapping("/signIn")
-    public String signIn(MemberDto.SignInRequest request){
-        System.out.println(request);
+    public String signIn(@RequestBody MemberDto.SignInRequest request){
         memberService.signIn(request);
         return "cardlist";
     }

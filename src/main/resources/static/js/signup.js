@@ -19,8 +19,18 @@ const handleCheckboxChange = () => {
         console.log("최대 3개까지만 선택할 수 있습니다.");
 
     } else {
-        selectedCategories = checkedCheckboxes.map(checkbox => checkbox.nextElementSibling.textContent);
-        console.log("선택된 카테고리:", selectedCategories);
+        const categoryMap = {
+            '대형마트': 'MT1',
+            '편의점': 'CS2',
+            '학원': 'AC5',
+            '주유': 'OL7',
+            '문화': 'CT1',
+            '외식': 'FD6',
+            '카페/베이커리': 'CE7',
+            '의료': 'HP8'
+        };
+        selectedCategories = checkedCheckboxes.map(checkbox =>
+            categoryMap[checkbox.nextElementSibling.textContent.trim()])
     }
 }
 
@@ -35,20 +45,28 @@ const userName = document.querySelector("#username")
 const password = document.querySelector("#signin-pw")
 const passwordCheck = document.querySelector("#signin-pw-again")
 const moneyGoal = document.querySelector("#signin-moneygoal")
-let emailauthentication = false;
+let emailAuthentication = false;
+let passwordAuthentication = false;
 
-const signUp = () => {
-    // if (!userID.value) {alert("이메일을 입력해주세요.") ; return false}
-    // if (!userName.value) {alert("이름을 입력해주세요.") ; return false}
-    // if (!password.value) {alert("비밀번호를 입력해주세요.") ; return false}
-    // if (!passwordCheck.value) {alert("확인비밀번호를 입력해주세요.") ; return false}
-    // if (!moneyGoal.value) {alert("목표 지출액을 입력해주세요.") ; return false}
-    // if (selectedCategories.length === 0 ) {alert("관심 카테고리를 1개이상 선택해주세요") ; return false}
-    // if (selectedCategories.length > 3 ) {alert("3개를 초과하실 수 없습니다.") ; return false}
-    //
-    //
-    // if(!emailauthentication) {alert("이메일 인증을 진행해주세요.")}
-    // location.href = "/login";
+const signUp = async () => {
+    if (!userID.value) {alert("이메일을 입력해주세요.") ; return false}
+    if (!userName.value) {alert("이름을 입력해주세요.") ; return false}
+    if (!password.value) {alert("비밀번호를 입력해주세요.") ; return false}
+    if (!passwordCheck.value) {alert("확인비밀번호를 입력해주세요.") ; return false}
+    if (selectedCategories.length === 0 ) {alert("관심 카테고리를 1개이상 선택해주세요") ; return false}
+    if (!moneyGoal.value) {alert("목표 지출액을 입력해주세요.") ; return false}
+    if(!emailAuthentication) {alert("이메일 인증을 진행해주세요.") ; return false}
+    if(!passwordAuthentication) {alert("비밀번호를 확인해주세요.") ; return false}
+
+    const memberConsCategoryDtoList= selectedCategories.map((category) => ({
+        "memberId":userID.value,
+        "expenditureCategoryId": category
+    }))
+    const tmp = await auth.postSignIn(userID.value, password.value, userName.value,memberConsCategoryDtoList ,moneyGoal.value)
+    if(tmp === true) {
+        console.log("회원가입 성공")
+        location.href = "login";
+    }
 }
 
 passwordCheck.addEventListener("input", function() {
@@ -62,6 +80,7 @@ passwordCheck.addEventListener("input", function() {
         if (nonValidationMessage) {nonValidationMessage.remove();}
         messageDiv.textContent = "비밀번호가 일치합니다.";
         messageDiv.classList.add("validation");
+        passwordAuthentication = true
     }
     else {
         const validationMessage = formInputDatePickerDefault1.querySelector(".validation");
@@ -70,15 +89,16 @@ passwordCheck.addEventListener("input", function() {
         if (nonValidationMessage) {return}
         messageDiv.textContent = "비밀번호가 일치하지 않습니다.";
         messageDiv.classList.add("non-validation");
+        passwordAuthentication = false
     }
     formInputDatePickerDefault1.appendChild(messageDiv);
 });
 
+signUpButton.addEventListener('click',  signUp);
+
 document.addEventListener('keydown', (event) => {
     if (event.key === "Enter") {signUp()}
 });
-
-signUpButton.addEventListener('click',  signUp);
 
 // email 인증 요청
 const checknumButton = document.querySelector(".checknum")
@@ -90,6 +110,7 @@ checknumButton.addEventListener("click", async () => {
     startTimer(60 * 5, display);
     authenticationModal.showModal();
     const emailRequest = await auth.postEmailRequest(userID.value)
+    console.log("인증번호 요청 성고 : ",emailRequest)
 })
 
 let timer, timerInterval ;
@@ -110,19 +131,22 @@ const startTimer = (duration, display) => {
     }, 1000);
 };
 
-const closeButton = document.querySelector('.close_btn')
-closeButton.addEventListener('click', () => {
-    clearInterval(timerInterval);
-    authenticationModal.close();
-})
-
 // email 인증 번호 확인
 const authenticationModalButton = document.querySelector(".authentication_modal_button")
 const authenticationModalInput = document.querySelector(".authentication_modal_input")
 
+const closeButton = document.querySelector('.close_btn')
+closeButton.addEventListener('click', () => {
+    authenticationModalInput.value = ""
+    clearInterval(timerInterval);
+    authenticationModal.close();
+})
+
 authenticationModalButton.addEventListener("click", async() => {
-    emailauthentication = await auth.postEamilAuthentication(userID.value,authenticationModalInput.value)
-    if(emailauthentication === true) {
+    emailAuthentication = await auth.postEamilAuthentication(userID.value,authenticationModalInput.value)
+    console.log("인증 번호 확인 : ",emailAuthentication)
+    if(emailAuthentication === true) {
+        authenticationModalInput.value = ""
         clearInterval(timerInterval);
         authenticationModal.close();
     }

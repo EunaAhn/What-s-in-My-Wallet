@@ -7,87 +7,29 @@
     <th:block layout:fragment="head">
         <link th:href="@{/css/cardregistration.css}" rel="stylesheet" />
         <link th:href="@{/css/common.css}" rel="stylesheet" />
-        <script type="text/javascript" th:src="@{/js/cardregistration.js}" defer></script>
+        <script type="module" th:src="@{/js/api/card.js}" defer></script>
+        <script type="module" th:src="@{/js/cardregistration.js}" defer></script>
     </th:block>
     <body>
+    <th:block layout:fragment="header" th:include="@{/fragments/header}"></th:block>
     <th:block layout:fragment="sidemenubar" th:include="@{/fragments/sidemenubar}"></th:block>
     <div class="container">
         <div class="register-text">연결할 카드를 선택해 주세요</div>
-
         <div class="card-info-list">
-            <div class="card-container">
-                <div class="card-list">
-
-                    <img class="image-19" src="/img/cardlist/card1.png" />
-
-                    <div class="card-text-info">
-                        <div class="card-title"> 디지로카 London </div>
-                        <div class="benefit-info">
-                            <div class="card-info"> 국내 모든 가맹점 최대 1.7%캐시백 </div>
-                            <div class="card-info"> 국내 2만원, 해외 2만원 </div>
-                            <div class="card-info"> 연회비지원, 납부혜택 </div>
-                        </div>
-                    </div>
-
-                    <input type="checkbox" name="card-selection" value="card1" />
-
-                </div>
-                <div class="card-list">
-                    <img class="image-19" src="/img/cardlist/card1.png" />
-
-                    <div class="card-text-info">
-                        <div class="card-title"> 디지로카 London </div>
-                        <div class="benefit-info">
-                            <div class="card-info"> 국내 모든 가맹점 최대 1.7%캐시백 </div>
-                            <div class="card-info"> 국내 2만원, 해외 2만원 </div>
-                            <div class="card-info"> 연회비지원, 납부혜택 </div>
-                        </div>
-                    </div>
-
-                    <input type="checkbox" name="card-selection" value="card1" />
-
-                </div>
-            </div>
-
-            <div class="card-container">
-                <div class="card-list">
-                    <img class="image-19" src="/img/cardlist/card1.png" />
-
-                    <div class="card-text-info">
-                        <div class="card-title"> 디지로카 London </div>
-                        <div class="benefit-info">
-                            <div class="card-info"> 국내 모든 가맹점 최대 1.7%캐시백 </div>
-                            <div class="card-info"> 국내 2만원, 해외 2만원 </div>
-                            <div class="card-info"> 연회비지원, 납부혜택 </div>
-                        </div>
-                    </div>
-
-                    <input type="checkbox" name="card-selection" value="card1" />
-
-                </div>
-                <div class="card-list">
-                    <img class="image-19" src="/img/cardlist/card1.png" />
-
-                    <div class="card-text-info">
-                        <div class="card-title"> 디지로카 London </div>
-                        <div class="benefit-info">
-                            <div class="card-info"> 국내 모든 가맹점 최대 1.7%캐시백 </div>
-                            <div class="card-info"> 국내 2만원, 해외 2만원 </div>
-                            <div class="card-info"> 연회비지원, 납부혜택 </div>
-                        </div>
-                    </div>
-
-                    <input type="checkbox" name="card-selection" value="card1" />
-
-                </div>
-            </div>
+<!--            <div class="card-list">-->
+<!--                <img class="image-19" src="/img/cardlist/card1.png" />-->
+<!--                <div class="card-text-info">-->
+<!--                    <div class="card-title"> 디지로카 London </div>-->
+<!--                    <div class="benefit-info">-->
+<!--                        <div class="card-info"> 9999-****-****-9999 </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <input type="checkbox" name="card-selection" value="card1" />-->
+<!--            </div>-->
         </div>
-
         <div class="register-button" id="register-button">
             <button id="register">카드 연결하기</button>
         </div>
-
     </div>
-
     </body>
 </html>

@@ -58,7 +58,6 @@ public class MemberServiceImpl implements MemberService{
         memberRepository.insertMember(request);
         memberExpenditureCategoryRepository.insertMemberConsCategory(request.getMemberConsCategoryDtoList());
         return "main";
-
     }
 
     @Override

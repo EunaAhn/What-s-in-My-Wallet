@@ -1,5 +1,6 @@
 package kr.or.kosa.nux2.web.auth.config;
 
+import jakarta.servlet.http.HttpServletRequest;
 import kr.or.kosa.nux2.web.auth.PrincipleOauth2UserService;
 import kr.or.kosa.nux2.web.auth.*;
 import kr.or.kosa.nux2.web.auth.provider.JwtProvider;
@@ -17,7 +18,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration
@@ -51,8 +56,8 @@ public class SecurityConfig {
 //                .formLogin((auth) -> auth.permitAll());
         http
                 .httpBasic((auth) -> auth.disable());
-
-        http.authorizeHttpRequests(auth -> auth.requestMatchers("/api/cardproduct/*", "/api/expenditure/*").permitAll());
+        http
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/test/*", "/api/expenditure/*", "/api/cardproduct/*", "/api/registrationcard/*").permitAll());
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**")
@@ -72,13 +77,11 @@ public class SecurityConfig {
                 .formLogin((auth)->auth.loginPage("/login").defaultSuccessUrl("/main").permitAll());
         http
                 .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/profile",true)
+                        .successHandler(new OAuthSuccessHandler(jwtUtils))
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(principleOauth2UserService))
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/oauth/profile")
-                        .successHandler(new OAuthSuccessHandler(jwtUtils))
-
-
 
                 );
         http
@@ -91,10 +94,6 @@ public class SecurityConfig {
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-
-
         return http.build();
     }
-
-
 }

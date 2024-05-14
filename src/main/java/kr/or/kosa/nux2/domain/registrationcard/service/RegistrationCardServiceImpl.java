@@ -41,11 +41,16 @@ public class RegistrationCardServiceImpl implements RegistrationCardService {
         // 컨트롤러에서는 카드번호(16)만 보낸다.
         // 마이데이터
 
-        for (RegistrationCardDto.InsertControllerRequest request : requests) {
-            MyDataCardDto.Response response = myDataCardRepository.findMyDataCardByCardNumber(request.getCardNumber());
+        for(RegistrationCardDto.InsertControllerRequest request : requests) {
+            //
+            System.out.println(request.getCardNumber());
+            Map<String, Object> mdcMap = new HashMap<>();
+            mdcMap.put("cardNumber", request.getCardNumber());
+            MyDataCardDto.Response response = myDataCardRepository.findMyDataCardByCardNumber(mdcMap);
             Map<String, Object> map = new HashMap<>();
-            map.put("cardNumber", response.getCardNumber());
-            map.put("cardCompanyId", response.getCardCompanyCode());
+
+            map.put("cardNumber" , response.getCardNumber());
+            map.put("cardName", response.getCardName());
             map.put("memberId", "dnwo1111");
             registrationCardRepository.insertRegistrationCard(map);
         }

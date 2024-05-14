@@ -113,14 +113,14 @@
                 left join
                 card_benefit_code cbc
                 on cp.card_product_id = cbc.card_product_id
-<!--                <choose>-->
-<!--                    <when test="cardProductId != null">-->
-<!--                        where cp.card_product_id in-->
-<!--                        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">-->
-<!--                            #{item}-->
-<!--                        </foreach>-->
-<!--                    </when>-->
-<!--                </choose>-->
+                <choose>
+                    <when test="cardProductId != null">
+                        where cp.card_product_id in
+                        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                            #{item}
+                        </foreach>
+                    </when>
+                </choose>
                 ORDER BY
                 cp.card_product_id
             </when>
@@ -156,7 +156,7 @@
                         </foreach>
                     </when>
                 </choose>
-                ) a where row_num between #{startnum} and #{endnum}
+                     ) a where row_num between #{startnum} and #{endnum}
                 ) cp
                 left join
                 card_benefit_code cbc

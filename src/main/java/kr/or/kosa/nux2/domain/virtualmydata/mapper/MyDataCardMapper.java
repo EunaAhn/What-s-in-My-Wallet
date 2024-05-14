@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface MyDataCardMapper {
@@ -16,6 +17,6 @@ public interface MyDataCardMapper {
 
     List<MyDataCardDto.Response> findAllMyDataCard();
 
-    MyDataCardDto.Response findMyDataCardByCardNumber(@Param("cardNumber") String cardNumber);
+    MyDataCardDto.Response findMyDataCardByCardNumber(Map<String, Object> map);
     //int deleteMyDataCardByCardNum(String cardNumber, String userName);
 }

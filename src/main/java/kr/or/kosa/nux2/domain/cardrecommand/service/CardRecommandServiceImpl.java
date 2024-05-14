@@ -51,7 +51,7 @@ public class CardRecommandServiceImpl implements CardRecommadService {
 
         CardRecommandDto.CardRecommandResponse resp = new CardRecommandDto.CardRecommandResponse();
         resp.setCardProductList(cardProductList);
-        resp.setDiscountAmountByCategoryList(discountAmountByCategoryList);
+        resp.setDiscountAmountByCategoryArr(discountAmountByCategoryList);
 
         return resp;
     }

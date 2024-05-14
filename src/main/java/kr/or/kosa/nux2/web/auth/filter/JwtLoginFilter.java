@@ -1,9 +1,11 @@
-package kr.or.kosa.nux2.web.auth;
+package kr.or.kosa.nux2.web.auth.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import kr.or.kosa.nux2.web.auth.JwtUtils;
+import kr.or.kosa.nux2.web.auth.authentication.JwtAuthenticationToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;

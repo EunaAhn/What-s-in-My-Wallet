@@ -1,4 +1,4 @@
-package kr.or.kosa.nux2.web.auth;
+package kr.or.kosa.nux2.web.auth.principal;
 
 import kr.or.kosa.nux2.domain.member.dto.MemberDto;
 import kr.or.kosa.nux2.domain.member.repository.MemberRepository;
@@ -18,8 +18,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
         log.info("method = {}","loadUserByUsername");
-
+        System.out.println("memberId"+memberId);
         MemberDto.UserDto userDto = memberRepository.findById(memberId);
+        System.out.println("userdto:"+userDto.toString());
         if (userDto != null) {
             return new CustomUserDetails(userDto);
         }

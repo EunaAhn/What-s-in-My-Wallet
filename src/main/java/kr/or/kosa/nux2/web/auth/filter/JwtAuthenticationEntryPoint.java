@@ -1,4 +1,4 @@
-package kr.or.kosa.nux2.web.auth;
+package kr.or.kosa.nux2.web.auth.filter;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

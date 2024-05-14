@@ -6,6 +6,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
+import kr.or.kosa.nux2.web.auth.authentication.JwtAuthenticationToken;
+import kr.or.kosa.nux2.web.auth.principal.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +15,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -106,6 +107,7 @@ public class JwtUtils {
     public Authentication getAuthentication(String token) {
         log.info("method = {}","getAuthentication");
         String userPrincipal = extractAllClaims(token).getSubject();
+        System.out.println("userprintl"+userPrincipal);
         UserDetails userDetails = userDetailsService.loadUserByUsername(userPrincipal);
         return new JwtAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }

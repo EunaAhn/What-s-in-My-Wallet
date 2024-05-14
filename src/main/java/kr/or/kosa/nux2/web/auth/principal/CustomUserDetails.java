@@ -1,4 +1,4 @@
-package kr.or.kosa.nux2.web.auth;
+package kr.or.kosa.nux2.web.auth.principal;
 
 import kr.or.kosa.nux2.domain.member.dto.MemberDto;
 import lombok.Getter;

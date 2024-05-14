@@ -1,7 +1,6 @@
 package kr.or.kosa.nux2.domain.expenditure.dto;
 
 
-import kr.or.kosa.nux2.domain.member.dto.MemberTargetExpenditureDto;
 import lombok.Getter;
 import lombok.Setter;
 

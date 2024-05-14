@@ -1,4 +1,4 @@
-package kr.or.kosa.nux2.web.auth;
+package kr.or.kosa.nux2.web.auth.authentication;
 
 import lombok.Getter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;

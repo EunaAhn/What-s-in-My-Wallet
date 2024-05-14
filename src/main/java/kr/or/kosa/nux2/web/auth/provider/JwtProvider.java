@@ -1,7 +1,7 @@
 package kr.or.kosa.nux2.web.auth.provider;
 
-import kr.or.kosa.nux2.web.auth.CustomUserDetailsService;
-import kr.or.kosa.nux2.web.auth.JwtAuthenticationToken;
+import kr.or.kosa.nux2.web.auth.principal.CustomUserDetailsService;
+import kr.or.kosa.nux2.web.auth.authentication.JwtAuthenticationToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;

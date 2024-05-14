@@ -15,52 +15,54 @@ public class HomeController {
 
     private static final Logger log = LoggerFactory.getLogger(HomeController.class);
 
-    @RequestMapping(value = "/onboarding", method= RequestMethod.GET)
+    @RequestMapping(value = "/onboarding", method = RequestMethod.GET)
     public String goOnBoarding(HttpServletRequest request) {
         return "onboarding";
     }
 
-    @RequestMapping(value = "/login", method= RequestMethod.GET)
-    public String goLogin(HttpServletRequest request) {return "login";}
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String goLogin(HttpServletRequest request) {
+        return "login";
+    }
 
-    @RequestMapping(value = "/signup", method= RequestMethod.GET)
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String goSignup(HttpServletRequest request, Model model) {
-        MemberDto.SignInRequest r = new MemberDto.SignInRequest();
+        MemberDto.SignUpRequest r = new MemberDto.SignUpRequest();
         model.addAttribute("model", r);
         return "signup";
     }
 
-    @RequestMapping(value = "/cardlist", method= RequestMethod.GET)
+    @RequestMapping(value = "/cardlist", method = RequestMethod.GET)
     public String goCardlist(HttpServletRequest request) {
         return "cardlist";
     }
 
-    @RequestMapping(value = "/history", method= RequestMethod.GET)
+    @RequestMapping(value = "/history", method = RequestMethod.GET)
     public String goHistory(HttpServletRequest request) {
         return "history";
     }
 
-    @RequestMapping(value = "/analyze", method= RequestMethod.GET)
+    @RequestMapping(value = "/analyze", method = RequestMethod.GET)
     public String goAnalyze(HttpServletRequest request) {
         return "analyze";
     }
 
-    @RequestMapping(value = "/suggestion", method= RequestMethod.GET)
+    @RequestMapping(value = "/suggestion", method = RequestMethod.GET)
     public String goSuggestion(HttpServletRequest request) {
         return "suggestion";
     }
 
-    @RequestMapping(value = "/profile", method= RequestMethod.GET)
-    public String goProfile(HttpServletRequest request) {
-        return "profile";
-    }
+//    @RequestMapping(value = "/profile", method= RequestMethod.GET)
+//    public String goProfile(HttpServletRequest request) {
+//        return "profile";
+//    }
 
-    @RequestMapping(value = "/carddetail", method= RequestMethod.GET)
+    @RequestMapping(value = "/carddetail", method = RequestMethod.GET)
     public String goCarddetail(HttpServletRequest request) {
         return "carddetail";
     }
 
-    @RequestMapping(value = "/cardregistration", method= RequestMethod.GET)
+    @RequestMapping(value = "/cardregistration", method = RequestMethod.GET)
     public String goCardregistration(HttpServletRequest request) {
         return "cardregistration";
     }

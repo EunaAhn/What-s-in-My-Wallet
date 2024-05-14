@@ -81,7 +81,6 @@ public enum ErrorCode {
     BUSINESS_EXCEPTION_ERROR(200, "B999", "Business Exception Error"),
 
 
-
 //    // Transaction Insert Error
 //    INSERT_ERROR(200, "9999", "Insert Transaction Error Exception"),
 //

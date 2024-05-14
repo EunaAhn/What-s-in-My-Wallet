@@ -9,6 +9,7 @@ public class MemberExpenditureTendDto {
         private String expenditureTendencyId;
         private String memberExpenditureTendency;
     }
+
     @Setter
     public static class ControllerResponse {
         private String memberExpenditureTendencyConcat;

@@ -13,7 +13,7 @@ import java.util.Map;
 public class CardProductRepository {
     private final CardProductMapper cardProductMapper;
 
-    public void deleteMemberLikeCard(Map<String, Object> map){
+    public void deleteMemberLikeCard(Map<String, Object> map) {
         cardProductMapper.deleteMemberLikeCard(map);
     }
 
@@ -21,7 +21,7 @@ public class CardProductRepository {
         cardProductMapper.insertMemberLikeCard(map);
     }
 
-    public CardProductDto.DetailsResponse findCardDetails(Long cardProductId){
+    public CardProductDto.DetailsResponse findCardDetails(Long cardProductId) {
         return cardProductMapper.findCardDetail(cardProductId);
     }
 
@@ -29,9 +29,10 @@ public class CardProductRepository {
         return cardProductMapper.findAllCards(columns);
     }
 
-    public List<CardProductDto.Response> findTop4LikeCard(){
+    public List<CardProductDto.Response> findTop4LikeCard() {
         return cardProductMapper.findTop4LikeCard();
-    };
+    }
+
     public List<CardProductDto.Response> findMemberLikeCard(String memberId) {
         return cardProductMapper.findMemberLikeCard(memberId);
     }

@@ -1,4 +1,4 @@
-package kr.or.kosa.nux2.web.auth;
+package kr.or.kosa.nux2.web.auth.principal;
 
 import kr.or.kosa.nux2.domain.member.dto.MemberDto;
 import lombok.Getter;
@@ -37,13 +37,11 @@ public class CustomUserDetails implements UserDetails, OAuth2User{
 
     @Override
     public String getPassword() {
-        //return memberAuthenticationResponse.getMemberPassword();
         return userDto.getMemberPassword();
     }
 
     @Override
     public String getUsername() {
-        //return memberAuthenticationResponse.getMemberId();
         return userDto.getMemberId();
     }
     private Collection<GrantedAuthority> createAuthorities(String roles){

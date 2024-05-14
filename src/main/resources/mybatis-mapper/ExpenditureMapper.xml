@@ -133,8 +133,7 @@
 
     <select id="findExpenditureRatioForCategoryByMonth" parameterType="map" resultType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$RatioByCategoryResponse">
         select
-        round(sum(eh.expenditure_amount)* 100 / (select sum(expenditure_amount)  from expenditure_history
-        where  <![CDATA[to_char(expenditure_datetime,'YYYY-MM') > #{month}]]>) , 1) as expenditrueRatio,
+        sum(eh.expenditure_amount)as expenditrueRatio,
         ec.expenditure_category_name as categoryName
         from
             expenditure_history eh

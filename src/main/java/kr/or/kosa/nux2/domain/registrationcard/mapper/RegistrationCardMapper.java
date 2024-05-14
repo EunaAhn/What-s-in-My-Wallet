@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface RegistrationCardMapper {
@@ -15,7 +16,7 @@ public interface RegistrationCardMapper {
     // 등록 카드 삭제
     int deleteRegistrationCard(@Param("registeredCardId") String registeredCardId);
     // 등록카드에 추가
-    int insertRegistrationCard(MyDataCardDto.Response registrationCard);
+    int insertRegistrationCard(Map<String, Object> map);
 
     // 마이데이터에 카드가 등록될 수 있어야한다.
     // 마이데이터 카드 테이블을 이용하여

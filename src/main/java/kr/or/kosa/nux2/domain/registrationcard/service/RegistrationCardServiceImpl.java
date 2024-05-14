@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +29,8 @@ public class RegistrationCardServiceImpl implements RegistrationCardService{
     @Override
     public int deleteRegistrationCard(String registeredCardId) {
         registrationCardRepository.deleteRegistrationCard(registeredCardId);
+
+        // 카드가 삭제되면 지출내역도 삭제 되어야 함.
         return 0;
     }
 
@@ -40,7 +44,11 @@ public class RegistrationCardServiceImpl implements RegistrationCardService{
         for(RegistrationCardDto.InsertControllerRequest request : requests) {
             //
             MyDataCardDto.Response response = myDataCardRepository.findMyDataCardByCardNumber(request.getCardNumber());
-            registrationCardRepository.insertRegistrationCard(response);
+            Map<String, Object> map = new HashMap<>();
+            map.put("cardNumber" , response.getCardNumber());
+            map.put("cardCompanyId", response.getCardCompanyCode());
+            map.put("memberId", "dnwo1111");
+            registrationCardRepository.insertRegistrationCard(map);
         }
 
         return 0;

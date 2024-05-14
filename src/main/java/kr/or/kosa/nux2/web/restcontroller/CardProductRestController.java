@@ -34,7 +34,7 @@ public class CardProductRestController {
         map.put("startnum", startNum);
         map.put("endnum", endNum);
         map.put("keyword", request.getKeyWord());
-
+        System.out.println(request.getKeyWord());
 
         List<CardProductDto.Response> response = cardProductService.showCardProductList(map);
 

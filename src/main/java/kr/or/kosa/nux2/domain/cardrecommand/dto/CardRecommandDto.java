@@ -11,21 +11,25 @@ public class CardRecommandDto {
     @Setter
     public static class CardRecommandResponse {
         private List<CardProductDto.Response> cardProductList;
-        private DiscountAmountByCategory[] discountAmountByCategoryList;
+        private DiscountAmountByCategory[] discountAmountByCategoryArr;
+    }
+    @Getter
+    public static class DiscountAmountByCategoryArr {
+        DiscountAmountByCategory[] discountAmountByCategories;
     }
 
     @Getter
     @Setter
     public static class DiscountAmountByCategory {
         private int cardId;
-        private double AC5;
-        private double CE7;
-        private double CS2;
-        private double CT1;
-        private double FD6;
-        private double HP8;
-        private double MT1;
-        private double OL7;
+        private double ac5;
+        private double ce7;
+        private double cs2;
+        private double ct1;
+        private double fd6;
+        private double hp8;
+        private double mt1;
+        private double ol7;
         private double 언제나할인;
         private double 통합할인액;
     }

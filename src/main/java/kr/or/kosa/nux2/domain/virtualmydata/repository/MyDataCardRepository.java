@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @AllArgsConstructor
@@ -26,7 +27,7 @@ public class MyDataCardRepository {
         return myDataCardMapper.findAllMyDataCard();
     }
 
-    public MyDataCardDto.Response findMyDataCardByCardNumber(String cardNumber) {
-        return myDataCardMapper.findMyDataCardByCardNumber(cardNumber);
+    public MyDataCardDto.Response findMyDataCardByCardNumber(Map<String, Object> map) {
+        return myDataCardMapper.findMyDataCardByCardNumber(map);
     }
 }

@@ -33,7 +33,7 @@
             my_data_cards
     </select>
 
-    <select id = "findMyDataCardByCardNumber" resultType="kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataCardDto$Response">
+    <select id = "findMyDataCardByCardNumber" parameterType="map" resultType="kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataCardDto$Response">
         select
         card_number as cardNumber,
         member_name as memberName,
@@ -42,8 +42,6 @@
         from
         my_data_cards
         where card_number = #{cardNumber}
-
-
     </select>
 
 </mapper>

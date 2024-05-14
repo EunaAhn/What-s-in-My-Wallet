@@ -8,9 +8,8 @@ import lombok.Setter;
 public class RegistrationCardDto {
     @Getter
     public static class Response {
-        private Long registerdCardId;
-        private String cardCompanyName;
         private String cardNumber;
+        private String cardCompanyName;
         private String cardNickName;
     }
 

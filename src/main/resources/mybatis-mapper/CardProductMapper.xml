@@ -152,7 +152,8 @@
                 <choose>
                     <when test="list != null">
                         where card_product_id in
-                        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                        <foreach item="item" index="index" collection="
+                        list" open="(" separator="," close=")">
                             #{item}
                         </foreach>
                     </when>

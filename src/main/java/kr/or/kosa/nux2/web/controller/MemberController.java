@@ -7,15 +7,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import kr.or.kosa.nux2.domain.member.dto.MemberDto;
 import kr.or.kosa.nux2.domain.member.service.MemberService;
-import kr.or.kosa.nux2.web.auth.CustomUserDetails;
-import kr.or.kosa.nux2.web.common.code.SuccessCode;
-import kr.or.kosa.nux2.web.common.response.ApiResponse;
+import kr.or.kosa.nux2.web.auth.principal.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -48,9 +43,17 @@ public class MemberController {
     }
 
     @Operation(summary = "controller", description = "controller.")
-    @PostMapping("/signIn")
-    public String signIn(@RequestBody MemberDto.SignInRequest request){
-        memberService.signIn(request);
+    @PostMapping("/signUp")
+    public String signUp(@RequestBody MemberDto.SignUpRequest request){
+        memberService.signUp(request);
         return "cardlist";
     }
+//    @GetMapping("/profile/status=0")
+//    public String oAuthMyPage(){
+//        return "profile";
+//    }
+
+
+
+
 }

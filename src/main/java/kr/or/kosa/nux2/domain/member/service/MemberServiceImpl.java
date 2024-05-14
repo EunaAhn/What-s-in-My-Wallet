@@ -6,17 +6,20 @@ import kr.or.kosa.nux2.domain.member.dto.Role;
 import kr.or.kosa.nux2.domain.member.repository.EmailAuthenticationRepository;
 import kr.or.kosa.nux2.domain.member.repository.MemberExpenditureCategoryRepository;
 import kr.or.kosa.nux2.domain.member.repository.MemberRepository;
-import kr.or.kosa.nux2.web.auth.CustomUserDetails;
+import kr.or.kosa.nux2.web.auth.principal.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 @Slf4j
@@ -32,10 +35,6 @@ public class MemberServiceImpl implements MemberService{
     private final JavaMailSender javaMailSender;
 
 
-    @Override
-    public String test() {
-        return "context 분리 test";
-    }
 
     @Override
     public String logout(CustomUserDetails customUserDetails) {
@@ -52,11 +51,15 @@ public class MemberServiceImpl implements MemberService{
 
     @Transactional
     @Override
-    public String signIn(MemberDto.SignInRequest request) {
+    public String signUp(MemberDto.SignUpRequest request) {
         request.setMemberPassword(bCryptPasswordEncoder.encode(request.getMemberPassword()));
         request.setRole(Role.USER.getRoles());
-        memberRepository.insertMember(request);
-        memberExpenditureCategoryRepository.insertMemberConsCategory(request.getMemberConsCategoryDtoList());
+        System.out.println("count:"+memberRepository.insertMember(request));
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("memberId",request.getMemberId());
+        paramMap.put("MemberConsCategoryDtoList",request.getMemberConsCategoryDtoList());
+        //memberExpenditureCategoryRepository.insertMemberConsCategory(request.getMemberConsCategoryDtoList());
+        memberExpenditureCategoryRepository.insertMemberConsCategory(paramMap);
         return "main";
     }
 
@@ -79,8 +82,10 @@ public class MemberServiceImpl implements MemberService{
         mailMessage.setTo(request.getMemberId());
         javaMailSender.send(mailMessage);
 
-
-        insertOrUpdateAuthenticationInfo(new MemberDto.AuthenticationRequest(request.getMemberId(),authenticationNumber));
+        Map<String,Object> paramMap = new HashMap<>();
+        paramMap.put("memberId",request.getMemberId());
+        paramMap.put("authenticationNumber",authenticationNumber);
+        insertOrUpdateAuthenticationInfo(paramMap);
     }
 
     @Override
@@ -91,14 +96,17 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public int insertOrUpdateAuthenticationInfo(MemberDto.AuthenticationRequest request) {
-       return emailAuthenticationRepository.insertOrUpdateAuthenticationInfo(request);
+    public int insertOrUpdateAuthenticationInfo(Map<String,Object> paramMap) {
+       return emailAuthenticationRepository.insertOrUpdateAuthenticationInfo(paramMap);
     }
     @Transactional
     @Override
-    public boolean validateAuthenticationNumber(MemberDto.AuthenticationRequest request) {
-        MemberDto.AuthenticationResponse response = emailAuthenticationRepository.findAuthenticationNumberByMemberIdAndTimeDiffLessThanFiveMinute(request);
-        MemberDto.MemberIdRequest memberIdRequest = new MemberDto.MemberIdRequest(request.getMemberId());
+    public boolean validateAuthenticationNumber(MemberDto.AuthenticationDto request) {
+        CustomUserDetails customUserDetails = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        MemberDto.MemberIdRequest memberIdRequest = new MemberDto.MemberIdRequest(customUserDetails.getUserDto().getMemberId());
+
+        MemberDto.AuthenticationDto response = emailAuthenticationRepository.findAuthenticationNumberByMemberIdAndTimeDiffLessThanFiveMinute(memberIdRequest);
+
         if(response!=null){
             if(response.getAuthenticationNumber().equals(request.getAuthenticationNumber())){
                 emailAuthenticationRepository.deleteAuthenticationInfoByMemberId(memberIdRequest);
@@ -111,12 +119,82 @@ public class MemberServiceImpl implements MemberService{
 
     @Transactional
     @Override
-    public MemberDto.ProfileResponse showMemberProfile(MemberDto.MemberIdRequest request) {
-        List<MemberConsCategoryDto.MemberConsCategoryResponse> memberConsCategoryDtoList = memberExpenditureCategoryRepository.selectMemberConsCategories(request);
+    public MemberDto.ProfileResponse showMemberProfile() {
+        CustomUserDetails customUserDetails = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("memberID"+customUserDetails.getUserDto().getMemberId());
+        MemberDto.MemberIdRequest request = new MemberDto.MemberIdRequest(customUserDetails.getUserDto().getMemberId());
+        List<MemberConsCategoryDto.MemberConsCategoryResponse> memberConsCategoryDtoList = memberExpenditureCategoryRepository.selectMemberConsCategoryNames(request);
+        System.out.println("memconstcate"+memberConsCategoryDtoList.toString());
         MemberDto.ProfileResponse response = memberRepository.selectMemberDetail(request);
         response.setMemberConsCategoryDtoList(memberConsCategoryDtoList);
+        return response;
+    }
+    @Transactional
+    @Override
+    public MemberDto.ProfileResponse updateMemberInfo(MemberDto.UpdateMemberInfoRequest request) {
+        CustomUserDetails customUserDetails = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("memberId",customUserDetails.getUserDto().getMemberId());
+        paramMap.put("targetExpenditure",request.getTargetExpenditure());
+        System.out.println("memberConsCategoryIdDtoList"+request.getMemberConsCategoryIdDtoList());
+        paramMap.put("memberConsCategoryIdDtoList",request.getMemberConsCategoryIdDtoList());
+
+        MemberDto.ProfileResponse response = updateTargetExpenditure(paramMap);
+        response.setMemberId(customUserDetails.getUserDto().getMemberId());
+        response.setMemberConsCategoryDtoList(updateMemberConsCategoryList(paramMap));
 
         return response;
     }
+
+    @Override
+    public boolean updatePassword(MemberDto.UpdatePasswordRequest request) {
+        if(request.getChangePassword().equals(request.getCheckPassword())){
+            CustomUserDetails customUserDetails = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Map<String,Object> paramMap = new HashMap<>();
+            paramMap.put("memberId",customUserDetails.getUserDto().getMemberId());
+            paramMap.put("memberPassword",bCryptPasswordEncoder.encode(request.getChangePassword()));
+            int count = memberRepository.updatePassword(paramMap);
+            if(count==1){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Transactional
+    @Override
+    public MemberDto.ProfileResponse updateTargetExpenditure(Map<String,Object> paramMap){
+        System.out.println("updateTarget:"+paramMap.get("memberConsCategoryIdDtoList"));
+        System.out.println("updatetarget"+memberRepository.updateTargetExpenditure(paramMap));
+        return memberRepository.findMemberNameAndTargetExpenditureByMemberId(paramMap);
+    }
+
+    @Transactional
+    @Override
+    public List<MemberConsCategoryDto.MemberConsCategoryResponse> updateMemberConsCategoryList(Map<String,Object> paramMap){
+        List<MemberConsCategoryDto.MemberConsCategoryIdDto> savedList =memberExpenditureCategoryRepository.selectMemberConsCategoryIds(paramMap);
+        List<MemberConsCategoryDto.MemberConsCategoryIdDto> changeList = (List<MemberConsCategoryDto.MemberConsCategoryIdDto>) paramMap.get("memberConsCategoryIdDtoList");
+
+        System.out.println("saved"+savedList.toString());
+        System.out.println("changed"+changeList.toString());
+        for(MemberConsCategoryDto.MemberConsCategoryIdDto item : changeList){
+            if(savedList.contains(item)){
+                savedList.remove(item);
+                changeList.remove(item);
+            }
+        }
+        paramMap.put("list",savedList);
+        System.out.println("saved"+paramMap.get("list"));
+        memberExpenditureCategoryRepository.deleteMemberConsCategory(paramMap);
+
+        paramMap.put("list",changeList);
+        System.out.println("changes"+paramMap.get("list"));
+        memberExpenditureCategoryRepository.insertMemberConsCategory(paramMap);
+        return memberExpenditureCategoryRepository.selectMemberConsCategoryNames(new MemberDto.MemberIdRequest(paramMap.get("memberId").toString()));
+    }
+
+
+
+
 
 }

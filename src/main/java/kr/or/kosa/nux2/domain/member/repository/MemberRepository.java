@@ -5,6 +5,8 @@ import kr.or.kosa.nux2.domain.member.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 @RequiredArgsConstructor
 @Repository
 public class MemberRepository {
@@ -17,11 +19,9 @@ public class MemberRepository {
     public int insertOAuthMember(MemberDto.UserDto userDto){
         return memberMapper.insertOAuthMember(userDto);
     }
-    public int updateSocialToken(MemberDto.UpdateSocialTokenRequest request){
-        return memberMapper.updateSocialToken(request);
-    }
-    public int insertMember(MemberDto.SignInRequest signInRequest){
-        return memberMapper.insertMember(signInRequest);
+
+    public int insertMember(MemberDto.SignUpRequest signUpRequest){
+        return memberMapper.insertMember(signUpRequest);
     }
     public boolean isExistMemberId(MemberDto.MemberIdRequest request){
         return memberMapper.isExistMemberId(request);
@@ -29,5 +29,23 @@ public class MemberRepository {
 
     public MemberDto.ProfileResponse selectMemberDetail(MemberDto.MemberIdRequest request){
         return memberMapper.selectMemberDetail(request);
+    }
+
+    public int updateStatus(Map<String,Object> paramMap){
+        return memberMapper.updateStatus(paramMap);
+    }
+    public int saveOrUpdateMember(Map<String, Object> paramMap){
+        return  memberMapper.saveOrUpdateMember(paramMap);
+    }
+    public int updateTargetExpenditure(Map<String, Object> paramMap){
+        return memberMapper.updateTargetExpenditure(paramMap);
+    }
+
+    public MemberDto.ProfileResponse findMemberNameAndTargetExpenditureByMemberId(Map<String, Object> paramMap){
+        return memberMapper.findMemberNameAndTargetExpenditureByMemberId(paramMap);
+    }
+
+    public int updatePassword(Map<String, Object> paramMap) {
+        return memberMapper.updatePassword(paramMap);
     }
 }

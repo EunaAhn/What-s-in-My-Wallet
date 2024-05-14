@@ -1,8 +1,10 @@
 package kr.or.kosa.nux2.domain.member.mapper;
 
 import kr.or.kosa.nux2.domain.member.dto.MemberDto;
-import kr.or.kosa.nux2.domain.member.dto.UpdateMemberDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Map;
 
 @Mapper
 public interface MemberMapper {
@@ -11,11 +13,17 @@ public interface MemberMapper {
 
     int insertOAuthMember(MemberDto.UserDto userDto);
 
-    int insertMember(MemberDto.SignInRequest signInRequest);
-
-    int updateSocialToken(MemberDto.UpdateSocialTokenRequest request);
+    int insertMember(MemberDto.SignUpRequest signUpRequest);
 
     boolean isExistMemberId(MemberDto.MemberIdRequest request);
+
     MemberDto.ProfileResponse selectMemberDetail(MemberDto.MemberIdRequest request);
 
+    int updateStatus(Map<String, Object> paramMap);
+
+    int saveOrUpdateMember(Map<String, Object> paramMap);
+    int updateTargetExpenditure(Map<String, Object> paramMap);
+    MemberDto.ProfileResponse findMemberNameAndTargetExpenditureByMemberId(Map<String, Object> paramMap);
+
+    int updatePassword(Map<String, Object> paramMap);
 }

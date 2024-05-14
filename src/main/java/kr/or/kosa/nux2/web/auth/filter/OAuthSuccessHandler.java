@@ -1,9 +1,10 @@
-package kr.or.kosa.nux2.web.auth;
+package kr.or.kosa.nux2.web.auth.filter;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kr.or.kosa.nux2.web.auth.provider.JwtProvider;
+import kr.or.kosa.nux2.web.auth.JwtUtils;
+import kr.or.kosa.nux2.web.auth.principal.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +29,7 @@ public class OAuthSuccessHandler implements AuthenticationSuccessHandler {
 
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         if(customUserDetails.getUserDto().getStatus()==0) {
-            response.sendRedirect("/test/profile?status=0");
+            response.sendRedirect("/api/member/profile?status=0");
         }else{
             response.sendRedirect("/main");
         }

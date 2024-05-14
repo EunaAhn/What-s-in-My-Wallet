@@ -4,28 +4,33 @@
 <mapper namespace="kr.or.kosa.nux2.domain.member.mapper.MemberMapper">
     <select id="findById" parameterType="String" resultType="kr.or.kosa.nux2.domain.member.dto.MemberDto$UserDto">
         select
-        member_id memberId,
-        member_password memberPassword,
-        provider provider,
-        role role,
-        social_token socialToken
-        from
-        member1
+        member_id as memberId,
+        member_Name as memberName,
+        member_password as memberPassword,
+        provider as provider,
+        role as role,
+        social_token as socialToken,
+        status
+        from member1
         where
         member_id = #{memberId}
     </select>
-    <insert id="insertOAuthMember" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$UserDto" >
-        insert into member1 (member_id,member_name, role, provider,social_token,status)
-        values (#{memberId},#{memberName},#{role},#{provider},#{socialToken},#{status})
+    <insert id="saveOrUpdateMember" parameterType="map" >
+        MERGE INTO member1
+        USING dual
+        ON (member_id = #{memberId})
+        WHEN MATCHED THEN
+        UPDATE SET
+        social_token = #{socialToken}
+        WHEN NOT MATCHED THEN
+        insert
+        (member_id,member_name,provider,role,social_token,status)
+        values
+        (#{memberId},#{memberName},#{provider},#{role},#{socialToken},#{status})
     </insert>
-    <update id="updateSocialToken" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$UpdateSocialTokenRequest">
-        update member1
-        set social_token = #{socialToken}
-        where member_id = #{memberId}
-    </update>
-    <insert id="insertMember" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$SignInRequest" >
-    insert into member1 (member_id,member_name, member_password, target_expenditure,role)
-    values (#{memberId},#{memberName},#{memberPassword},#{targetExpenditure},#{role})
+    <insert id="insertMember" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$SignUpRequest" >
+        insert into member1 (member_id,member_name, member_password, target_expenditure,role)
+        values (#{memberId},#{memberName},#{memberPassword},#{targetExpenditure},#{role})
     </insert>
     <select id="isExistMemberId" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$MemberIdRequest" resultType="boolean">
         SELECT CASE
@@ -45,4 +50,26 @@
         where
             member_id = #{memberId}
     </select>
+    <select id="findMemberNameAndTargetExpenditureByMemberId" parameterType="map" resultType="kr.or.kosa.nux2.domain.member.dto.MemberDto$ProfileResponse">
+        select member_name memberName,target_expenditure targetExpenditure
+        from member1
+        where member_id = #{memberId}
+    </select>
+    <update id="updateTargetExpenditure" parameterType="map">
+        update
+            member1
+        set
+            target_expenditure = #{targetExpenditure},
+            status = 1
+        where
+            member_id = #{memberId}
+    </update>
+    <update id="updatePassword" parameterType="map">
+        update
+        member1
+        set
+        member_password = #{memberPassword}
+        where
+        member_id = #{memberId}
+    </update>
 </mapper>

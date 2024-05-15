@@ -12,7 +12,7 @@ public interface CardProductMapper {
 
     int insertMemberLikeCardProduct(Map<String, Object> map);
 
-    CardProductDto.DetailsResponse findCardProductDetail(@Param("cardProductId") Long cardProductId);
+    CardProductDto.DetailsResponse findCardProductDetail(Map<String, Object> map);
 
     List<CardProductDto.Response> findAllCardProducts(Map<String, Object> map);
 

@@ -17,8 +17,11 @@ public class MyDataTransHistoryRepository {
         return myDataTransHistoryMapper.findAllTransHistory(memberId, cardNumber);
     }
 
-    public int insertTransHistory(MyDataTransanctionHistoryDto.InsertRequest insertRequest) {
-        return myDataTransHistoryMapper.insertTransHistory(insertRequest);
+    public boolean insertTransHistory(MyDataTransanctionHistoryDto.InsertRequest insertRequest) {
+        int result = myDataTransHistoryMapper.insertTransHistory(insertRequest);
+
+        if(result == 1) return true;
+        return false;
     }
 
 }

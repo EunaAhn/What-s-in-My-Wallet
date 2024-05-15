@@ -30,8 +30,14 @@ public class CardProductServiceImpl implements CardProductService {
 
     @Override
     public CardProductDto.DetailsResponse showCardProductDetail(CardProductDto.DetailRequest request) {
-        Long cardProductId = request.getCardProductId();
-        CardProductDto.DetailsResponse response = cardProductRepository.findCardDetails(cardProductId);
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("cardProductId", request.getCardProductId());
+        map.put("memberId", "dnwo1111");
+        System.out.println("오류없음");
+        CardProductDto.DetailsResponse response = cardProductRepository.findCardDetails(map);
+        System.out.println("오류존재");
 
         return response;
     }

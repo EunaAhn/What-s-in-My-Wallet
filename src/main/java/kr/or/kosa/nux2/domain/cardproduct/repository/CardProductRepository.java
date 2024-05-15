@@ -27,8 +27,8 @@ public class CardProductRepository {
         return false;
     }
 
-    public CardProductDto.DetailsResponse findCardDetails(Long cardProductId) {
-        return cardProductMapper.findCardProductDetail(cardProductId);
+    public CardProductDto.DetailsResponse findCardDetails(Map<String, Object> map) {
+        return cardProductMapper.findCardProductDetail(map);
     }
 
     public List<CardProductDto.Response> findAllCards(Map<String, Object> columns) {

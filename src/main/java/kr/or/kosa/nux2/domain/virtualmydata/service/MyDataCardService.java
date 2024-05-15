@@ -8,9 +8,5 @@ import java.util.Map;
 public interface MyDataCardService {
     List<MyDataCardDto.Response> showAllMyDataCard(MyDataCardDto.AuthenticationRequest authenticationRequest);
 
-    void createMyDataCard(MyDataCardDto.InsertRequest insertRequest);
-
-    List<MyDataCardDto.Response> showAllMyDataCard();
-
     MyDataCardDto.Response findMyDataCardByCardNumber(Map<String, Object> map);
 }

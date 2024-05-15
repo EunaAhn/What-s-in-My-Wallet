@@ -22,6 +22,7 @@ public class CardProductDto {
         private String cardImageFileName;
         private String membershipFee;
         private String benefitSummary;
+        private int isUserClickLike;
 
         private Long likeCount;
         private List<BenefitCategoryDetails> benefitCategoryList;

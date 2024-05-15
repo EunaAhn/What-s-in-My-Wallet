@@ -28,12 +28,14 @@ public class RegistrationCardRestController {
     @DeleteMapping("/delete")
     public ResponseEntity<ApiResponse<?>> deleteCard(@RequestBody RegistrationCardDto.InsertControllerRequest request) {
         registrationCardService.deleteRegistrationCard(request.getCardNumber());
+        
         return null;
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> registerCard(@RequestBody List<RegistrationCardDto.InsertControllerRequest> requests) {
         registrationCardService.insertRegistrationCard(requests);
+
         return new ResponseEntity<>("OK", HttpStatus.CREATED);
     }
 }

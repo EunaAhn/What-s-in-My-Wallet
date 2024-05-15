@@ -29,7 +29,7 @@ public class MyDataCardsRestController {
     private final MyDataCardServiceImpl myDataCardService;
 
     @PostMapping("/mycard")
-    public ResponseEntity<ApiResponse<?>> showMyCard(@RequestBody MyDataCardDto.AuthenticationRequest request){
+    public ResponseEntity<ApiResponse<List<MyDataCardDto.Response>>> showMyCard(@RequestBody MyDataCardDto.AuthenticationRequest request){
         List<MyDataCardDto.Response> responses = myDataCardService.showAllMyDataCard(request);
 
         return new ResponseEntity<>(new ApiResponse(responses, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);

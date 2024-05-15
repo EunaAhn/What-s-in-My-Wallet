@@ -19,8 +19,6 @@ public interface MemberService {
 
     String generateAuthenticationNumber();
 
-    int insertOrUpdateAuthenticationInfo(Map<String, Object> paramMap);
-
     boolean validateAuthenticationNumber(MemberDto.AuthenticationDto request);
 
     MemberDto.ProfileResponse showMemberProfile();

@@ -180,7 +180,7 @@
 <!--    "likeCount": 1,-->
 <!--    "benefitCategoryList": []-->
 
-    <select id="findTop4LikeCardProduct" resultMap="cardListResultSumm">
+    <select id="findTop6LikeCardProduct" resultMap="cardListResultSumm">
         SELECT
             subquery.cpi as card_product_id,
             subquery.cci as card_company_id,

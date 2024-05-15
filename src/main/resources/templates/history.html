@@ -4,8 +4,6 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default_layout}">
-    <th:block layout:fragment="head">
-        <link th:href="@{/css/history.css}" rel="stylesheet" />
         <link th:href="@{/css/common.css}" rel="stylesheet" />
         <script type="module" th:src="@{/js/api/history.js}" defer></script>
         <script type="module" th:src="@{/js/history.js}" defer></script>
@@ -17,7 +15,9 @@
     <dialog>
         <div class="modal_header">
             <p>이눅스님의 소비내역</p>
-            <button class="close_btn">
+            <th:block layout:fragment="head">
+                <link th:href="@{/css/history.css}" rel="stylesheet" />
+                <button class="close_btn">
                 <img class="close_image" th:src="@{/img/common/closebtn.png}" alt="close_button" />
             </button>
         </div>

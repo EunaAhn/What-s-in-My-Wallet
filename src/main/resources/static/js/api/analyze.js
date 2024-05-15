@@ -1,7 +1,8 @@
 const myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Authorization", `Bearer ${localStorage.getItem("access_token")}`);
 
-export const getExpendituretendency = async (yearAndMonth) => {
+export const getExpenditureTendency = async (yearAndMonth) => {
     const raw = JSON.stringify({
         "yearAndMonth": yearAndMonth
     });
@@ -15,12 +16,12 @@ export const getExpendituretendency = async (yearAndMonth) => {
         const result = await response.json();
         return result.result;
     } catch (error) {
-        console.log("getExpendituretendency error : ",error)
-        return null
+        console.log("getExpenditureTendency error: ", error);
+        return null;
     }
 }
 
-export const getTotalAmountBytime = async (yearAndMonth) => {
+export const getTotalAmountByTime = async (yearAndMonth) => {
     const raw = JSON.stringify({
         "yearAndMonth": yearAndMonth
     });
@@ -34,14 +35,14 @@ export const getTotalAmountBytime = async (yearAndMonth) => {
         const result = await response.json();
         return result.result;
     } catch (error) {
-        console.log("getTotalAmountBytime error : ",error)
-        return null
+        console.log("getTotalAmountByTime error: ", error);
+        return null;
     }
 }
 
-export const geTotalAmountBy12month = async (yearAndMonth) => {
+export const getTotalAmountBy12Month = async (year) => {
     const raw = JSON.stringify({
-        "yearAndMonth": yearAndMonth
+        "year": year
     });
     const requestOptions = {
         method: "POST",
@@ -53,8 +54,47 @@ export const geTotalAmountBy12month = async (yearAndMonth) => {
         const result = await response.json();
         return result.result;
     } catch (error) {
-        console.log("getTotalAmountBytime error : ",error)
-        return null
+        console.log("getTotalAmountBy12Month error: ", error);
+        return null;
     }
 }
 
+export const getSavingAmountGoal = async (yearAndMonth) => {
+    const raw = JSON.stringify({
+        "yearAndMonth" : yearAndMonth
+    });
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw
+    };
+    try {
+        const response = await fetch(`/api/expenditure/savingamount`, requestOptions);
+        const result = await response.json();
+        return result.result;
+    } catch (error) {
+        console.log("getSavingAmountGoal error: ", error);
+        return null;
+    }
+}
+
+export const getTotalCountByTimePeriod = async (yearAndMonth, endHour, startHour) => {
+    const raw = JSON.stringify({
+        "yearAndMonth" : yearAndMonth,
+        "endHour" : endHour,
+        "startHour" : startHour
+    });
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw
+    };
+    try {
+        const response = await fetch(`/api/expenditure/totalcountbytimeperiod`, requestOptions);
+        const result = await response.json();
+        return result.result;
+    } catch (error) {
+        console.log("getTotalCountByTimePeriod error: ", error);
+        return null;
+    }
+}

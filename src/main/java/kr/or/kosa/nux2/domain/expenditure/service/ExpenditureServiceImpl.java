@@ -48,7 +48,7 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         Map<String, Object> map = new HashMap<>();
 
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
-        map.put("memberId", "dnwo1111");
+        map.put("memberId", memberId);
         map.put("nowDate", request.getNowDate());
         //map.put("expenditureId", request.getExpenditureId());
 
@@ -102,7 +102,7 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         Map<String, Object> columns = new HashMap<>();
 
         columns.put("nowDate", request.getYearAndMonth());
-        columns.put("memberId", "dnwo1111");
+        columns.put("memberId", memberId);
 
         Map<String, Object> response = expenditureRepository.findTotalExpenditureForMonthAndTimeByYearAndMonth(columns);
         return response;
@@ -127,7 +127,7 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Map<String, Object> map = new HashMap<>();
-        map.put("memberId", "dnwo1111");
+        map.put("memberId", memberId);
 
         // 사용자의 등록카드리스트를 조회
         List<RegistrationCardDto.Response> registeredCard = registrationCardService.showAllRegisteredCardByMemberId();

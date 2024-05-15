@@ -1,12 +1,15 @@
 const myHeaders = new Headers();
+const myHeaders_extra = new Headers();
 myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Authorization", `Bearer ${localStorage.getItem("access_token")}`);
+myHeaders_extra.append("Content-Type", "application/json");
 
 export const getNewExpenditureList = async () => {
     const requestOptions = {
-        method: "GET",
+        method: "POST",
     };
     try {
-        const response = await fetch(`/api/expenditure/list`, requestOptions);
+        const response = await fetch(`/api/expenditure/reload`, requestOptions);
         const result = await response.json();
         return result.result;
     } catch (error) {
@@ -38,7 +41,7 @@ export const getExpenditureList = async (yearAndMonth) => {
 export const getExpenditureKeywordList = async (yearAndMonth, keyword) => {
     const raw = JSON.stringify({
         "yearAndMonth": yearAndMonth,
-        "keyword": keyword
+        "keyWord": keyword
     });
     const requestOptions = {
         method: "POST",

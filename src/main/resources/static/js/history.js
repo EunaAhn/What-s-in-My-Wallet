@@ -3,7 +3,7 @@ import { getExpenditureList, getStoreAddressList, getExpenditureKeywordList, get
 
 document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem('clickedmenu', ".side_history");
-})
+});
 
 // 현재 날짜를 기준으로 nowDate와 yearAndMonth 생성
 const today = new Date();
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const categoriesSelect = document.getElementById('categories');
     const closeButton = document.querySelector('.close_btn');
     const saveButton = document.querySelector('.modal_save');
-    const updateButton = document.getElementById('updateBtn');
+    const updateButton = document.querySelector('.update_btn');
 
     let currentMonth = today.getMonth();
     let currentYear = today.getFullYear();
@@ -108,18 +108,17 @@ document.addEventListener("DOMContentLoaded", () => {
     updateButton.addEventListener('click', async () => {
         try {
             const newExpenditureList = await getNewExpenditureList();
-            if (newExpenditureList) {
+            if (newExpenditureList && newExpenditureList.result === true) {
                 console.log("내역이 업데이트되었습니다.", newExpenditureList);
                 alert("내역이 업데이트되었습니다.");
-                // 새로운 소비 내역을 기반으로 캘린더를 업데이트합니다.
-                addCalendarData(currentMonth, currentYear, selectedKeyword);
+                addCalendarData(currentMonth, currentYear, selectedKeyword); // 캘린더 업데이트
             } else {
-                console.log("내역 업데이트에 실패했습니다.");
-                alert("내역 업데이트에 실패했습니다.");
+                console.log("가장 최신 내역입니다.");
+                alert("가장 최신 내역입니다.");
             }
         } catch (error) {
             console.error('Error updating expenditure list:', error);
-            alert('Error updating expenditure list');
+            alert("내역 업데이트에 실패했습니다.");
         }
     });
 
@@ -134,7 +133,9 @@ const addCalendarData = async (currentMonth, currentYear, keyword = null) => {
     try {
         let expenditureList;
         if (keyword) {
+            console.log(keyword)
             expenditureList = await getExpenditureKeywordList(yearAndMonth, keyword);
+            console.log(expenditureList);
         } else {
             expenditureList = await history.getExpenditureList(yearAndMonth);
         }
@@ -459,3 +460,23 @@ function createExpenseItems(expenditureSummaryDtoList) {
         expenseList.appendChild(expenseItem);
     });
 }
+
+const hdCardSearch = document.querySelector("#hd_card_search");
+
+hdCardSearch.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && hdCardSearch.value) {
+        localStorage.setItem("searchWord", hdCardSearch.value);
+        window.location.href = "cardlist";
+        hdCardSearch.value = "";
+    }
+});
+
+const hdSearchImage = document.querySelector(".hd_search_image");
+
+hdSearchImage.addEventListener("click", () => {
+    if (hdCardSearch.value) {
+        localStorage.setItem("searchWord", hdCardSearch.value);
+        window.location.href = "cardlist";
+        hdCardSearch.value = "";
+    }
+});

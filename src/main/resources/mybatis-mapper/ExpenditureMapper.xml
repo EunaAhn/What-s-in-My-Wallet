@@ -196,7 +196,7 @@
     </select>
 
 
-    <select id="findAverageExpenditureForMonthByYear" parameterType="map">
+    <select id="findAverageExpenditureForMonthByYear" parameterType="map" resultType="map">
         select
             NVL("1월", 0) AS "1월",
             NVL("2월", 0) AS "2월",

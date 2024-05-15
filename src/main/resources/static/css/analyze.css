@@ -11,33 +11,40 @@
     padding-top: 40px;
 }
 
-.section{
+.section {
     height: 46%;
     width: 75%;
     display: flex;
     padding: 20px 0;
 }
 
-.section_up{
+.section_up {
     position: relative;
     align-items: center;
     border-bottom: 1px solid #717579;
 }
 
-.title{
+.title {
     position: absolute;
     font-size: 26px;
     font-weight: 700;
     top: -30px;
     text-shadow: 1px 1px 2px rgb(0 0 0 / 25%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.mbti_image{
+.title select {
+    margin: 0 10px;
+}
+
+.mbti_image {
     height: 100%;
     margin-right: 25px;
 }
 
-.content_box{
+.content_box {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -45,7 +52,7 @@
     width: 100%;
 }
 
-.content{
+.content {
     height: 48%;
     width: 100%;
     display: flex;
@@ -57,22 +64,22 @@
     box-shadow: 0 0 15px 0 rgb(0 0 0 / 15%);
 }
 
-.expense_type{
+.expense_type {
     font-size: 20px;
     margin-bottom: 8px;
 }
 
-.type_description{
+.type_description {
     font-size: 16px;
     color: #717579;
     margin-bottom: 8px;
 }
 
-.section_down{
+.section_down {
     justify-content: space-between;
 }
 
-.chart{
+.chart {
     height: 100%;
     width: 49%;
     display: flex;
@@ -84,19 +91,68 @@
     box-shadow: 0 0 15px 0 rgb(0 0 0 / 15%);
 }
 
-.chart_title{
+.chart_title {
     height: 10%;
     width: 90%;
     text-align: left;
     font-size: 20px;
 }
 
-.time_chart_wrapper{
+.time_chart_wrapper {
     height: 100%;
     width: 90%;
 }
 
-.price_chart_wrapper{
+.price_chart_wrapper {
     height: 85%;
     width: 90%;
 }
+
+
+.month-select-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+
+#monthSelect {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: border-color 0.3s;
+    height: 36px;
+}
+
+#monthSelect:focus {
+    border-color: #3f3f3f;
+    outline: none;
+}
+
+
+#updateButton {
+    padding: 5px 15px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #8b81d4;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 36px;
+}
+
+#updateButton:hover {
+    background-color: #7b73bb;
+}
+
+#updateButton:focus {
+    outline: none;
+}
+

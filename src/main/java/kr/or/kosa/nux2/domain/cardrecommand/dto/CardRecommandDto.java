@@ -9,6 +9,11 @@ import lombok.Setter;
 import java.util.List;
 
 public class CardRecommandDto {
+    /*
+      ========================================================================================
+                                            RESPONSE DTO
+      ========================================================================================
+     */
     @Getter
     @Setter
     public static class CardRecommandResponse {
@@ -31,6 +36,13 @@ public class CardRecommandDto {
         private double 언제나할인;
         private double 통합할인액;
     }
+
+
+    /*
+      ========================================================================================
+                                            REQUEST DTO
+      ========================================================================================
+     */
 
     @Getter
     @NoArgsConstructor

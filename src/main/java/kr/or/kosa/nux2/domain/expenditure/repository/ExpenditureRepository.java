@@ -31,26 +31,33 @@ public class ExpenditureRepository {
         return expenditureMapper.findAllExpenditureDetails(columns);
     }
 
-    public int insertExpenditures(Map<String, Object> map) {
-        return expenditureMapper.insertExpenditures(map);
+    public boolean insertExpenditures(Map<String, Object> map) {
+        int result = expenditureMapper.insertExpenditures(map);
+
+        if(result == 1) return true;
+        return false;
     }
 
-    public void updateExpenditureMemo(Map<String, Object> map) {
-        expenditureMapper.updateExpenditureMemo(map);
-    }
+    public boolean updateExpenditureMemo(Map<String, Object> map) {
+        int result = expenditureMapper.updateExpenditureMemo(map);
 
+        if(result == 1) return true;
+        return false;
+    }
+    // 월별카테고리별지출비율
     public List<ExenditureDto.RatioByCategoryResponse> findExpenditureRatioForCategoryByMonth(Map<String, Object> map) {
         return expenditureMapper.findExpenditureRatioForCategoryByMonth(map);
     }
-
+    // 월별카테고리별지출횟수
     public List<Map<String, Object>> findExpenditureCountForCategoryByMonth(Map<String, Object> map) {
         return expenditureMapper.findExpenditureCountForCategoryByMonth(map);
     }
-
+    // 월별시간대별지출액
     public Map<String, Object> findTotalExpenditureForMonthAndTimeByYearAndMonth(Map<String, Object> map) {
         return expenditureMapper.findTotalExpenditureForMonthAndTimeByYearAndMonth(map);
     }
 
+    // 월별총지출액
     public Map<String, Object> findAverageExpenditureForMonthByYear(Map<String, Object> map) {
         return expenditureMapper.findAverageExpenditureForMonthByYear(map);
     }
@@ -63,12 +70,18 @@ public class ExpenditureRepository {
         return expenditureMapper.findExpendiutreTendencyAnalysis(map);
     }
 
-    public int isExistMemo(Map<String, Object> map) {
-        return expenditureMapper.isExistMemo(map);
+    public boolean isExistMemo(Map<String, Object> map) {
+        int result = expenditureMapper.isExistMemo(map);
+
+        if(result == 1) return true;
+        return false;
     }
 
-    public void insertExpenditureMemo(Map<String, Object> map) {
-        expenditureMapper.insertExpenditureMemo(map);
+    public boolean insertExpenditureMemo(Map<String, Object> map) {
+        int result = expenditureMapper.insertExpenditureMemo(map);
+
+        if(result == 1) return true;
+        return  false;
     }
 
     public List<ExenditureDto.CategoryList> findAllCategoryList(Map<String, Object> map) {

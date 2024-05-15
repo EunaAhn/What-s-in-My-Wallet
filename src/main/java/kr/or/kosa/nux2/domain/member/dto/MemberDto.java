@@ -56,7 +56,7 @@ public class MemberDto {
         private String targetExpenditure;
     }
 
-    @Setter
+
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
@@ -66,7 +66,6 @@ public class MemberDto {
     }
 
     @Getter
-    @RedisHash(value = "")
     public static class AuthenticationDto {
         private String memberId;
         private String authenticationNumber;

@@ -48,7 +48,7 @@ public class RegistrationCardServiceImpl implements RegistrationCardService {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
         boolean result = false;
         for(RegistrationCardDto.InsertControllerRequest request : requests) {
-            //
+
             System.out.println(request.getCardNumber());
             Map<String, Object> mdcMap = new HashMap<>();
             mdcMap.put("cardNumber", request.getCardNumber());

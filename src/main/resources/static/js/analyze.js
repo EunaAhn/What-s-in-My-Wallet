@@ -1,5 +1,5 @@
 import * as analyze from "./api/analyze.js"
-import {geTotalAmountBy12month, getTotalAmountBytime} from "./api/analyze.js";
+import {getExpendituretendency, geTotalAmountBy12month, getTotalAmountBytime} from "./api/analyze.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem('clickedmenu', ".side_analyze");
@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const yearAndMonth = "2024-05"
 
+const MBTI = await getExpendituretendency("202405");
+console.log(MBTI);
 const List = await getTotalAmountBytime(yearAndMonth);
 // 결과 객체에서 키를 배열로 가져옵니다.
 const keys = Object.keys(List);

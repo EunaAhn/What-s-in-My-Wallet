@@ -1,9 +1,44 @@
 const myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
+export const getNewExpenditureList = async () => {
+    const requestOptions = {
+        method: "GET",
+    };
+    try {
+        const response = await fetch(`/api/expenditure/list`, requestOptions);
+        const result = await response.json();
+        return result.result;
+    } catch (error) {
+        console.log("getExpenditureList : ",error)
+        return null
+    }
+}
+
+
 export const getExpenditureList = async (yearAndMonth) => {
     const raw = JSON.stringify({
         "yearAndMonth": yearAndMonth
+    });
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw
+    };
+    try {
+        const response = await fetch(`/api/expenditure/list`, requestOptions);
+        const result = await response.json();
+        return result.result;
+    } catch (error) {
+        console.log("getCardProductList error : ",error)
+        return null
+    }
+}
+
+export const getExpenditureKeywordList = async (yearAndMonth, keyword) => {
+    const raw = JSON.stringify({
+        "yearAndMonth": yearAndMonth,
+        "keyword": keyword
     });
     const requestOptions = {
         method: "POST",

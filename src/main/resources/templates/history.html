@@ -65,15 +65,16 @@
                     <button id="nextBtn"><img th:src="@{/img/history/RightVector.png}" alt="rightvector" /></button>
                 </div>
                 <div class="right_section">
-                    <select class="categories" name="categories" >
+                    <select class="categories" name="categories" id="categories">
                         <option disabled selected>소비 카테고리 선택</option>
-                        <option value="restaurant">음식점</option>
+                        <option value="전체">전체</option>
+                        <option value="restaurant">외식</option>
                         <option value="conveniencestore">편의점</option>
-                        <option value="gasstation">주유소</option>
+                        <option value="gasstation">주유</option>
                         <option value="academy">학원</option>
-                        <option value="culturallife">문화생활</option>
-                        <option value="cafe">카페</option>
-                        <option value="hospital">병원</option>
+                        <option value="culturallife">문화</option>
+                        <option value="cafe">카페/베이커리</option>
+                        <option value="hospital">의료</option>
                         <option value="largesupermarket">대형마트</option>
                     </select>
                     <button class="update_btn">

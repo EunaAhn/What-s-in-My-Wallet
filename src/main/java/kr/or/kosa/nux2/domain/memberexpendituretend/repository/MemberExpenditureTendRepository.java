@@ -11,13 +11,9 @@ import java.util.Map;
 @Repository
 @AllArgsConstructor
 public class MemberExpenditureTendRepository {
-
     private final MemberExpenditureTendMapper memberExpenditureTendMapper;
 
     public List<MemberExpenditureTendDto.Response> findMemberExpenditureTendMapper(Map<String, Object> columns) {
         return memberExpenditureTendMapper.findMemberExpenditureTend(columns);
     }
-
-    ;
-
 }

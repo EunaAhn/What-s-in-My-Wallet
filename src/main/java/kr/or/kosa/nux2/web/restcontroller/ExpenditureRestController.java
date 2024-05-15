@@ -73,7 +73,7 @@ public class ExpenditureRestController {
         return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
 
-    @GetMapping("/reload")
+    @PostMapping("/reload")
     public ResponseEntity<ApiResponse<Boolean>> reloadNewExpenditures() {
         boolean response = expenditureService.insertExpenditure();
 

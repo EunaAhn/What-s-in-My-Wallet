@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-//@RestControllerAdvice
+@RestControllerAdvice
 //개발 완료 후 주석 해제 권장
 public class GlobalExceptionHandler {
     private final HttpStatus HTTP_BADREQUEST = HttpStatus.BAD_REQUEST;

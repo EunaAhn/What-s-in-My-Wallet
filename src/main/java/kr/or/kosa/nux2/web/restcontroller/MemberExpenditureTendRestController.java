@@ -1,5 +1,6 @@
 package kr.or.kosa.nux2.web.restcontroller;
 
+import jakarta.validation.Valid;
 import kr.or.kosa.nux2.domain.memberexpendituretend.dto.MemberExpenditureTendDto;
 import kr.or.kosa.nux2.domain.memberexpendituretend.service.MemberExpenditureTendServiceImpl;
 import kr.or.kosa.nux2.web.common.code.SuccessCode;
@@ -17,9 +18,10 @@ import java.util.List;
 public class MemberExpenditureTendRestController {
     private final MemberExpenditureTendServiceImpl memberExpenditureTendService;
 
-    @PostMapping("/")
-    public ResponseEntity<ApiResponse<List<MemberExpenditureTendDto.Response>>> showExpenditureTend(@RequestBody MemberExpenditureTendDto.ExpenditureTendRequest request) {
-        List<MemberExpenditureTendDto.Response> responses = memberExpenditureTendService.findMemberExpenditureTend(request.getYearAndMonth());
+    @PostMapping("/yearandmonth")
+    public ResponseEntity<ApiResponse<List<MemberExpenditureTendDto.Response>>> showExpenditureTend(@Valid @RequestBody MemberExpenditureTendDto.ExpenditureTendRequest request) {
+        List<MemberExpenditureTendDto.Response> responses = memberExpenditureTendService.findMemberExpenditureTend(request);
+
         return new ResponseEntity<>(new ApiResponse<>(responses, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }
 }

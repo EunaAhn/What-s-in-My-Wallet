@@ -44,7 +44,8 @@ public class MemberServiceImpl implements MemberService {
                 restTemplate.getForObject(URL + socialAccessToken, String.class);
             }
         }
-        return "logout";
+        SecurityContextHolder.clearContext();
+        return "login";
     }
 
     @Transactional

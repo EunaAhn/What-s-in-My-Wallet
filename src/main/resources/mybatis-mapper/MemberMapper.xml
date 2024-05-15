@@ -11,12 +11,12 @@
         role as role,
         social_token as socialToken,
         status
-        from member1
+        from member
         where
         member_id = #{memberId}
     </select>
     <insert id="saveOrUpdateMember" parameterType="map" >
-        MERGE INTO member1
+        MERGE INTO member
         USING dual
         ON (member_id = #{memberId})
         WHEN MATCHED THEN
@@ -29,13 +29,13 @@
         (#{memberId},#{memberName},#{provider},#{role},#{socialToken},#{status})
     </insert>
     <insert id="insertMember" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$SignUpRequest" >
-        insert into member1 (member_id,member_name, member_password, target_expenditure,role)
+        insert into member (member_id,member_name, member_password, target_expenditure,role)
         values (#{memberId},#{memberName},#{memberPassword},#{targetExpenditure},#{role})
     </insert>
     <select id="isExistMemberId" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$MemberIdRequest" resultType="boolean">
         SELECT CASE
         WHEN EXISTS (
-        SELECT 1 FROM member1 WHERE member_id = #{memberId}
+        SELECT 1 FROM member WHERE member_id = #{memberId}
         ) THEN 1
         ELSE 0
         END AS member_id_exists
@@ -46,18 +46,18 @@
             member_id memberId,
             member_name memberName,
             target_expenditure targetExpenditure
-        from member1
+        from member
         where
             member_id = #{memberId}
     </select>
     <select id="findMemberNameAndTargetExpenditureByMemberId" parameterType="map" resultType="kr.or.kosa.nux2.domain.member.dto.MemberDto$ProfileResponse">
         select member_name memberName,target_expenditure targetExpenditure
-        from member1
+        from member
         where member_id = #{memberId}
     </select>
     <update id="updateTargetExpenditure" parameterType="map">
         update
-            member1
+            member
         set
             target_expenditure = #{targetExpenditure},
             status = 1
@@ -66,7 +66,7 @@
     </update>
     <update id="updatePassword" parameterType="map">
         update
-        member1
+        member
         set
         member_password = #{memberPassword}
         where

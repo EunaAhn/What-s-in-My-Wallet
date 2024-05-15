@@ -25,22 +25,26 @@
         <result property="cardImageFileName" column="card_product_image"/>
         <result property="membershipFee" column="membership_fee"/>
         <result property="benefitSummary" column="benefit_summary"/>
+        <result property="baseRecord" column="base_record"/>
         <result property="likeCount" column="likeCount"/>
+        <result property="isUserClickLike" column="isUserClickLike"/>
         <collection property="benefitCategoryList" column="benefit_code_id" javaType="java.util.ArrayList" resultMap="categoryListResult">
 
         </collection>
     </resultMap>
-    <select id="findCardDetail" parameterType="java.lang.Long" resultMap="cardListResult">
+    <select id="findCardProductDetail" parameterType="map" resultMap="cardListResult">
         select
-            cp.card_product_id,
-            cp.card_company_id,
-            cp.card_product_name,
-            cp.card_product_image,
-            cp.membership_fee,
-            cp.benefit_summary,
-            cbc.benefit_name,
-            cbd.benefit_details,
-            (select count(member_id) from member_like_card) as likeCount
+            cp.card_product_id as card_product_id,
+            cp.card_company_id as card_company_id,
+            cp.card_product_name as card_product_name,
+            cp.card_product_image as card_product_image,
+            cp.membership_fee as membership_fee,
+            cp.benefit_summary as benefit_summary,
+            cbc.benefit_name as benefit_name,
+            cbd.benefit_details as benefit_details,
+            cpd.base_record as base_record,
+            (select count(*) from member_like_card where member_id = #{memberId} and card_product_id = #{cardProductId}) as isUserClickLike,
+            (select count(member_id) from member_like_card where card_product_id = #{cardProductId}) as likeCount
         from
             card_product cp
             join
@@ -49,14 +53,15 @@
             join
             card_benefit_details cbd
             on cbd.card_id = cbc.card_product_id
+            join
+            card_product_details cpd
+            on cp.card_product_id = cpd.card_product_id
         where cp.card_product_id = #{cardProductId}
-
     </select>
 
     <select id="findBenefitDetails" parameterType="map" resultType="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$BenefitDetails">
         select benefit_details
         from card_benefit_details  as benefitDetails
-<!--        where benfit_code_id = 'EC2' and card_id =1-->
     </select>
 
     <resultMap id="cardListResultSumm" type="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$Response">
@@ -75,8 +80,7 @@
         <!-- property는 도메인 클래스의 멤버변수명과 일치, column은 테이블의 컬럼명과 일치 -->
         <result property="benefitName" column="benefit_name"/>
     </resultMap>
-    <select id="findAllCards" parameterType="map" resultMap="cardListResultSumm">
-
+    <select id="findAllCardProducts" parameterType="map" resultMap="cardListResultSumm">
         <choose>
             <when test="keyword != null">
                 SELECT
@@ -176,7 +180,7 @@
 <!--    "likeCount": 1,-->
 <!--    "benefitCategoryList": []-->
 
-    <select id="findTop4LikeCard" resultMap="cardListResultSumm">
+    <select id="findTop4LikeCardProduct" resultMap="cardListResultSumm">
         SELECT
             subquery.cpi as card_product_id,
             subquery.cci as card_company_id,
@@ -212,7 +216,7 @@
     </select>
 
 
-    <select id="findMemberLikeCard" parameterType="String" resultMap="cardListResultSumm">
+    <select id="findMemberLikeCardProduct" parameterType="String" resultMap="cardListResultSumm">
 <!--        select-->
 <!--            cp.card_product_id,-->
 <!--            cp.card_company_id,-->
@@ -258,11 +262,11 @@
         order by cp.card_product_id
     </select>
 
-    <insert id="insertMemberLikeCard" parameterType="map">
-        insert into member_like_card(card_product_id, member_id) values(#{cardId}, #{memberId})
+    <insert id="insertMemberLikeCardProduct" parameterType="map">
+        insert into member_like_card(card_product_id, member_id) values(#{cardProductId}, #{memberId})
     </insert>
 
-    <delete id="deleteMemberLikeCard" parameterType="map">
-        delete from member_like_card where member_id = #{memberId} and card_product_id = #{cardId}
+    <delete id="deleteMemberLikeCardProduct" parameterType="map">
+        delete from member_like_card where member_id = #{memberId} and card_product_id = #{cardProductId}
     </delete>
 </mapper>

@@ -16,23 +16,14 @@ public class MyDataCardServiceImpl implements MyDataCardService {
     @Override
     public List<MyDataCardDto.Response> showAllMyDataCard(MyDataCardDto.AuthenticationRequest authenticationRequest) {
         List<MyDataCardDto.Response> responses = myDataCardRepository.findAllMyDataCard(authenticationRequest);
+
         return responses;
-    }
-
-    @Override
-    public void createMyDataCard(MyDataCardDto.InsertRequest insertRequest) {
-        // 관리자용 후순위
-    }
-
-    @Override
-    public List<MyDataCardDto.Response> showAllMyDataCard() {
-        // 관리자용 후순위
-        return List.of();
     }
 
     @Override
     public MyDataCardDto.Response findMyDataCardByCardNumber(Map<String, Object> map) {
         MyDataCardDto.Response response = myDataCardRepository.findMyDataCardByCardNumber(map);
+
         return response;
     }
 }

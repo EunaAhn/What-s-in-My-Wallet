@@ -1,7 +1,11 @@
 package kr.or.kosa.nux2.domain.expenditure.dto;
 
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -9,7 +13,7 @@ import java.util.Map;
 
 public class ExenditureDto {
     // insert, update 용 DTO도 정의해야한다.
-/*
+     /*
       ========================================================================================
                                           일반 RESPONSE DTO
       ========================================================================================
@@ -19,7 +23,6 @@ public class ExenditureDto {
     public static class Response {
         // 달력 한칸에 표현되는 지출 DTO -> 30~31개의 idx를 갖는 List로 Wrapping되는 DTO
         private String expenditureDate;
-        //        private List<ExenditureDto.CategoryName> expenditureCategoryList;
         private Long expenditureAmount;
     }
 
@@ -98,7 +101,6 @@ public class ExenditureDto {
       ========================================================================================
      */
 
-    //    int expenditureConutByTime;
     @Getter
     public static class TendencyAnalysis {
         private Long totalExpenditure;
@@ -117,6 +119,7 @@ public class ExenditureDto {
      */
     @Setter
     public static class InsertRequest {
+        // 사용자 활용 DTO X
         private Long cardId;
         private String memberId;
         private String categoryId;
@@ -127,41 +130,48 @@ public class ExenditureDto {
     @Getter
     @Setter
     public static class UpdateMemoRequest {
+        @Pattern(regexp = "\\d{4}\\d{2}", message = "날짜는 YYYYMM 형식이어야 합니다.")
         private String memoId;
         private String memo;
     }
 
     @Getter
-    @Setter
+    @NoArgsConstructor
     public static class ExpenditureDetailRequest {
-        String expenditureId;
+//        @NotNull
+//        @Positive
+//        String expenditureId;
+        @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "날짜는 YYYY-MM 형식이어야 합니다.")
         String nowDate;
     }
 
     @Getter
-    @Setter
-    public static class YearRequest {
+    @NoArgsConstructor
+    public static class ByYearRequest {
+        @Pattern(regexp = "\\d{4}", message = "날짜는 YYYY 형식이어야 합니다.")
         int year;
     }
 
     @Getter
-    @Setter
+    @NoArgsConstructor
     public static class TotalExpenditureCountRequest {
         String nowDate;
     }
 
     @Getter
-    @Setter
-    public static class TotalExpenditureCountByTimePeriodRequest {
+    @NoArgsConstructor
+    public static class TotalCountByTimePeriodRequest {
+        @Pattern(regexp = "\\d{4}-\\d{2}", message = "날짜는 YYYY-MM 형식이어야 합니다.")
         String yearAndMonth;
         String startHour;
         String endHour;
     }
 
     @Getter
-    @Setter
-    public static class YearAndMonthRequest {
+    @NoArgsConstructor
+    public static class ByYearAndMonthRequest {
+        @Pattern(regexp = "\\d{4}-\\d{2}", message = "날짜는 YYYY-MM 형식이어야 합니다.")
         String yearAndMonth;
-        String keyword;
+        String keyWord;
     }
 }

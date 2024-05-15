@@ -6,14 +6,9 @@ import java.util.List;
 
 
 public interface RegistrationCardService {
-    List<RegistrationCardDto.Response> showAllRegisteredCardByMemberId(String memberId);
+    List<RegistrationCardDto.Response> showAllRegisteredCardByMemberId();
 
-    // 삭제, 삽입 개수 반환
-    // 등록 카드 삭제
-    int deleteRegistrationCard(String registeredCardId);
+    boolean deleteRegistrationCard(String registeredCardId);
 
-    // 등록카드에 추가
-    int insertRegistrationCard(List<RegistrationCardDto.InsertControllerRequest> registrationCard);
-
-
+    boolean insertRegistrationCard(List<RegistrationCardDto.InsertControllerRequest> registrationCard);
 }

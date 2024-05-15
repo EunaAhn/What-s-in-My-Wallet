@@ -19,8 +19,11 @@ public class MyDataCardRepository {
         return myDataCardMapper.findAllMyDataCardByAuth(authenticationRequest);
     }
 
-    public void insertMyDataCard(MyDataCardDto.InsertRequest insertRequest) {
-        myDataCardMapper.insertMyDataCard(insertRequest);
+    public boolean insertMyDataCard(MyDataCardDto.InsertRequest insertRequest) {
+        int result = myDataCardMapper.insertMyDataCard(insertRequest);
+
+        if(result == 1) return true;
+        return false;
     }
 
     public List<MyDataCardDto.Response> findAllMyDataCard() {

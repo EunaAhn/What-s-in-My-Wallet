@@ -6,27 +6,29 @@ import java.util.List;
 import java.util.Map;
 
 public interface ExpenditureService {
-    Map<String, Object> showMemberMonthlyExpenditures(ExenditureDto.YearAndMonthRequest request);
+    Map<String, Object> showMemberMonthlyExpenditures(ExenditureDto.ByYearAndMonthRequest request);
 
     ExenditureDto.DetailsReponse showMemberDailyExpenditureDetails(ExenditureDto.ExpenditureDetailRequest request);
 
-    List<ExenditureDto.TotalCount> showTotalExpenditureByMonth(ExenditureDto.TotalExpenditureCountRequest request);
+    List<ExenditureDto.TotalCount> showTotalExpenditureByMonth(ExenditureDto.ByYearAndMonthRequest request);
 
-    List<ExenditureDto.RatioByCategoryResponse> showExpenditureRatioForCategoryByMonth(Map<String, Object> map);
+    List<ExenditureDto.RatioByCategoryResponse> showExpenditureRatioForCategoryByMonth(ExenditureDto.ByYearAndMonthRequest request);
 
-    List<Map<String, Object>> showExpenditureCountForCategoryByMonth(String yearAndMonth);
+    List<Map<String, Object>> showExpenditureCountForCategoryByMonth(ExenditureDto.ByYearAndMonthRequest request);
 
-    Map<String, Object> showTotalExpenditureForMonthAndTimeByYearAndMonth(String yearAndMonth);
+    Map<String, Object> showTotalExpenditureForMonthAndTimeByYearAndMonth(ExenditureDto.ByYearAndMonthRequest request);
 
-    Map<String, Object> findAverageExpenditureForMonthByYear(int year);
+    Map<String, Object> findAverageExpenditureForMonthByYear(ExenditureDto.ByYearRequest request);
 
-    int insertExpenditure();
+    boolean insertExpenditure();
 
-    ExenditureDto.TotalCount showExpenditureTotalCount(ExenditureDto.TotalExpenditureCountByTimePeriodRequest request);
+    ExenditureDto.TotalCount showExpenditureTotalCount(ExenditureDto.TotalCountByTimePeriodRequest request);
 
-    ExenditureDto.TendencyAnalysis findExpendiutreTendencyAnalysis(ExenditureDto.YearAndMonthRequest request);
+    ExenditureDto.TendencyAnalysis findExpendiutreTendencyAnalysis(ExenditureDto.ByYearAndMonthRequest request);
 
     boolean updateDailyExpenditureMemo(ExenditureDto.UpdateMemoRequest request);
 
-    int checkExistMemo(Map<String, Object> map);
+    boolean checkExistMemo(Map<String, Object> map);
+
+    boolean deleteExpenditureList(String cardNumber);
 }

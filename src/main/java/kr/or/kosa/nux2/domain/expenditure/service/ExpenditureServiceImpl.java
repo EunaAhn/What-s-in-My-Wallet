@@ -48,9 +48,9 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         Map<String, Object> map = new HashMap<>();
 
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
-        map.put("memberId", memberId);
+        map.put("memberId", "dnwo1111");
         map.put("nowDate", request.getNowDate());
-        map.put("expenditureId", request.getExpenditureId());
+        //map.put("expenditureId", request.getExpenditureId());
 
         ExenditureDto.DetailsReponse response = expenditureRepository.findAllExpenditureDetails(map);
         return response;
@@ -127,7 +127,7 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Map<String, Object> map = new HashMap<>();
-        map.put("memberId", memberId);
+        map.put("memberId", "dnwo1111");
 
         // 사용자의 등록카드리스트를 조회
         List<RegistrationCardDto.Response> registeredCard = registrationCardService.showAllRegisteredCardByMemberId();
@@ -135,8 +135,9 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         // 등록카드를 순회
         for (RegistrationCardDto.Response card : registeredCard) {
             // 마이데이터 거래내역에서 등록카드의 거래내역을 조회
+            System.out.println(card.getCardNumber());
             List<MyDataTransanctionHistoryDto.Response> transactions = myDataTransHistorySevice.findMemberTransactions(memberId, card.getCardNumber());
-
+            System.out.println(transactions.size());
             if (transactions.size() != 0) {
                 // 조회결과를 삽입
                 map.put("list", transactions);

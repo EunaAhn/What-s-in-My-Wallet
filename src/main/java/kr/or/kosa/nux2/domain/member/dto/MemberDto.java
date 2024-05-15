@@ -57,7 +57,9 @@ public class MemberDto {
 
 
     @AllArgsConstructor
+    @NoArgsConstructor
     @Getter
+    @Setter
     public static class MemberIdRequest {
         private String memberId;
     }

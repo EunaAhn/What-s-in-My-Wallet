@@ -34,7 +34,12 @@ public class MemberServiceImpl implements MemberService {
     private final JavaMailSender javaMailSender;
     private final AuthenticationRepository authenticationRepository;
 
-
+    /**
+     * 로그아웃 함수
+     *
+     * @param customUserDetails: 로그인한 유저 정보
+     * @return : 로그인 페이지
+     */
     @Override
     public String logout(CustomUserDetails customUserDetails) {
         log.info("method = {}", "logout");
@@ -48,6 +53,12 @@ public class MemberServiceImpl implements MemberService {
         return "login";
     }
 
+    /**
+     * 회원가입 함수
+     *
+     * @param request: 회원가입 정보
+     * @return: 성공, 실패 시 해당 페이지 이동
+     */
     @Transactional
     @Override
     public String signUp(MemberDto.SignUpRequest request) {
@@ -67,6 +78,12 @@ public class MemberServiceImpl implements MemberService {
         return "signup";
     }
 
+    /**
+     * 존재하지 않는 아이디(이메일)인지 확인하는 함수
+     *
+     * @param request: 아이디(이메일)
+     * @return: 아이디 존재하지 않으면 true, 존재하면 false
+     */
     @Override
     public boolean checkMemberId(MemberDto.MemberIdRequest request) {
         if (memberRepository.isExistMemberId(request)) {
@@ -77,6 +94,11 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    /**
+     * 이메일 발송 함수
+     *
+     * @param request: 아이디(이메일)
+     */
     @Transactional
     @Override
     public void sendEmail(MemberDto.MemberIdRequest request) {
@@ -92,6 +114,11 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
+    /**
+     * 인증번호 생성 함수
+     *
+     * @return 6자리 랜덤숫자
+     */
     @Override
     public String generateAuthenticationNumber() {
         Random random = new Random();
@@ -99,7 +126,12 @@ public class MemberServiceImpl implements MemberService {
         return String.valueOf(randomNumber);
     }
 
-
+    /**
+     * 인증번호 검증 함수
+     *
+     * @param request: 입력한 번호
+     * @return 인증번호와 같으면 true, 다르면 false
+     */
     @Transactional
     @Override
     public boolean validateAuthenticationNumber(MemberDto.AuthenticationRequest request) {
@@ -114,6 +146,11 @@ public class MemberServiceImpl implements MemberService {
         return false;
     }
 
+    /**
+     * 마이페이지 프로필 출력 함수
+     *
+     * @return 프로필 정보
+     */
     @Transactional
     @Override
     public MemberDto.ProfileResponse showMemberProfile() {
@@ -127,6 +164,12 @@ public class MemberServiceImpl implements MemberService {
         return response;
     }
 
+    /**
+     * 마이페이지 정보 수정
+     *
+     * @param request: 회원 관심카테고리, 월목표지출액 수정 정보
+     * @return: 변경된 회원 정보
+     */
     @Transactional
     @Override
     public MemberDto.ProfileResponse updateMemberInfo(MemberDto.UpdateMemberInfoRequest request) {
@@ -144,6 +187,12 @@ public class MemberServiceImpl implements MemberService {
         return response;
     }
 
+    /**
+     * 비밀번호 변경 함수
+     *
+     * @param request: 변경할 비밀번호, 확인 비밀번호
+     * @return: 변경되면 true, 변경되지 않았으면 false
+     */
     @Override
     public boolean updatePassword(MemberDto.UpdatePasswordRequest request) {
         if (request.getChangePassword().equals(request.getCheckPassword())) {
@@ -166,6 +215,12 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findMemberNameAndTargetExpenditureByMemberId(paramMap);
     }
 
+    /**
+     * 관심 카테고리 리스트 수정
+     *
+     * @param paramMap: 수정된 관심 카테고리 리스트
+     * @return: 수정된 후 관심 카테고리 리스트
+     */
     @Transactional
     @Override
     public List<MemberConsCategoryDto.MemberConsCategoryResponse> updateMemberConsCategoryList(Map<String, Object> paramMap) {

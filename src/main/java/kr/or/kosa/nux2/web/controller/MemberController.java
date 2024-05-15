@@ -15,16 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-@Tag(name = "Member", description = "Member API")
+@Tag(name = "Member", description = "회원 API")
 public class MemberController {
     private final MemberService memberService;
-
-
-    @Operation(summary = "controller", description = "controller.")
-    @GetMapping("/hello")
-    public String hello() {
-        return "hello";
-    }
 
     @GetMapping("/")
     public String index() {
@@ -35,7 +28,7 @@ public class MemberController {
     public String login() {
         return "login";
     }
-
+    @Operation(summary = "로그아웃")
     @PostMapping("/logout/1")
     public String logout(HttpServletRequest request, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         HttpSession session = request.getSession();
@@ -43,7 +36,7 @@ public class MemberController {
         return memberService.logout(customUserDetails);
     }
 
-    @Operation(summary = "controller", description = "controller.")
+    @Operation(summary = "회원가입")
     @PostMapping("/signUp")
     public String signUp(@RequestBody MemberDto.SignUpRequest request) {
         memberService.signUp(request);

@@ -20,7 +20,6 @@ public class MyDataTransanctionHistoryDto {
     }
 
     @Getter
-    @AllArgsConstructor
     public static class InsertRequest {
         private Long transactionId;
         private String transactionCode;

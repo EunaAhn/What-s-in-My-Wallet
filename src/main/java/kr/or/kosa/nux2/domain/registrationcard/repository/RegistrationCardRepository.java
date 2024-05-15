@@ -17,12 +17,18 @@ public class RegistrationCardRepository {
         return registrationCardMapper.findAllRegistrationCardByMemberId(memberId);
     }
 
-    public int deleteRegistrationCard(String registrationId) {
-        return registrationCardMapper.deleteRegistrationCard(registrationId);
+    public boolean deleteRegistrationCard(String registrationId) {
+        int result = registrationCardMapper.deleteRegistrationCard(registrationId);
+
+        if(result == 1) return true;
+        return false;
     }
 
-    public int insertRegistrationCard(Map<String, Object> map) {
-        return registrationCardMapper.insertRegistrationCard(map);
+    public boolean insertRegistrationCard(Map<String, Object> map) {
+        int result =  registrationCardMapper.insertRegistrationCard(map);
+
+        if(result == 1) return true;
+        return false;
     }
 
 }

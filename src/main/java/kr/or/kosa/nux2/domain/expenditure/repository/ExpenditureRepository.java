@@ -70,6 +70,13 @@ public class ExpenditureRepository {
         return expenditureMapper.findExpendiutreTendencyAnalysis(map);
     }
 
+    public boolean deleteExpenditure(String cardNumber) {
+        int result = expenditureMapper.deleteExpenditure(cardNumber);
+
+        if(result == 1) return true;
+        return false;
+    }
+
     public boolean isExistMemo(Map<String, Object> map) {
         int result = expenditureMapper.isExistMemo(map);
 

@@ -130,7 +130,7 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         map.put("memberId", memberId);
 
         // 사용자의 등록카드리스트를 조회
-        List<RegistrationCardDto.Response> registeredCard = registrationCardService.showAllRegisteredCardByMemberId(memberId);
+        List<RegistrationCardDto.Response> registeredCard = registrationCardService.showAllRegisteredCardByMemberId();
 
         // 등록카드를 순회
         for (RegistrationCardDto.Response card : registeredCard) {
@@ -197,5 +197,10 @@ public class ExpenditureServiceImpl implements ExpenditureService {
     @Override
     public boolean checkExistMemo(Map<String, Object> map) {
         return expenditureRepository.isExistMemo(map);
+    }
+
+    @Override
+    public boolean deleteExpenditureList(String cardNumber) {
+        return expenditureRepository.deleteExpenditure(cardNumber);
     }
 }

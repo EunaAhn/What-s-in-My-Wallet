@@ -29,4 +29,6 @@ public interface ExpenditureService {
     boolean updateDailyExpenditureMemo(ExenditureDto.UpdateMemoRequest request);
 
     boolean checkExistMemo(Map<String, Object> map);
+
+    boolean deleteExpenditureList(String cardNumber);
 }

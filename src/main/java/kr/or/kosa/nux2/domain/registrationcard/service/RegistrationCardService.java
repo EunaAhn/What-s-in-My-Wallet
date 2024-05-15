@@ -6,11 +6,9 @@ import java.util.List;
 
 
 public interface RegistrationCardService {
-    List<RegistrationCardDto.Response> showAllRegisteredCardByMemberId(String memberId);
+    List<RegistrationCardDto.Response> showAllRegisteredCardByMemberId();
 
-    int deleteRegistrationCard(String registeredCardId);
+    boolean deleteRegistrationCard(String registeredCardId);
 
-    int insertRegistrationCard(List<RegistrationCardDto.InsertControllerRequest> registrationCard);
-
-
+    boolean insertRegistrationCard(List<RegistrationCardDto.InsertControllerRequest> registrationCard);
 }

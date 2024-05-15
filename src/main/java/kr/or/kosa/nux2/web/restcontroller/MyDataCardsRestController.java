@@ -1,5 +1,6 @@
 package kr.or.kosa.nux2.web.restcontroller;
 
+import jakarta.validation.Valid;
 import kr.or.kosa.nux2.domain.cardproduct.repository.CardProductRepository;
 import kr.or.kosa.nux2.domain.expenditure.repository.ExpenditureRepository;
 import kr.or.kosa.nux2.domain.memberexpendituretend.repository.MemberExpenditureTendRepository;
@@ -8,6 +9,7 @@ import kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataCardDto;
 import kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataTransanctionHistoryDto;
 import kr.or.kosa.nux2.domain.virtualmydata.repository.MyDataCardRepository;
 import kr.or.kosa.nux2.domain.virtualmydata.repository.MyDataTransHistoryRepository;
+import kr.or.kosa.nux2.domain.virtualmydata.service.MyDataCardService;
 import kr.or.kosa.nux2.domain.virtualmydata.service.MyDataCardServiceImpl;
 import kr.or.kosa.nux2.domain.virtualmydata.service.MyDataTransHistorySevice;
 import kr.or.kosa.nux2.web.common.code.SuccessCode;
@@ -26,10 +28,10 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 public class MyDataCardsRestController {
-    private final MyDataCardServiceImpl myDataCardService;
+    private final MyDataCardService myDataCardService;
 
     @PostMapping("/mycard")
-    public ResponseEntity<ApiResponse<List<MyDataCardDto.Response>>> showMyCard(@RequestBody MyDataCardDto.AuthenticationRequest request){
+    public ResponseEntity<ApiResponse<List<MyDataCardDto.Response>>> showMyCard(@Valid  @RequestBody MyDataCardDto.AuthenticationRequest request){
         List<MyDataCardDto.Response> responses = myDataCardService.showAllMyDataCard(request);
 
         return new ResponseEntity<>(new ApiResponse(responses, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);

@@ -2,6 +2,7 @@ package kr.or.kosa.nux2.domain.expenditure.mapper;
 
 import kr.or.kosa.nux2.domain.expenditure.dto.*;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ public interface ExpenditureMapper {
     int insertExpenditures(Map<String, Object> map);
 
     int updateExpenditureMemo(Map<String, Object> columns);
+    int deleteExpenditure(@Param("cardNumber") String cardNumber);
 
     List<ExenditureDto.RatioByCategoryResponse> findExpenditureRatioForCategoryByMonth(Map<String, Object> map);
 

@@ -2,7 +2,7 @@ package kr.or.kosa.nux2.web.restcontroller;
 
 import jakarta.validation.Valid;
 import kr.or.kosa.nux2.domain.memberexpendituretend.dto.MemberExpenditureTendDto;
-import kr.or.kosa.nux2.domain.memberexpendituretend.service.MemberExpenditureTendServiceImpl;
+import kr.or.kosa.nux2.domain.memberexpendituretend.service.MemberExpenditureTendService;
 import kr.or.kosa.nux2.web.common.code.SuccessCode;
 import kr.or.kosa.nux2.web.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/expendituretendency")
 public class MemberExpenditureTendRestController {
-    private final MemberExpenditureTendServiceImpl memberExpenditureTendService;
+    private final MemberExpenditureTendService memberExpenditureTendService;
 
     @PostMapping("/yearandmonth")
     public ResponseEntity<ApiResponse<List<MemberExpenditureTendDto.Response>>> showExpenditureTend(@Valid @RequestBody MemberExpenditureTendDto.ExpenditureTendRequest request) {

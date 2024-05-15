@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @AllArgsConstructor
@@ -14,19 +15,22 @@ public class MyDataCardRepository {
     private final MyDataCardMapper myDataCardMapper;
 
 
-    public List<MyDataCardDto.Response> findAllMyDataCard(MyDataCardDto.AuthenticationRequest authenticationRequest){
+    public List<MyDataCardDto.Response> findAllMyDataCard(MyDataCardDto.AuthenticationRequest authenticationRequest) {
         return myDataCardMapper.findAllMyDataCardByAuth(authenticationRequest);
-    };
+    }
 
-    public void insertMyDataCard(MyDataCardDto.InsertRequest insertRequest){
-        myDataCardMapper.insertMyDataCard(insertRequest);
-    };
+    public boolean insertMyDataCard(MyDataCardDto.InsertRequest insertRequest) {
+        int result = myDataCardMapper.insertMyDataCard(insertRequest);
 
-    public List<MyDataCardDto.Response> findAllMyDataCard(){
+        if(result == 1) return true;
+        return false;
+    }
+
+    public List<MyDataCardDto.Response> findAllMyDataCard() {
         return myDataCardMapper.findAllMyDataCard();
     }
 
-    public MyDataCardDto.Response findMyDataCardByCardNumber(String cardNumber) {
-        return myDataCardMapper.findMyDataCardByCardNumber(cardNumber);
+    public MyDataCardDto.Response findMyDataCardByCardNumber(Map<String, Object> map) {
+        return myDataCardMapper.findMyDataCardByCardNumber(map);
     }
 }

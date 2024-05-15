@@ -14,6 +14,7 @@ public class MyDataTransHistorySevice {
 
     public List<MyDataTransanctionHistoryDto.Response> findMemberTransactions(String memberId, String cardNumber) {
         List<MyDataTransanctionHistoryDto.Response> response = myDataTransHistoryRepository.findAllTransHistory(memberId, cardNumber);
+
         return response;
     }
 

@@ -25,14 +25,13 @@ public class Nux2WebApplicationInitializer implements WebApplicationInitializer 
         public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 
         }
-
-
     }
 
     @Configuration
     @EnableTransactionManagement
     @ComponentScan(basePackages = "kr.or.kosa.nux2.domain")
-    static class RootConfig{}
+    static class RootConfig {
+    }
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {

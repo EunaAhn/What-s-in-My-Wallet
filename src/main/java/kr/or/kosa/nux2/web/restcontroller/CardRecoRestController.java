@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,11 +17,10 @@ public class CardRecoRestController {
     private final CardRecommadService cardRecommadService;
 
     @GetMapping("/list")
-    public ResponseEntity<CardRecommandDto.CardRecommandResponse> recommandCardReco() {
-        CardRecommandDto.CardRecommandResponse response = cardRecommadService.recommandCards();
+    public ResponseEntity<CardRecommandDto.CardRecommandResponse> recommandCardReco(@RequestBody  CardRecommandDto.YearAndMonthRequest request) {
+        CardRecommandDto.CardRecommandResponse response = cardRecommadService.recommandCards(request);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 
 }

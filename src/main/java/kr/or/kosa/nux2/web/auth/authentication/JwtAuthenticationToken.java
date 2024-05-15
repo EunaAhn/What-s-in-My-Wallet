@@ -1,4 +1,4 @@
-package kr.or.kosa.nux2.web.auth;
+package kr.or.kosa.nux2.web.auth.authentication;
 
 import lombok.Getter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -51,19 +51,4 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
         return Objects.hash(super.hashCode(), principal, password);
     }
 
-    /*
-     @Override
-    public void setAuthenticated(boolean authenticated) {
-        if (authenticated) {
-            throw new IllegalArgumentException("Cannot set this token to trusted.");
-        }
-        super.setAuthenticated(false);
-    }
-
-    @Override
-    public void eraseCredentials() {
-        super.eraseCredentials();
-        credentials = null;
-    }
-     */
 }

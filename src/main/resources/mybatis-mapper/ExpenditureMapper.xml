@@ -12,9 +12,6 @@
     <resultMap id="expenditureResultMap" type="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$Response">
         <result property="expenditureDate" column="expenditureDate"/>
         <result property="expenditureAmount" column="expenditureAmount"/>
-<!--        <collection property="expenditureCategoryList" ofType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$CategoryName" javaType="List">-->
-<!--            <result property="expenditureCategoryName" column="expenditure_category_name"/>-->
-<!--        </collection>-->
     </resultMap>
 
 
@@ -103,7 +100,7 @@
     <select id="findAllExpenditureDetails" parameterType="map" resultMap="expenditureDetailsMap">
         select
             (select sum(expenditure_amount) from expenditure_history WHERE TO_CHAR(expenditure_datetime, 'YYYY-MM-DD') = #{nowDate}) as expenditure_total_amount,
-            ehd.expenditure_memo,
+            (select expenditure_memo from daily_expenditure_memo where member_id = #{memberId} and memo_id = #{nowDate}) as expenditure_memo,
             ehd.expenditure_history_id,
             (select count(expenditure_history_id) from expenditure_history where member_id = #{memberId} and to_char(expenditure_datetime,'YYYY-MM-DD') = #{nowDate}) as expenditure_count,
             ehd.store_name,
@@ -133,8 +130,7 @@
 
     <select id="findExpenditureRatioForCategoryByMonth" parameterType="map" resultType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$RatioByCategoryResponse">
         select
-        round(sum(eh.expenditure_amount)* 100 / (select sum(expenditure_amount)  from expenditure_history
-        where  <![CDATA[to_char(expenditure_datetime,'YYYY-MM') > #{month}]]>) , 1) as expenditrueRatio,
+        sum(eh.expenditure_amount)as expenditrueRatio,
         ec.expenditure_category_name as categoryName
         from
             expenditure_history eh
@@ -275,8 +271,6 @@
 
 
     <select id="findExpendiutreTendencyAnalysis" parameterType="map" resultType="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$TendencyAnalysis">
-    <!--     private int targetExpenditure;
-        private int savingAmount;       -->
         select
             sub.s as totalExpenditure,
             (nvl((select target_expenditure from member where member_id = #{memberId}),0) - sub.s) as savingAmount

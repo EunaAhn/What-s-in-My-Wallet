@@ -10,7 +10,8 @@ public enum Role {
     ADMIN("ROLE_ADMIN,ROLE_USER");
 
     private final String roles;
-    public static String getIncludingRoles(String role){
+
+    public static String getIncludingRoles(String role) {
         return Role.valueOf(role).getRoles();
     }
 

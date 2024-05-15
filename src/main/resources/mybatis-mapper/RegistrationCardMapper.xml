@@ -4,10 +4,8 @@
 <mapper namespace="kr.or.kosa.nux2.domain.registrationcard.mapper.RegistrationCardMapper">
     <select id="findAllRegistrationCardByMemberId" parameterType="String" resultType="kr.or.kosa.nux2.domain.registrationcard.dto.RegistrationCardDto$Response">
         select
-            reg_card_id as registerdCardId,
-            card_company_id as cardCompanyName,
             card_number as cardNumber,
-            card_nickname as cardNickName
+            card_name as cardNickName
         from
             registered_card
         where
@@ -15,9 +13,9 @@
     </select>
 
 
-    <insert id = "insertRegistrationCard" parameterType="kr.or.kosa.nux2.domain.registrationcard.dto.RegistrationCardDto$InsertServiceRequest">
-        insert into registered_card(reg_card_id, member_id, card_company_id, card_number, card_nickname)
-        values(#{cardId}, #{memberId}, #{cardCompanyId}, #{cardNumber}, #{cardNickName})
+    <insert id = "insertRegistrationCard" parameterType="map">
+        insert into registered_card(card_number, member_id, card_name)
+        values (#{cardNumber}, #{memberId}, #{cardName})
     </insert>
 
     <delete id="deleteRegistrationCard" parameterType="java.lang.String">

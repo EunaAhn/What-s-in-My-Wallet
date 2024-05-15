@@ -9,10 +9,7 @@ public enum SuccessCode {
     SELECT_SUCCESS(200, "200", "SELECT SUCCESS"),
     DELETE_SUCCESS(204, "204", "DELETE SUCCESS"),
     INSERT_SUCCESS(201, "201", "INSERT SUCCESS"),
-    UPDATE_SUCCESS(200, "200", "UPDATE SUCCESS"),
-
-    ;
-
+    UPDATE_SUCCESS(200, "200", "UPDATE SUCCESS");
 
     private final int status;
 

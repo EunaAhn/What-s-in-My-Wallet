@@ -1,26 +1,32 @@
 package kr.or.kosa.nux2.domain.cardproduct.dto;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 public class CardProductDto {
+    /*
+      ========================================================================================
+                                            RESPONSE DTO
+      ========================================================================================
+     */
+
     @Getter
     public static class DetailsResponse {
-        // 카드상품 테이블 컬럼
-        private Long cardProductId; // 카드 상품 아이디 (바인딩 해줄 데이터는 아님)
-        private Long cardCompanyId; //
+        private Long cardProductId;
+        private Long cardCompanyId;
         private String cardName;
         private String cardImageFileName;
         private String membershipFee;
         private String benefitSummary;
+        private String baseRecord;
+        private int isUserClickLike;
 
-
-        // 아래 조인 테이블 데이터 DTO 및 속성
-        private Long likeCount; // 어쩔수 없이 N+1 쿼리 수행
+        private Long likeCount;
         private List<BenefitCategoryDetails> benefitCategoryList;
-//        private CardCompanyDto.Response cardCompanyDto;
     }
 
     @Getter
@@ -45,7 +51,6 @@ public class CardProductDto {
     @Getter
     public static class BenefitCategoryDetails {
         private String benefitName;
-        // 혜택상세Dto의 리스트 속성은 반드시 lazy loading을 적용해야한다.
         private List<BenefitDetails> benefitDetailsList;
     }
 
@@ -55,22 +60,36 @@ public class CardProductDto {
     }
 
     @Getter
-    @Setter
+    @NoArgsConstructor
     public static class DetailRequest {
-        private Long cardId;
+        private Long cardProductId;
     }
 
+    /*
+      ========================================================================================
+                                              REQUEST DTO
+      ========================================================================================
+     */
+
+
     @Getter
-    @Setter
-    public static class ListRequest{
+    @NoArgsConstructor
+    public static class ListRequest {
+        @NotNull
+        @Positive
         int startNum;
+        @NotNull
+        @Positive
         int endNum;
+
         String keyWord = null;
     }
 
     @Getter
-    @Setter
+    @NoArgsConstructor
     public static class LikeRequest {
+        @NotNull
+        @Positive
         Long cardId;
     }
 }

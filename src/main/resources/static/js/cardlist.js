@@ -58,6 +58,7 @@ const addCardProductList = async () => {
     extraCardtProductList.forEach(card => {
         const cardList = document.createElement('div');
         cardList.classList.add('card-list');
+        cardList.id = `${card.cardProductId}`
         cardListContainer.appendChild(cardList);
 
         const cardImage = document.createElement('img');
@@ -95,13 +96,16 @@ const addCardProductList = async () => {
         benefitInfo.appendChild(categoryInfo);
 
         cardTextInfo.appendChild(benefitInfo);
+
+        cardList.addEventListener('click', () => {
+            window.location.href = `carddetail?id=${card.cardProductId}`;
+        });
     })
     startNum += 10
     endNum += 10
 }
 
 addCardButton.addEventListener("click", () => {addCardProductList()})
-
 // 카드 키워드 검색
 const hdCardSearch = document.querySelector("#hd_card_search")
 
@@ -132,3 +136,4 @@ hdSearchImage.addEventListener("click", () => {
         hdCardSearch.value = ""
     }
 })
+

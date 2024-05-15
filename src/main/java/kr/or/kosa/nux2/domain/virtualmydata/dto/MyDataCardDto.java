@@ -1,33 +1,43 @@
 package kr.or.kosa.nux2.domain.virtualmydata.dto;
 
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 public class MyDataCardDto {
-    @AllArgsConstructor
     @Getter
     public static class Response {
         private String cardNumber;
         private String cardCompanyCode;
         private String memberName;
+        private String cardName;
     }
 
-    @AllArgsConstructor
+
     @Getter
     public static class InsertRequest {
+        @Pattern(regexp = "\\d{16}", message = "카드형식은 16자리 숫자형문자여야합니다.")
         private String cardNumber;
+        @Pattern(regexp = "\\d{3}", message = "cvs는 3자리 숫자형문자여야합니다.")
         private String cvs;
         private String memberName;
         private String ExpireMonth;
         private String ExpireYear;
-        private String memberContactNumber;
+        @Pattern(
+                regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$",
+                message = "이메일 형식이 올바르지 않습니다."
+        )
+        private String memberEmail;
         private String cardCompanyCode;
     }
 
     @Getter
-    @Setter
+    @NoArgsConstructor
     public static class AuthenticationRequest {
         private String memberName;
-        private String memberContactNumber;
-        // email로 변경하기
+        @Pattern(
+                regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$",
+                message = "이메일 형식이 올바르지 않습니다."
+        )
+        private String memberEmail;
     }
 }

@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
     // 비즈니스 로직예외와 공존이 권장?
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<String> handleDatabaseException(DataAccessException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("DB error");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     }
 
     // 객체, 파라미터 에러

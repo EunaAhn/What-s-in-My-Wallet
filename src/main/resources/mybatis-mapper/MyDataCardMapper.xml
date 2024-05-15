@@ -6,41 +6,42 @@
         select
             card_number as cardNumber,
             member_name as memberName,
-            card_company as cardCompanyCode
+            card_company as cardCompanyCode,
+            card_name as cardName
         from
             my_data_cards
         where
             member_name = #{memberName}
             and
-            member_contact_number = #{memberContactNumber}
+            member_email = #{memberEmail}
             and
             card_number not in (select card_number from registered_card)
     </select>
 
     <insert id = "insertMyDataCard" parameterType="kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataCardDto$InsertRequest">
-        insert into my_data_cards(card_number, cvs_code, member_name, exp_month, exp_year, member_contact_number, card_company)
-        values(#{cardNumber}, #{cvs}, #{memberName}, #{ExpireMonth}, #{ExpireYear}, #{memberContactNumber}, #{cardCompanyCode})
+        insert into my_data_cards(card_number, cvs_code, member_name, exp_month, exp_year, member_email, card_company)
+        values(#{cardNumber}, #{cvs}, #{memberName}, #{ExpireMonth}, #{ExpireYear}, #{memberEmail}, #{cardCompanyCode})
     </insert>
 
     <select id="findAllMyDataCard"  resultType="kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataCardDto$Response">
         select
             card_number as cardNumber,
             member_name as memberName,
-            card_company as cardCompanyCode
+            card_company as cardCompanyCode,
+            card_name as cardName
         from
             my_data_cards
     </select>
 
-    <select id = "findMyDataCardByCardNumber" resultType="kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataCardDto$Response">
+    <select id = "findMyDataCardByCardNumber" parameterType="map" resultType="kr.or.kosa.nux2.domain.virtualmydata.dto.MyDataCardDto$Response">
         select
         card_number as cardNumber,
         member_name as memberName,
-        card_company as cardCompanyCode
+        card_company as cardCompanyCode,
+        card_name as cardName
         from
         my_data_cards
         where card_number = #{cardNumber}
-
-
     </select>
 
 </mapper>

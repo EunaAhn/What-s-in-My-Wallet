@@ -1,35 +1,27 @@
 package kr.or.kosa.nux2.domain.registrationcard.dto;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 
 public class RegistrationCardDto {
     @Getter
     public static class Response {
-        private Long registerdCardId;
-        private String cardCompanyName;
         private String cardNumber;
+        private String cardCompanyName;
         private String cardNickName;
     }
 
 
-    // 마이데이터를 통해서 가공해야하므로 Setter사용
-
-    @Setter
-    @AllArgsConstructor
-    public static class InsertServiceRequest {
-        Long cardId;
-        String memberId;
-        Long cardCompanyId;
-        String cardNumber;
-        String cardNickName;
-    }
 
     @Getter
-    @Setter
+    @NoArgsConstructor
     public static class InsertControllerRequest {
+        @Pattern(regexp = "\\d{16}", message = "카드형식은 16자리 숫자형문자여야합니다.")
         String cardNumber;
     }
 }

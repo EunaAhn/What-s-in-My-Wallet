@@ -6,21 +6,34 @@
         <foreach collection="list" item="item" index="idx" separator=" " open="INSERT ALL" close="select * from dual">
         into member_expenditure_category
         (member_id, expenditure_category_id) values
-            (#{item.memberId},#{item.expenditureCategoryId})
+            (#{memberId},#{item.expenditureCategoryId})
         </foreach>
     </insert>
 
-
-    <select id="selectMemberConsCategories" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$MemberIdRequest" resultType="kr.or.kosa.nux2.domain.member.dto.MemberConsCategoryDto$MemberConsCategoryResponse">
+    <select id="selectMemberConsCategoryNames" parameterType="kr.or.kosa.nux2.domain.member.dto.MemberDto$MemberIdRequest" resultType="kr.or.kosa.nux2.domain.member.dto.MemberConsCategoryDto$MemberConsCategoryResponse">
         select e.expenditure_category_name expenditureCategoryName
         from  expenditure_category e
         join member_expenditure_category c
         on e.expenditure_category_id = c.expenditure_category_id
-        join member1 m
+        join member m
         on m.member_id = c.member_id
         where c.member_id = #{memberId}
     </select>
+    <select id="selectMemberConsCategoryIds" parameterType="map" resultType="kr.or.kosa.nux2.domain.member.dto.MemberConsCategoryDto$MemberConsCategoryIdDto">
+        select c.expenditure_category_id expenditureCategoryId
+        from member_expenditure_category c
+        join member m
+        on m.member_id = c.member_id
+        where c.member_id = #{memberId}
 
-
+    </select>
+    <delete id="deleteMemberConsCategory" parameterType="list">
+        DELETE FROM member_expenditure_category
+        <where>
+            <foreach collection="list" item="item" open="" close="" separator="OR">
+                (member_id = #{memberId} AND expenditure_category_id = #{item.expenditureCategoryId})
+            </foreach>
+        </where>
+    </delete>
 
 </mapper>

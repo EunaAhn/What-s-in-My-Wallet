@@ -1,12 +1,14 @@
 import * as suggestion from "./api/suggestion.js";
-import {getCategoryNameList} from "./api/suggestion.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem('clickedmenu', ".side_suggestion");
+    CardRecommandation()
 })
+const CardRecommandation = async () => {
+    await suggestion.getCardReco()
+}
 
 const yearAndMonth = "2024-05"
-
 const categoryList = await suggestion.getCategoryNameList(yearAndMonth);
 const expenditureRatio = await suggestion.getExpenditureRatioList(yearAndMonth);
 
@@ -105,3 +107,23 @@ var options_line = {
 
 var linechart = new ApexCharts(document.querySelector("#line-chart"), options_line);
 linechart.render();
+
+// const img = document.querySelector('.img');
+//
+// img.onload = function() {
+//     // 이미지의 가로와 세로 크기 가져오기
+//     const width = img.width;
+//     const height = img.height;
+//
+//     // 가로세로 비율 계산
+//     const aspectRatio = width / height;
+//
+//     // 결과 출력
+//     console.log('Width:', width);
+//     console.log('Height:', height);
+//     console.log('Aspect Ratio:', aspectRatio);
+// };
+//
+// if (img.complete) {
+//     img.onload();
+// }

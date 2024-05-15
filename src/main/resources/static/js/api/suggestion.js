@@ -78,3 +78,20 @@ export const getLineCategoryNameList = async (yearAndMonth) => {
         return null
     }
 }
+
+// 카드 추천
+export const getCardReco = async ()=> {
+    const requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+    };
+    try {
+        const response = await fetch(`/api/cardreco/list`, requestOptions);
+        const result = await response.json();
+        console.log(result)
+        return result;
+    } catch (error) {
+        console.log("getCardReco error : ",error)
+        return null
+    }
+}

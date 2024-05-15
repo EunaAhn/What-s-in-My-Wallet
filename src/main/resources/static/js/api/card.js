@@ -52,7 +52,6 @@ export const getMyCard = async () => {
         "memberName": "김우재",
         "memberContactNumber": "01089387607"
     });
-
     const requestOptions = {
         method: "POST",
         headers: myHeaders,
@@ -74,7 +73,6 @@ export const postRegistrationcardRegister = async (selectedCardIdList) => {
     const raw = JSON.stringify(
         selectedCardIdList
     );
-
     const requestOptions = {
         method: "POST",
         headers: myHeaders,
@@ -83,9 +81,7 @@ export const postRegistrationcardRegister = async (selectedCardIdList) => {
     try {
         console.log(raw)
         const response = await fetch(`/api/registrationcard/register`, requestOptions);
-        console.log(response)
-        // const result = await response.json();
-        // return result.result;
+        return response.ok;
 
     } catch (error) {
         console.log("postRegistrationcardRegister error : ",error)
@@ -110,3 +106,68 @@ export const getRegistrationCardList = async () => {
     }
 }
 
+// 카드 상세 정보 조회
+export const postCardDetail = async (cardId) => {
+    const raw = JSON.stringify({
+        "cardId": cardId
+    });
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw
+    };
+    try {
+        const response = await fetch(`/api/cardproduct/detail`, requestOptions);
+        const result = await response.json();
+        return result.result;
+
+    } catch (error) {
+        console.log("postCardDetail error : ",error)
+        return null
+    }
+}
+
+// 카드 찜하기
+export const postLikeCard = async (cardId) => {
+    const raw = JSON.stringify({
+        "cardId": cardId
+    });
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw
+    };
+    try {
+        const response = await fetch(`/api/cardproduct/memberlike`, requestOptions);
+        const result = await response.json();
+        return result.result;
+
+    } catch (error) {
+        console.log("postCardDetail error : ",error)
+        return null
+    }
+}
+
+// 카드 찜하기 취소
+export const deleteLikeCard = async (cardId) => {
+    const raw = JSON.stringify({
+        "cardId": cardId
+    });
+
+    const requestOptions = {
+        method: "DELETE",
+        headers: myHeaders,
+        body: raw
+    };
+    try {
+        const response = await fetch(`/api/cardproduct/memberlike`, requestOptions);
+        const result = await response.json();
+        return result.result;
+
+    } catch (error) {
+        console.log("postCardDetail error : ",error)
+        return null
+    }
+}

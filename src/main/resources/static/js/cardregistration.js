@@ -27,7 +27,7 @@ const generateCardInfo = (cardItemlist) => {
         // 현재 카드사로 되어있는데 카드 타이틀로 변경해야함
         const cardTitle = document.createElement('div');
         cardTitle.classList.add('card-title');
-        cardTitle.textContent = `${companys[item.cardCompanyCode]}`;
+        cardTitle.textContent = `${item.cardName}`;
         cardTextInfo.appendChild(cardTitle);
 
         const benefitInfo = document.createElement('div');
@@ -61,14 +61,16 @@ const registerRegistrationCardList = () => {
             selectedCardIds.push({"cardNumber":checkbox.id}); // or checkbox.id if you prefer id
         }
     });
-    console.log(selectedCardIds)
     return selectedCardIds;
 }
 
-
 const registerButton = document.getElementById('register')
-registerButton.addEventListener('click', function (){
-    card.postRegistrationcardRegister(registerRegistrationCardList())
-    // location.href = "/cardlist";
+registerButton.addEventListener('click', async () => {
+    const selectedCardIds = registerRegistrationCardList()
+    const registerCardListVal = await card.postRegistrationcardRegister(selectedCardIds)
+    if(registerCardListVal === true) {
+        alert(`${selectedCardIds.length}개의 카드가 등록되었습니다.`)
+    }
+    location.href = "cardlist";
 });
 

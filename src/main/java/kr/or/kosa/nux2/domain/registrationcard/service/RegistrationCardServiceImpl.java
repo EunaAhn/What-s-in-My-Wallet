@@ -44,13 +44,14 @@ public class RegistrationCardServiceImpl implements RegistrationCardService{
         for(RegistrationCardDto.InsertControllerRequest request : requests) {
             //
             MyDataCardDto.Response response = myDataCardRepository.findMyDataCardByCardNumber(request.getCardNumber());
+            System.out.println("response"+response);
             Map<String, Object> map = new HashMap<>();
             map.put("cardNumber" , response.getCardNumber());
             map.put("cardCompanyId", response.getCardCompanyCode());
+            map.put("cardName", response.getCardName());
             map.put("memberId", "dnwo1111");
             registrationCardRepository.insertRegistrationCard(map);
         }
-
         return 0;
     }
 }

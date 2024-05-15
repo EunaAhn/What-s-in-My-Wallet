@@ -56,9 +56,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/carddetail", method= RequestMethod.GET)
-    public String goCarddetail(HttpServletRequest request) {
-        return "carddetail";
-    }
+    public String goCarddetail(HttpServletRequest request) {return "carddetail";}
 
     @RequestMapping(value = "/cardregistration", method= RequestMethod.GET)
     public String goCardregistration(HttpServletRequest request) {

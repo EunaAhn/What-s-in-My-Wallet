@@ -57,7 +57,7 @@ public class SecurityConfig {
         http
                 .httpBasic((auth) -> auth.disable());
         http
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/test/*", "/api/expenditure/*", "/api/cardproduct/*", "/api/registrationcard/*","/api/cardreco/*","/api/mydata/*", "/mycard").permitAll());
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/test/*", "/api/expenditure/*", "/api/cardproduct/*", "/api/registrationcard/*","/api/cardreco/*","/api/mydata/*", "/mycard", "/api/cardproduct/*").permitAll());
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**")

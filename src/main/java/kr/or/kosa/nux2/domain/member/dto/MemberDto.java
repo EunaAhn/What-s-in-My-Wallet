@@ -3,6 +3,7 @@ package kr.or.kosa.nux2.domain.member.dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.*;
+import org.springframework.data.redis.core.RedisHash;
 
 import java.util.List;
 
@@ -23,9 +24,9 @@ public class MemberDto {
         private String targetExpenditure;
         private int status;
 
-        public static UserDto of(String registrationId, String memberId, String memberName,String socialToken){
-            if(registrationId.equals("google")){
-                return ofGoogle(memberId,memberName,socialToken);
+        public static UserDto of(String registrationId, String memberId, String memberName, String socialToken) {
+            if (registrationId.equals("google")) {
+                return ofGoogle(memberId, memberName, socialToken);
             }
             return null;
         }
@@ -55,7 +56,7 @@ public class MemberDto {
         private String targetExpenditure;
     }
 
-
+    @Setter
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
@@ -65,7 +66,9 @@ public class MemberDto {
     }
 
     @Getter
+    @RedisHash(value = "")
     public static class AuthenticationDto {
+        private String memberId;
         private String authenticationNumber;
     }
 
@@ -89,7 +92,7 @@ public class MemberDto {
     @AllArgsConstructor
     @NoArgsConstructor
     @ToString
-    public static class ProfileResponse{
+    public static class ProfileResponse {
         private String memberId;
         private String memberName;
         private List<MemberConsCategoryDto.MemberConsCategoryResponse> memberConsCategoryDtoList;
@@ -103,8 +106,9 @@ public class MemberDto {
         private List<MemberConsCategoryDto.MemberConsCategoryIdDto> memberConsCategoryIdDtoList;
         private String targetExpenditure;
     }
+
     @Getter
-    public static class UpdatePasswordRequest{
+    public static class UpdatePasswordRequest {
         private String changePassword;
         private String checkPassword;
     }

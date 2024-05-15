@@ -3,7 +3,7 @@ package kr.or.kosa.nux2.domain.member.service;
 import kr.or.kosa.nux2.domain.member.dto.MemberConsCategoryDto;
 import kr.or.kosa.nux2.domain.member.dto.MemberDto;
 import kr.or.kosa.nux2.domain.member.dto.Role;
-import kr.or.kosa.nux2.domain.member.repository.EmailAuthenticationRepository;
+import kr.or.kosa.nux2.domain.member.repository.AuthenticationRepository;
 import kr.or.kosa.nux2.domain.member.repository.MemberExpenditureCategoryRepository;
 import kr.or.kosa.nux2.domain.member.repository.MemberRepository;
 import kr.or.kosa.nux2.web.auth.principal.CustomUserDetails;
@@ -29,10 +29,10 @@ public class MemberServiceImpl implements MemberService {
     private static final String URL = "https://accounts.google.com/o/oauth2/revoke?token=";
     private RestTemplate restTemplate = new RestTemplate();
     private final MemberRepository memberRepository;
-    private final EmailAuthenticationRepository emailAuthenticationRepository;
     private final MemberExpenditureCategoryRepository memberExpenditureCategoryRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JavaMailSender javaMailSender;
+    private final AuthenticationRepository authenticationRepository;
 
 
     @Override
@@ -50,15 +50,20 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     @Override
     public String signUp(MemberDto.SignUpRequest request) {
-        request.setMemberPassword(bCryptPasswordEncoder.encode(request.getMemberPassword()));
-        request.setRole(Role.USER.getRoles());
+        MemberDto.UserDto findUserDto = memberRepository.findById(request.getMemberId());
+        if (findUserDto == null) {
+            request.setMemberPassword(bCryptPasswordEncoder.encode(request.getMemberPassword()));
+            request.setRole(Role.USER.getRoles());
+            memberRepository.insertMember(request);
 
-        Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("memberId", request.getMemberId());
-        paramMap.put("MemberConsCategoryDtoList", request.getMemberConsCategoryDtoList());
+            Map<String, Object> paramMap = new HashMap<>();
+            paramMap.put("memberId", request.getMemberId());
+            paramMap.put("list", request.getMemberConsCategoryDtoList());
 
-        memberExpenditureCategoryRepository.insertMemberConsCategory(paramMap);
-        return "main";
+            memberExpenditureCategoryRepository.insertMemberConsCategory(paramMap);
+            return "main";
+        }
+        return "signup";
     }
 
     @Override
@@ -82,11 +87,8 @@ public class MemberServiceImpl implements MemberService {
         mailMessage.setTo(request.getMemberId());
         javaMailSender.send(mailMessage);
 
-        Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("memberId", request.getMemberId());
-        paramMap.put("authenticationNumber", authenticationNumber);
+        authenticationRepository.save(request.getMemberId(), authenticationNumber);
 
-        insertOrUpdateAuthenticationInfo(paramMap);
     }
 
     @Override
@@ -96,26 +98,15 @@ public class MemberServiceImpl implements MemberService {
         return String.valueOf(randomNumber);
     }
 
-    @Override
-    public int insertOrUpdateAuthenticationInfo(Map<String, Object> paramMap) {
-        return emailAuthenticationRepository.insertOrUpdateAuthenticationInfo(paramMap);
-    }
 
     @Transactional
     @Override
     public boolean validateAuthenticationNumber(MemberDto.AuthenticationDto request) {
-        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        MemberDto.MemberIdRequest memberIdRequest = new MemberDto.MemberIdRequest(customUserDetails.getUserDto().getMemberId());
-
-        MemberDto.AuthenticationDto response = emailAuthenticationRepository.findAuthenticationNumberByMemberIdAndTimeDiffLessThanFiveMinute(memberIdRequest);
-
-        if (response != null) {
-            if (response.getAuthenticationNumber().equals(request.getAuthenticationNumber())) {
-                emailAuthenticationRepository.deleteAuthenticationInfoByMemberId(memberIdRequest);
-                return true;
-            }
+        String authenticationNumber = authenticationRepository.findById(request.getMemberId());
+        if (authenticationNumber != null && authenticationNumber.equals(request.getAuthenticationNumber())) {
+            authenticationRepository.delete(request.getMemberId());
+            return true;
         }
-        emailAuthenticationRepository.deleteAuthenticationInfoByMemberId(memberIdRequest);
         return false;
     }
 

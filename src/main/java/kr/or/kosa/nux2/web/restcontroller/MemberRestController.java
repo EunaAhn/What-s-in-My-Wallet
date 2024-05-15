@@ -22,7 +22,7 @@ public class MemberRestController {
     }
 
     @PostMapping("/email/authentication")
-    public ResponseEntity<ApiResponse<MemberDto.CheckAuthenticationNumberResponse>> checkAuthenticationNumber(@RequestBody MemberDto.AuthenticationDto request) {
+    public ResponseEntity<ApiResponse<MemberDto.CheckAuthenticationNumberResponse>> checkAuthenticationNumber(@RequestBody MemberDto.AuthenticationRequest request) {
         MemberDto.CheckAuthenticationNumberResponse response = new MemberDto.CheckAuthenticationNumberResponse(memberService.validateAuthenticationNumber(request));
         return new ResponseEntity<>(new ApiResponse<>(response, SuccessCode.SELECT_SUCCESS), HttpStatus.OK);
     }

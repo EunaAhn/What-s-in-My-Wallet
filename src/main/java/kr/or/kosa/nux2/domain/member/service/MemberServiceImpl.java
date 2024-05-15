@@ -102,10 +102,13 @@ public class MemberServiceImpl implements MemberService {
 
     @Transactional
     @Override
-    public boolean validateAuthenticationNumber(MemberDto.AuthenticationDto request) {
-        String authenticationNumber = authenticationRepository.findById(request.getMemberId());
+    public boolean validateAuthenticationNumber(MemberDto.AuthenticationRequest request) {
+        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String memberId = customUserDetails.getUserDto().getMemberId();
+        String authenticationNumber = authenticationRepository.findById(memberId);
+
         if (authenticationNumber != null && authenticationNumber.equals(request.getAuthenticationNumber())) {
-            authenticationRepository.delete(request.getMemberId());
+            authenticationRepository.delete(memberId);
             return true;
         }
         return false;

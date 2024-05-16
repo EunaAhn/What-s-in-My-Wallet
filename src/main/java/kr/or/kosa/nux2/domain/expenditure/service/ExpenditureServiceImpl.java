@@ -173,8 +173,8 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Map<String, Object> map = new HashMap<>();
-        map.put("memberId", "dnwo1111@naver.com");
-        System.out.println(memberId);
+        map.put("memberId", memberId);
+
         // 사용자의 등록카드리스트를 조회
         List<RegistrationCardDto.Response> registeredCard = registrationCardService.showAllRegisteredCardByMemberId();
 
@@ -187,7 +187,8 @@ public class ExpenditureServiceImpl implements ExpenditureService {
             if (transactions.size() != 0) {
                 // 조회결과를 삽입
                 map.put("list", transactions);
-                result = expenditureRepository.insertExpenditures(map);
+                expenditureRepository.insertExpenditures(map);
+                result = expenditureRepository.insertExpenditureDetails(map);
             }
         }
 

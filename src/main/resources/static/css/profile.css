@@ -282,7 +282,6 @@ dialog::backdrop {
     cursor: pointer;
 }
 
-
 /*개인 정보 수정*/
 .user_modal {
     position: relative;
@@ -443,4 +442,20 @@ button#signup {
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     font-size: 15px;
 
+}
+
+.like_item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px; /* 각 항목 사이에 간격 추가 */
+}
+
+.like_card_content {
+    flex-grow: 1; /* 남은 공간을 차지하도록 설정 */
+    padding: 0 10px; /* 이미지와 내용 사이에 간격 추가 */
+}
+
+.like_icon {
+    margin-left: auto; /* SVG 아이콘을 오른쪽으로 정렬 */
 }

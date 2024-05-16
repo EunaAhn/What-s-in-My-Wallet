@@ -31,7 +31,7 @@ public class RegistrationCardServiceImpl implements RegistrationCardService {
     public List<RegistrationCardDto.Response> showAllRegisteredCardByMemberId() {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        List<RegistrationCardDto.Response> responses = registrationCardRepository.findAllRegistrationCardByMemberId("dnwo1111");
+        List<RegistrationCardDto.Response> responses = registrationCardRepository.findAllRegistrationCardByMemberId(memberId);
         return responses;
     }
 

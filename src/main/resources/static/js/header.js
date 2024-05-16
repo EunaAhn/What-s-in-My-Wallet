@@ -14,3 +14,8 @@ searchInput.addEventListener("blur",()=>{
     searchImage.classList.remove("focusing")
 })
 
+const hdUserName = document.querySelector(".hd_user_name")
+const hdUserEmail = document.querySelector(".hd_user_email")
+
+hdUserName.innerHTML = localStorage.getItem("memberName")
+hdUserEmail.innerHTML = localStorage.getItem("memberId")

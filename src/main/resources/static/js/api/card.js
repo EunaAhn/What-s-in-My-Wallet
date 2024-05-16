@@ -1,5 +1,6 @@
 const myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Authorization", `Bearer ${localStorage.getItem("access_token")}`);
 
 // 카드 상품 전체 목록 조회(검색옵션)
 export const getCardProductList = async (startNum, endNum, keyWord) => {
@@ -49,8 +50,8 @@ export const getCardProductTop = async () => {
 // 내 카드 목록 조회
 export const getMyCard = async () => {
     const raw = JSON.stringify({
-        "memberName": "김우재",
-        "memberContactNumber": "01089387607"
+        "memberName": localStorage.getItem("memberName"),
+        "memberEmail": localStorage.getItem("memberId")
     });
     const requestOptions = {
         method: "POST",
@@ -97,6 +98,7 @@ export const getRegistrationCardList = async () => {
     };
     try {
         const response = await fetch(`/api/registrationcard/list`, requestOptions);
+        console.log(response)
         const result = await response.json();
         return result.result;
 
@@ -109,7 +111,7 @@ export const getRegistrationCardList = async () => {
 // 카드 상세 정보 조회
 export const postCardDetail = async (cardId) => {
     const raw = JSON.stringify({
-        "cardId": cardId
+        "cardProductId": cardId
     });
 
     const requestOptions = {
@@ -145,7 +147,7 @@ export const postLikeCard = async (cardId) => {
         return result.result;
 
     } catch (error) {
-        console.log("postCardDetail error : ",error)
+        console.log("postLikeCard error : ",error)
         return null
     }
 }
@@ -155,7 +157,6 @@ export const deleteLikeCard = async (cardId) => {
     const raw = JSON.stringify({
         "cardId": cardId
     });
-
     const requestOptions = {
         method: "DELETE",
         headers: myHeaders,
@@ -163,11 +164,12 @@ export const deleteLikeCard = async (cardId) => {
     };
     try {
         const response = await fetch(`/api/cardproduct/memberlike`, requestOptions);
+        console.log(response)
         const result = await response.json();
         return result.result;
 
     } catch (error) {
-        console.log("postCardDetail error : ",error)
+        console.log("deleteLikeCard error : ",error)
         return null
     }
 }

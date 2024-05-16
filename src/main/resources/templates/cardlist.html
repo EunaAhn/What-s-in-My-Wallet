@@ -7,6 +7,7 @@
     <th:block layout:fragment="head">
         <link th:href="@{/css/cardlist.css}" rel="stylesheet" />
         <link th:href="@{/css/common.css}" rel="stylesheet" />
+        <script type="module" th:src="@{/js/utils.js}" defer></script>
         <script type="module" th:src="@{/js/api/card.js}" defer></script>
         <script type="module" th:src="@{/js/cardlist.js}" defer></script>
         <script src="https://kit.fontawesome.com/e2b1540441.js" crossorigin="anonymous" defer></script>
@@ -15,36 +16,21 @@
         <th:block layout:fragment="header" th:include="@{/fragments/header}"></th:block>
         <th:block layout:fragment="sidemenubar" th:include="@{/fragments/sidemenubar}"></th:block>
         <div class="container scrollBar">
+
+<!--            alert, confirm window 사용예시-->
+            <button class="aaaa">얼럴</button>
+            <button class="bbbb">컴펌</button>
+
             <div class="favorite-card-title">
                 <img id="favorite-card-title-img" src="/img/cardlist/What’s%20Our%20Favorite%20Card%20Top6.png">
                 <div class="favorite-card-info">(좋아요 많은순)</div>
             </div>
 
             <div class="favorite-card-list">
-                <div class="favorite-list">
-                    <img class="favorite-card-list-img" src="/img/cardlist/card1.png">
-                    <div class="favorite">신한카드</div>
-                </div>
-                <div class="favorite-list">
-                    <img class="favorite-card-list-img" src="/img/cardlist/card2.png">
-                    <div class="favorite">신한카드</div>
-                </div>
-                <div class="favorite-list">
-                    <img class="favorite-card-list-img" src="/img/cardlist/card3.png">
-                    <div class="favorite">신한카드</div>
-                </div>
-                <div class="favorite-list">
-                    <img class="favorite-card-list-img" src="/img/cardlist/card4.png">
-                    <div class="favorite">신한카드</div>
-                </div>
-                <div class="favorite-list">
-                    <img class="favorite-card-list-img" src="/img/cardlist/card4.png">
-                    <div class="favorite">신한카드</div>
-                </div>
-                <div class="favorite-list">
-                    <img class="favorite-card-list-img" src="/img/cardlist/card1.png">
-                    <div class="favorite">신한카드</div>
-                </div>
+<!--                <div class="favorite-list">-->
+<!--                    <img class="favorite-card-list-img" src="/img/cardlist/card1.png">-->
+<!--                    <div class="favorite">신한카드</div>-->
+<!--                </div>-->
             </div>
 
             <div class="card-info-list">

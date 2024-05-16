@@ -180,7 +180,7 @@
 <!--    "likeCount": 1,-->
 <!--    "benefitCategoryList": []-->
 
-    <select id="findTop4LikeCardProduct" resultMap="cardListResultSumm">
+    <select id="findTop6LikeCardProduct" resultMap="cardListResultSumm">
         SELECT
             subquery.cpi as card_product_id,
             subquery.cci as card_company_id,
@@ -210,7 +210,7 @@
             subquery.cpi IN (
             SELECT card_product_id FROM (
             SELECT card_product_id, count(member_id) FROM member_like_card  GROUP BY card_product_id order by count(member_id) desc
-            ) likes where  <![CDATA[rownum < 5]]> )
+            ) likes where  <![CDATA[rownum < 7]]> )
         order by likecount desc
 
     </select>

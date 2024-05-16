@@ -1,13 +1,16 @@
 import * as card from "./api/card.js"
+import * as utils from "./utils.js"
 
 let startNum = 0
 let endNum = 0
 let localKeyWord = ""
 
+const companys = ["신한카드", "현대카드", "삼성카드", "국민카드","롯데카드", "하나카드", "우리카드", "NH농협카드","IBK기업은행카드"]
+
 document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem('clickedmenu', ".side_cardlist");
     startNum = 1
-    endNum = 10
+    endNum = 20
     localKeyWord =""
     addCardProductList(localKeyWord)
     cardProductTop()
@@ -25,10 +28,52 @@ document.addEventListener("DOMContentLoaded", () => {
         addCardProductList()
     }
 })
+const favoriteCardList = document.querySelector('.favorite-card-list');
 
 // 인기 카드 출력
 const cardProductTop = async () => {
-    console.log("여기?",await card.getCardProductTop())
+    const cards = await card.getCardProductTop()
+
+    // 각 카드 정보를 순회하며 HTML 동적 생성
+    cards.forEach((card) => {
+        const cardElement = document.createElement('div');
+        cardElement.classList.add('favorite-list');
+        favoriteCardList.appendChild(cardElement);
+
+        const imgElement = document.createElement('img');
+        imgElement.classList.add('favorite-card-list-img');
+        imgElement.src = `/img/cardimg/카드${card.cardProductId}.jpg`;
+        cardElement.appendChild(imgElement);
+
+        const cardRect = cardElement.getBoundingClientRect();
+        const cardWidth = cardRect.width;
+
+        imgElement.onload = () => {
+            const imgWidth = imgElement.width;
+            const imgHeight = imgElement.height;
+            const aspectRatio = imgWidth / imgHeight;
+
+            if (aspectRatio > 1) {
+                imgElement.style.transform = "rotate(85deg)";
+                imgElement.style.height =`${cardWidth}px`;
+                imgElement.style.width =`${aspectRatio*cardWidth}px`;
+            }
+            else  {
+                imgElement.style.transform = "rotate(-5deg)";
+                imgElement.style.height = `${cardWidth/aspectRatio}px`;
+                imgElement.style.width = `${cardWidth}px`;
+            }
+        };
+
+        const nameElement = document.createElement('div');
+        nameElement.classList.add('favorite');
+        nameElement.textContent = companys[card.cardCompanyId];
+        cardElement.appendChild(nameElement);
+
+        cardElement.addEventListener("click", () => {
+            window.location.href = `carddetail?id=${card.cardProductId}`;
+        })
+    })
 }
 
 const cardListContainer = document.querySelector(".card-info-list");
@@ -60,10 +105,11 @@ const addCardProductList = async () => {
         cardList.classList.add('card-list');
         cardList.id = `${card.cardProductId}`
         cardListContainer.appendChild(cardList);
+        console.log()
 
         const cardImage = document.createElement('img');
         cardImage.classList.add('image-19');
-        cardImage.src = '/img/cardlist/card1.png';
+        cardImage.src = `/img/cardimg/카드${card.cardProductId}.jpg`;
         cardList.appendChild(cardImage);
 
         const cardTextInfo = document.createElement('div');
@@ -137,3 +183,33 @@ hdSearchImage.addEventListener("click", () => {
     }
 })
 
+
+const container = document.querySelector(".container")
+
+// Alert 창 사용법예시
+const aaaa = document.querySelector('.aaaa')
+const customAlert = utils.customAlert("안녕하세요.")
+aaaa.addEventListener("click", () => {
+    container.appendChild(customAlert)
+    customAlert.showModal()
+})
+
+// ConFirm창 사용법예시
+const bbbb = document.querySelector('.bbbb')
+const customConfirm = utils.customConfirm(`${localStorage.getItem("memberName")} 님의 카드를 연결해주세요!`,"등록하기", "다음에 하기")
+bbbb.addEventListener("click",() => {
+    container.appendChild(customConfirm)
+    customConfirm.showModal()
+})
+
+const confirmTrueButton = customConfirm.querySelector('.confirm_true');
+confirmTrueButton.addEventListener('click', () => {
+    customConfirm.close();
+    console.log(true)
+});
+
+const confirmFalseButton = customConfirm.querySelector('.confirm_false');
+confirmFalseButton.addEventListener('click', () => {
+    customConfirm.close();
+    console.log(false)
+});

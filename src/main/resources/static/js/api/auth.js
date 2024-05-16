@@ -12,11 +12,13 @@ export const postLogin = async (username, password) => {
         body: formdata,
     };
     try {
-        console.log(username,password)
         const response = await fetch(`/login`, requestOptions);
         if(response && response.status === 200) {
             const accessToken = await response.headers.get('Authorization').split(' ')[1];
+            const data = await response.json()
             localStorage.setItem('access_token', accessToken)
+            localStorage.setItem('memberName', data.memberName)
+            localStorage.setItem('memberId', data.memberId)
             console.log("일반 로그인 성공")
             return true
         }

@@ -43,10 +43,10 @@ public class MemberController {
         memberService.signUp(request);
         return "cardlist";
     }
-//    @GetMapping("/profile/status=0")
-//    public String oAuthMyPage(){
-//        return "profile";
-//    }
+    @GetMapping("/profile/status=0")
+    public String oAuthMyPage(){
+        return "profile";
+    }
 
 
 }

@@ -7,6 +7,7 @@
     <th:block layout:fragment="head">
         <link th:href="@{/css/suggestion.css}" rel="stylesheet" />
         <link th:href="@{/css/common.css}" rel="stylesheet" />
+        <script type="module" th:src="@{/js/utils.js}" defer></script>
         <script type="module" th:src="@{/js/api/suggestion.js}" defer></script>
         <script type="module" th:src="@{/js/suggestion.js}" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -17,27 +18,44 @@
     <div class="container">
         <div class="section section_up">
             <div class="title">이눅스님에게 딱 맞는 카드</div>
-
+            <img class="blub" src="/img/common/bulb.png" alt="bulb">
+            <div class="pikingrate">
+                <div>
+                    <span style="color: #8B81D4">"피킹률"</span>이란 신용카드를 사용할 때 연회비와 사용실적에 비해 내가 혜택을 잘 쓰고 있는지 확인할 수 있는 지표입니다. </div>
+                </div>
             <div class="content_box">
-                <div class="content time_content">
-                    <img class="img img1" src="/img/cardlist/card1.png">
-                    <img class="img img2" src="/img/cardlist/card2.png">
-                    <div class="description_box">
-                        <p class="expense_type">총 7,976원 혜택</p>
-                        <p class="type_description">피킹률: 0.52%</p>
-                        <p class="type_description">지출 횟수가 30회 이상이시군요!</p>
-                    </div>
-                </div>
-                <div  class="content price_content">
-                    <img class="img" src="/img/cardlist/card2.png">
-                    <div class="description_box">
-                        <p class="expense_type">총 67,783원 혜택</p>
-                        <p class="type_description">피킹률: 4.43%</p>
-                        <p class="type_description">목표 지출금액보다 15만원 절약하셨어요</p>
-                    </div>
-                </div>
+<!--                <div class="content time_content">-->
+<!--                    <img class="img" src="/img/cardimg/카드11.jpg">-->
+<!--                    <div class="description_box">-->
+<!--                        <P class="card_title">신한카드 Mr.Life</P>-->
+<!--                        <p class="expense_type">총 7,976원 혜택</p>-->
+<!--                        <p class="type_description">피킹률: 0.52%</p>-->
+<!--                        <div class="category_pikings">-->
+<!--                            <div class="category_piking">-->
+<!--                                <div class="category">학원</div>-->
+<!--                                <p class="piking">17,756원 할인</p>-->
+<!--                            </div>-->
+<!--                            <div class="category_piking">-->
+<!--                                <div class="category">음식점</div>-->
+<!--                                <p class="piking">17,756원 할인</p>-->
+<!--                            </div>-->
+<!--                            <div class="category_piking">-->
+<!--                                <div class="category">문화</div>-->
+<!--                                <p class="piking">17,756원 할인</p>-->
+<!--                            </div>-->
+<!--                            <div class="category_piking">-->
+<!--                                <div class="category">병원</div>-->
+<!--                                <p class="piking">17,756원 할인</p>-->
+<!--                            </div>-->
+<!--                            <div class="category_piking">-->
+<!--                                <div class="category">병원</div>-->
+<!--                                <p class="piking">17,756원 할인</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <button class="cardButton">카드 상세</button>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
-
         </div>
 
         <div class="section section_down">

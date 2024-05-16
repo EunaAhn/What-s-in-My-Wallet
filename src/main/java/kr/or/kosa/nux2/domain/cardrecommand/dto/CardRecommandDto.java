@@ -35,6 +35,8 @@ public class CardRecommandDto {
         private double ol7;
         private double 언제나할인;
         private double 통합할인액;
+        private double 연회비;
+        private double 피킹률;
     }
 
 
@@ -47,7 +49,7 @@ public class CardRecommandDto {
     @Getter
     @NoArgsConstructor
     public static class YearAndMonthRequest {
-        @Pattern(regexp = "\\d{4}-\\d{2}", message = "날짜는 YYYY-MM 형식이어야 합니다.")
+        //@Pattern(regexp = "\\d{4}-\\d{2}", message = "날짜는 YYYY-MM 형식이어야 합니다.")
         private String yearAndMonth;
     }
 }

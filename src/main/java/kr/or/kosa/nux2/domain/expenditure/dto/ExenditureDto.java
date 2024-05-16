@@ -148,7 +148,7 @@ public class ExenditureDto {
     @Getter
     @NoArgsConstructor
     public static class ByYearRequest {
-        @Pattern(regexp = "\\d{4}", message = "날짜는 YYYY 형식이어야 합니다.")
+        //@Pattern(regexp = "\\d{4}", message = "날짜는 YYYY 형식이어야 합니다.")
         int year;
     }
 

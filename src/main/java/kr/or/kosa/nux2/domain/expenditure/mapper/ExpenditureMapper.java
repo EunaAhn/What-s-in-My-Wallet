@@ -31,6 +31,7 @@ public interface ExpenditureMapper {
 
     Map<String, Object> findAverageExpenditureForMonthByYear(Map<String, Object> map);
 
+   Long findTotalExpenditureByMonth(Map<String, Object> map);
     // 소비성향을 넘겨주면 해당 시간대의 총 지출 횟수를 반환해야한다.
     // 리팩터링 부채 : enum의 위치 애매 + 단순 columns으로 넘기는게 타당한지 의문
     // 일단 MemberExpenditureTendDto에서 값을 꺼내서 전달
@@ -47,6 +48,8 @@ public interface ExpenditureMapper {
     int insertExpenditureMemo(Map<String, Object> map);
 
     List<ExenditureDto.CategoryList> findAllCategoryList(Map<String, Object> map);
+
+    int insertExpenditureDetails(Map<String, Object> map);
 }
 
 

@@ -4,6 +4,7 @@ package kr.or.kosa.nux2.domain.cardrecommand.service;
 import kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto;
 import kr.or.kosa.nux2.domain.cardproduct.repository.CardProductRepository;
 import kr.or.kosa.nux2.domain.cardrecommand.dto.CardRecommandDto;
+import kr.or.kosa.nux2.domain.expenditure.repository.ExpenditureRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,25 +12,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.math.BigDecimal;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.security.Key;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class CardRecommandServiceImpl implements CardRecommadService {
     private final CardProductRepository cardProductRepository;
     private final RestTemplate restTemplate;
-
+    private final ExpenditureRepository expenditureRepository;
     @Override
     public CardRecommandDto.CardRecommandResponse recommandCards(CardRecommandDto.YearAndMonthRequest request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         URI uri = UriComponentsBuilder
-                .fromUriString("http://3.39.9.210:5000") // flask server uri
-                .path("/")
+                .fromUriString("http://13.209.42.180:5000") // flask server uri
+                .path("/rewardrate")
                 .queryParam("memberId", memberId)
                 .queryParam("date", request.getYearAndMonth())
                 .encode()
@@ -45,12 +45,24 @@ public class CardRecommandServiceImpl implements CardRecommadService {
         Map<String, Object> map = new HashMap();
         List<Integer> cardProductIdList = new ArrayList<>();
         for (CardRecommandDto.DiscountAmountByCategory dac : discountAmountByCategoryList) {
+            double membershipFee = dac.get연회비();
+            Map<String, Object> map2 = new HashMap<>();
+            map2.put("memberId" , memberId);
+            map2.put("yearAndMonth", request.getYearAndMonth());
+            System.out.println(request.getYearAndMonth());
+            Long result = expenditureRepository.findTotalExpenditureByMonth(map2);
+
+            System.out.println(result);
+            double benefit = dac.get통합할인액();
+            double rewardsRate = ((benefit - (membershipFee / 12)) / (Long)result) * 100;
+
+            dac.set피킹률(rewardsRate);
             cardProductIdList.add(dac.getCardId());
         }
 
         map.put("list", cardProductIdList);
         map.put("startnum", 1);
-        map.put("endnum", 4);
+        map.put("endnum", 2);
         List<CardProductDto.Response> cardProductList = cardProductRepository.findAllCards(map);
 
 

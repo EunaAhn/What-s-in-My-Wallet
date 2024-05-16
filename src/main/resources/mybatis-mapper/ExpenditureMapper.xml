@@ -196,7 +196,7 @@
     </select>
 
 
-    <select id="findAverageExpenditureForMonthByYear" parameterType="map">
+    <select id="findAverageExpenditureForMonthByYear" parameterType="map" resultType="map">
         select
             NVL("1월", 0) AS "1월",
             NVL("2월", 0) AS "2월",
@@ -252,6 +252,22 @@
     </insert>
 
 
+    <insert id = "insertExpenditureDetails" parameterType="list">
+        <foreach collection="list" item="item" index="idx" separator=" " open="INSERT ALL" close="select * from dual">
+            INTO expenditure_history_dts (
+            expenditure_history_id,
+            store_name,
+            store_address
+            )
+            VALUES
+            (
+            #{item.transactionId},
+            #{item.storeName},
+            #{item.storeAddress}
+            )
+        </foreach>
+    </insert>
+
 
     <resultMap id="totalcountmap" type="kr.or.kosa.nux2.domain.expenditure.dto.ExenditureDto$TotalCount">
         <result column="expenditure_total_count" property="expenditureTotalCount"/>
@@ -289,7 +305,6 @@
 
     <select id = "isExistMemo" parameterType="map" resultType="int">
         select count(*) from daily_expenditure_memo where memo_id = #{memoId} and member_id = #{memberId}
-
     </select>
 
     <insert id="insertExpenditureMemo" parameterType="map">
@@ -297,5 +312,11 @@
     </insert>
 
 
+    <select id="findTotalExpenditureByMonth" parameterType="map" resultType="long">
+        select sum(expenditure_amount) as totalAmount from expenditure_history where member_id = #{memberId} and to_char(expenditure_datetime,'YYYY-MM') = #{yearAndMonth}
+    </select>
+    <delete id="deleteExpenditure" parameterType="string">
+        delete from expenditure_history where reg_card_id = #{cardNumber}
+    </delete>
 
 </mapper>

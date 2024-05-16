@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/test")
 public class HomeController {
 
     private static final Logger log = LoggerFactory.getLogger(HomeController.class);
@@ -20,10 +19,10 @@ public class HomeController {
         return "onboarding";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String goLogin(HttpServletRequest request) {
-        return "login";
-    }
+//    @RequestMapping(value = "/login", method = RequestMethod.GET)
+//    public String goLogin(HttpServletRequest request) {
+//        return "login";
+//    }
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String goSignup(HttpServletRequest request, Model model) {
@@ -62,5 +61,11 @@ public class HomeController {
     public String goCardregistration(HttpServletRequest request) {
         return "cardregistration";
     }
+
+    @RequestMapping(value = "/automation", method = RequestMethod.GET)
+    public String goAutomation(HttpServletRequest request) {
+        return "automation";
+    }
+
 
 }

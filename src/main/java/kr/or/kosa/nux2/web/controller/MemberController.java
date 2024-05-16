@@ -31,7 +31,7 @@ public class MemberController {
         return "index";
     }
 
-    @GetMapping("/oauth")
+    @GetMapping("/login")
     public String login() {
         return "login";
     }
@@ -49,8 +49,14 @@ public class MemberController {
         memberService.signUp(request);
         return "cardlist";
     }
-    @GetMapping("/profile/status=0")
+    @GetMapping("/api/member/profile/status=0")
     public String oAuthMyPage(){
+        return "profile";
+    }
+    @GetMapping("/login/oauth2/code/google")
+    public String oAuth(@RequestParam String code, String state){
+        System.out.println("code"+code);
+        System.out.println("login ");
         return "profile";
     }
 

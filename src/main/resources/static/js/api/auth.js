@@ -45,7 +45,7 @@ export const postSignIn = async (memberId, memberPassword, memberName, memberCon
     };
     try {
         console.log(raw)
-        const response = await fetch(`/signIn`, requestOptions);
+        const response = await fetch(`/signUp`, requestOptions);
         if(response && response.status === 200) {
             const result = await response.ok
             console.log("일반 사용자 회원가입 완료 : ", result)

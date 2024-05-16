@@ -56,7 +56,7 @@ export const customConfirm = (notification, tureContent, falseContent) => {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    // goCardProductRegister()
+     goCardProductRegister()
 })
 
 
@@ -64,16 +64,16 @@ const container = document.querySelector(".container")
 
 // 카드 등록 페이지로 라우팅 ( 모든 페이지에 적용 )
 // 일단 주석처리
-// const goCardProductRegister = async () => {
-//     const registeredCard = await card.getRegistrationCardList()
-//     if(!registeredCard.length){
-//         const customAlertwindow = customAlert(`${localStorage.getItem("memberName")} 님의 카드를 연결해주세요!`)
-//         container.appendChild(customAlertwindow)
-//         customAlertwindow.showModal()
-//         const alertCheckButton = customAlertwindow.querySelector('.alert_check');
-//         alertCheckButton.addEventListener('click', () => {
-//             customAlertwindow.close();
-//             location.href = "cardregistration";
-//         });
-//     }
-// }
+const goCardProductRegister = async () => {
+    const registeredCard = await card.getRegistrationCardList()
+    if(!registeredCard.length){
+        const customAlertwindow = customAlert(`${localStorage.getItem("memberName")} 님의 카드를 연결해주세요!`)
+        container.appendChild(customAlertwindow)
+        customAlertwindow.showModal()
+        const alertCheckButton = customAlertwindow.querySelector('.alert_check');
+        alertCheckButton.addEventListener('click', () => {
+            customAlertwindow.close();
+            location.href = "cardregistration";
+        });
+    }
+}

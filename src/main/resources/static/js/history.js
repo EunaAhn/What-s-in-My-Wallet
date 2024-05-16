@@ -114,8 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("내역이 업데이트되었습니다.");
                 addCalendarData(currentMonth, currentYear, selectedKeyword); // 캘린더 업데이트
             } else {
-                console.log("가장 최신 내역입니다.");
-                alert("가장 최신 내역입니다.");
+                console.log("내역이 업데이트되었습니다.");
+                alert("내역이 업데이트되었습니다.");
             }
         } catch (error) {
             console.error('Error updating expenditure list:', error);

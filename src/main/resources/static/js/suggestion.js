@@ -144,11 +144,10 @@ document.addEventListener("DOMContentLoaded", () => {
     CardRecommandation()
 })
 
-
 const CardRecommandation = async () => {
     // const cardRecoList= await suggestion.getCardRecoList(yearAndMonth)
-
-    // console.log(cardRecoList)
+    // const slicedCardProductList = cardRecoList.cardProductList.slice(0,2)
+    // console.log("slicedCardProductList : ",slicedCardProductList)
 
     const contentBox = document.querySelector(".content_box")
     data.cardProductList.forEach((card) => {

@@ -67,8 +67,8 @@ button:hover {
     height: 65%;
     max-width: 500px;
     min-width: 430px;
-    max-height: 600px;
-    min-height: 600px;
+    max-height: 500px;
+    min-height: 500px;
     top: 0;
     bottom: 0;
     left: 0;
@@ -137,7 +137,6 @@ button#signin {
     border-radius: 14px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     font-size: 15px;
-
 }
 
 /* RESULT */

@@ -48,7 +48,6 @@ public class JwtFilter extends OncePerRequestFilter {
             } else {
                 log.info("not exist userName");
             }
-
         } else {
             log.info("invalid token");
         }

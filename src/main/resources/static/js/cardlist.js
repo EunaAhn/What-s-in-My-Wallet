@@ -182,34 +182,3 @@ hdSearchImage.addEventListener("click", () => {
         hdCardSearch.value = ""
     }
 })
-
-
-const container = document.querySelector(".container")
-
-// Alert 창 사용법예시
-const aaaa = document.querySelector('.aaaa')
-const customAlert = utils.customAlert("안녕하세요.")
-aaaa.addEventListener("click", () => {
-    container.appendChild(customAlert)
-    customAlert.showModal()
-})
-
-// ConFirm창 사용법예시
-const bbbb = document.querySelector('.bbbb')
-const customConfirm = utils.customConfirm(`${localStorage.getItem("memberName")} 님의 카드를 연결해주세요!`,"등록하기", "다음에 하기")
-bbbb.addEventListener("click",() => {
-    container.appendChild(customConfirm)
-    customConfirm.showModal()
-})
-
-const confirmTrueButton = customConfirm.querySelector('.confirm_true');
-confirmTrueButton.addEventListener('click', () => {
-    customConfirm.close();
-    console.log(true)
-});
-
-const confirmFalseButton = customConfirm.querySelector('.confirm_false');
-confirmFalseButton.addEventListener('click', () => {
-    customConfirm.close();
-    console.log(false)
-});

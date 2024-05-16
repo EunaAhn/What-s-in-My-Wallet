@@ -34,3 +34,9 @@ document.addEventListener('keydown', (event) =>  {
 
 signinButton.addEventListener('click', login);
 
+
+// const btn = document.querySelector(".snslogin_google2")
+//
+// btn.addEventListener("click", () => {
+//     window.location.href = "/oauth2/authorization/google";
+// })

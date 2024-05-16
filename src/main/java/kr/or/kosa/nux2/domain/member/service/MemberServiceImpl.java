@@ -135,8 +135,7 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     @Override
     public boolean validateAuthenticationNumber(MemberDto.AuthenticationRequest request) {
-        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String memberId = customUserDetails.getUserDto().getMemberId();
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
         String authenticationNumber = authenticationRepository.findById(memberId);
 
         if (authenticationNumber != null && authenticationNumber.equals(request.getAuthenticationNumber())) {
@@ -154,8 +153,8 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     @Override
     public MemberDto.ProfileResponse showMemberProfile() {
-        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        MemberDto.MemberIdRequest request = new MemberDto.MemberIdRequest(customUserDetails.getUserDto().getMemberId());
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+        MemberDto.MemberIdRequest request = new MemberDto.MemberIdRequest(memberId);
 
         List<MemberConsCategoryDto.MemberConsCategoryResponse> memberConsCategoryDtoList = memberExpenditureCategoryRepository.selectMemberConsCategoryNames(request);
 
@@ -173,15 +172,15 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     @Override
     public MemberDto.ProfileResponse updateMemberInfo(MemberDto.UpdateMemberInfoRequest request) {
-        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("memberId", customUserDetails.getUserDto().getMemberId());
+        paramMap.put("memberId", memberId);
         paramMap.put("targetExpenditure", request.getTargetExpenditure());
         paramMap.put("memberConsCategoryIdDtoList", request.getMemberConsCategoryIdDtoList());
 
         MemberDto.ProfileResponse response = updateTargetExpenditure(paramMap);
-        response.setMemberId(customUserDetails.getUserDto().getMemberId());
+        response.setMemberId(memberId);
         response.setMemberConsCategoryDtoList(updateMemberConsCategoryList(paramMap));
 
         return response;
@@ -196,10 +195,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean updatePassword(MemberDto.UpdatePasswordRequest request) {
         if (request.getChangePassword().equals(request.getCheckPassword())) {
-            CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 
             Map<String, Object> paramMap = new HashMap<>();
-            paramMap.put("memberId", customUserDetails.getUserDto().getMemberId());
+            paramMap.put("memberId", memberId);
             paramMap.put("memberPassword", bCryptPasswordEncoder.encode(request.getChangePassword()));
 
             int count = memberRepository.updatePassword(paramMap);

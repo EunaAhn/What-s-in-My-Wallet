@@ -1,8 +1,10 @@
 import * as card from "./api/card.js"
+const companys = ["신한카드", "현대카드", "삼성카드", "국민카드","롯데카드", "하나카드", "우리카드", "NH농협카드","IBK기업은행카드"]
 let cardItemlist = []
 
 document.addEventListener("DOMContentLoaded", async () => {
-    cardItemlist = await card.getRegistrationCardList()
+    cardItemlist = await card.getMyCard()
+    console.log(cardItemlist)
     await generateCardInfo(cardItemlist)
 })
 
@@ -22,9 +24,10 @@ const generateCardInfo = (cardItemlist) => {
         const cardTextInfo = document.createElement('div');
         cardTextInfo.classList.add('card-text-info');
 
+        // 현재 카드사로 되어있는데 카드 타이틀로 변경해야함
         const cardTitle = document.createElement('div');
         cardTitle.classList.add('card-title');
-        cardTitle.textContent = `${item.cardNickName}`;
+        cardTitle.textContent = `${item.cardName}`;
         cardTextInfo.appendChild(cardTitle);
 
         const benefitInfo = document.createElement('div');
@@ -50,12 +53,24 @@ const generateCardInfo = (cardItemlist) => {
 
 // 선택한 카드 등록하기
 const registerRegistrationCardList = () => {
-
+    const cardList = document.querySelectorAll(".card-list");
+    const selectedCardIds = [];
+    cardList.forEach(card => {
+        const checkbox = card.querySelector('input[type="checkbox"]');
+        if (checkbox && checkbox.checked) {
+            selectedCardIds.push({"cardNumber":checkbox.id}); // or checkbox.id if you prefer id
+        }
+    });
+    return selectedCardIds;
 }
 
 const registerButton = document.getElementById('register')
-registerButton.addEventListener('click', function (){
-    registerRegistrationCardList()
-    // location.href = "/cardlist";
+registerButton.addEventListener('click', async () => {
+    const selectedCardIds = registerRegistrationCardList()
+    const registerCardListVal = await card.postRegistrationcardRegister(selectedCardIds)
+    if(registerCardListVal === true) {
+        alert(`${selectedCardIds.length}개의 카드가 등록되었습니다.`)
+    }
+    location.href = "cardlist";
 });
 

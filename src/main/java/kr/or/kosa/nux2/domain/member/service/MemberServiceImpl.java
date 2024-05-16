@@ -3,7 +3,7 @@ package kr.or.kosa.nux2.domain.member.service;
 import kr.or.kosa.nux2.domain.member.dto.MemberConsCategoryDto;
 import kr.or.kosa.nux2.domain.member.dto.MemberDto;
 import kr.or.kosa.nux2.domain.member.dto.Role;
-import kr.or.kosa.nux2.domain.member.repository.EmailAuthenticationRepository;
+import kr.or.kosa.nux2.domain.member.repository.AuthenticationRepository;
 import kr.or.kosa.nux2.domain.member.repository.MemberExpenditureCategoryRepository;
 import kr.or.kosa.nux2.domain.member.repository.MemberRepository;
 import kr.or.kosa.nux2.web.auth.principal.CustomUserDetails;
@@ -29,12 +29,17 @@ public class MemberServiceImpl implements MemberService {
     private static final String URL = "https://accounts.google.com/o/oauth2/revoke?token=";
     private RestTemplate restTemplate = new RestTemplate();
     private final MemberRepository memberRepository;
-    private final EmailAuthenticationRepository emailAuthenticationRepository;
     private final MemberExpenditureCategoryRepository memberExpenditureCategoryRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JavaMailSender javaMailSender;
+    private final AuthenticationRepository authenticationRepository;
 
-
+    /**
+     * 로그아웃 함수
+     *
+     * @param customUserDetails: 로그인한 유저 정보
+     * @return : 로그인 페이지
+     */
     @Override
     public String logout(CustomUserDetails customUserDetails) {
         log.info("method = {}", "logout");
@@ -44,23 +49,41 @@ public class MemberServiceImpl implements MemberService {
                 restTemplate.getForObject(URL + socialAccessToken, String.class);
             }
         }
-        return "logout";
+        SecurityContextHolder.clearContext();
+        return "login";
     }
 
+    /**
+     * 회원가입 함수
+     *
+     * @param request: 회원가입 정보
+     * @return: 성공, 실패 시 해당 페이지 이동
+     */
     @Transactional
     @Override
     public String signUp(MemberDto.SignUpRequest request) {
-        request.setMemberPassword(bCryptPasswordEncoder.encode(request.getMemberPassword()));
-        request.setRole(Role.USER.getRoles());
+        MemberDto.UserDto findUserDto = memberRepository.findById(request.getMemberId());
+        if (findUserDto == null) {
+            request.setMemberPassword(bCryptPasswordEncoder.encode(request.getMemberPassword()));
+            request.setRole(Role.USER.getRoles());
+            memberRepository.insertMember(request);
 
-        Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("memberId", request.getMemberId());
-        paramMap.put("MemberConsCategoryDtoList", request.getMemberConsCategoryDtoList());
+            Map<String, Object> paramMap = new HashMap<>();
+            paramMap.put("memberId", request.getMemberId());
+            paramMap.put("list", request.getMemberConsCategoryDtoList());
 
-        memberExpenditureCategoryRepository.insertMemberConsCategory(paramMap);
-        return "main";
+            memberExpenditureCategoryRepository.insertMemberConsCategory(paramMap);
+            return "main";
+        }
+        return "signup";
     }
 
+    /**
+     * 존재하지 않는 아이디(이메일)인지 확인하는 함수
+     *
+     * @param request: 아이디(이메일)
+     * @return: 아이디 존재하지 않으면 true, 존재하면 false
+     */
     @Override
     public boolean checkMemberId(MemberDto.MemberIdRequest request) {
         if (memberRepository.isExistMemberId(request)) {
@@ -71,6 +94,11 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    /**
+     * 이메일 발송 함수
+     *
+     * @param request: 아이디(이메일)
+     */
     @Transactional
     @Override
     public void sendEmail(MemberDto.MemberIdRequest request) {
@@ -82,13 +110,15 @@ public class MemberServiceImpl implements MemberService {
         mailMessage.setTo(request.getMemberId());
         javaMailSender.send(mailMessage);
 
-        Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("memberId", request.getMemberId());
-        paramMap.put("authenticationNumber", authenticationNumber);
+        authenticationRepository.save(request.getMemberId(), authenticationNumber);
 
-        insertOrUpdateAuthenticationInfo(paramMap);
     }
 
+    /**
+     * 인증번호 생성 함수
+     *
+     * @return 6자리 랜덤숫자
+     */
     @Override
     public String generateAuthenticationNumber() {
         Random random = new Random();
@@ -96,34 +126,35 @@ public class MemberServiceImpl implements MemberService {
         return String.valueOf(randomNumber);
     }
 
-    @Override
-    public int insertOrUpdateAuthenticationInfo(Map<String, Object> paramMap) {
-        return emailAuthenticationRepository.insertOrUpdateAuthenticationInfo(paramMap);
-    }
-
+    /**
+     * 인증번호 검증 함수
+     *
+     * @param request: 입력한 번호
+     * @return 인증번호와 같으면 true, 다르면 false
+     */
     @Transactional
     @Override
-    public boolean validateAuthenticationNumber(MemberDto.AuthenticationDto request) {
-        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        MemberDto.MemberIdRequest memberIdRequest = new MemberDto.MemberIdRequest(customUserDetails.getUserDto().getMemberId());
+    public boolean validateAuthenticationNumber(MemberDto.AuthenticationRequest request) {
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+        String authenticationNumber = authenticationRepository.findById(memberId);
 
-        MemberDto.AuthenticationDto response = emailAuthenticationRepository.findAuthenticationNumberByMemberIdAndTimeDiffLessThanFiveMinute(memberIdRequest);
-
-        if (response != null) {
-            if (response.getAuthenticationNumber().equals(request.getAuthenticationNumber())) {
-                emailAuthenticationRepository.deleteAuthenticationInfoByMemberId(memberIdRequest);
-                return true;
-            }
+        if (authenticationNumber != null && authenticationNumber.equals(request.getAuthenticationNumber())) {
+            authenticationRepository.delete(memberId);
+            return true;
         }
-        emailAuthenticationRepository.deleteAuthenticationInfoByMemberId(memberIdRequest);
         return false;
     }
 
+    /**
+     * 마이페이지 프로필 출력 함수
+     *
+     * @return 프로필 정보
+     */
     @Transactional
     @Override
     public MemberDto.ProfileResponse showMemberProfile() {
-        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        MemberDto.MemberIdRequest request = new MemberDto.MemberIdRequest(customUserDetails.getUserDto().getMemberId());
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+        MemberDto.MemberIdRequest request = new MemberDto.MemberIdRequest(memberId);
 
         List<MemberConsCategoryDto.MemberConsCategoryResponse> memberConsCategoryDtoList = memberExpenditureCategoryRepository.selectMemberConsCategoryNames(request);
 
@@ -132,30 +163,42 @@ public class MemberServiceImpl implements MemberService {
         return response;
     }
 
+    /**
+     * 마이페이지 정보 수정
+     *
+     * @param request: 회원 관심카테고리, 월목표지출액 수정 정보
+     * @return: 변경된 회원 정보
+     */
     @Transactional
     @Override
     public MemberDto.ProfileResponse updateMemberInfo(MemberDto.UpdateMemberInfoRequest request) {
-        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("memberId", customUserDetails.getUserDto().getMemberId());
+        paramMap.put("memberId", memberId);
         paramMap.put("targetExpenditure", request.getTargetExpenditure());
         paramMap.put("memberConsCategoryIdDtoList", request.getMemberConsCategoryIdDtoList());
 
         MemberDto.ProfileResponse response = updateTargetExpenditure(paramMap);
-        response.setMemberId(customUserDetails.getUserDto().getMemberId());
+        response.setMemberId(memberId);
         response.setMemberConsCategoryDtoList(updateMemberConsCategoryList(paramMap));
 
         return response;
     }
 
+    /**
+     * 비밀번호 변경 함수
+     *
+     * @param request: 변경할 비밀번호, 확인 비밀번호
+     * @return: 변경되면 true, 변경되지 않았으면 false
+     */
     @Override
     public boolean updatePassword(MemberDto.UpdatePasswordRequest request) {
         if (request.getChangePassword().equals(request.getCheckPassword())) {
-            CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 
             Map<String, Object> paramMap = new HashMap<>();
-            paramMap.put("memberId", customUserDetails.getUserDto().getMemberId());
+            paramMap.put("memberId", memberId);
             paramMap.put("memberPassword", bCryptPasswordEncoder.encode(request.getChangePassword()));
 
             int count = memberRepository.updatePassword(paramMap);
@@ -171,6 +214,12 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findMemberNameAndTargetExpenditureByMemberId(paramMap);
     }
 
+    /**
+     * 관심 카테고리 리스트 수정
+     *
+     * @param paramMap: 수정된 관심 카테고리 리스트
+     * @return: 수정된 후 관심 카테고리 리스트
+     */
     @Transactional
     @Override
     public List<MemberConsCategoryDto.MemberConsCategoryResponse> updateMemberConsCategoryList(Map<String, Object> paramMap) {

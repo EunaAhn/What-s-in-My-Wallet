@@ -20,6 +20,12 @@ public class CardProductServiceImpl implements CardProductService {
     private final CardProductRepository cardProductRepository;
     private final MemberExpenditureCategoryRepository memberExpenditureCategoryRepository;
 
+    /**
+     * 카드상품리스트 출력 함수
+     *
+     * @param request: 시작번호, 끝번호, 검색조건(옵션)
+     * @return 카드상품리스트
+     */
     @Override
     public List<CardProductDto.Response> showCardProductList(CardProductDto.ListRequest request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -31,13 +37,19 @@ public class CardProductServiceImpl implements CardProductService {
 
         MemberDto.MemberIdRequest serviceRequest = new MemberDto.MemberIdRequest();
         serviceRequest.setMemberId(memberId);
-        List<MemberConsCategoryDto.MemberConsCategoryResponse>  result = memberExpenditureCategoryRepository.selectMemberConsCategoryNames(serviceRequest);
+        List<MemberConsCategoryDto.MemberConsCategoryResponse> result = memberExpenditureCategoryRepository.selectMemberConsCategoryNames(serviceRequest);
 
         map.put("categoryList", result);
         List<CardProductDto.Response> responses = cardProductRepository.findAllCards(map);
         return responses;
     }
 
+    /**
+     * 카드 상세 조회 함수
+     *
+     * @param request: 카드상품 아이디
+     * @return: 해당 카드 상세 정보
+     */
     @Override
     public CardProductDto.DetailsResponse showCardProductDetail(CardProductDto.DetailRequest request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -50,6 +62,11 @@ public class CardProductServiceImpl implements CardProductService {
         return response;
     }
 
+    /**
+     * 인기카드 조회 함수
+     *
+     * @return: 찜한 수가 많은 상위 6개 정보
+     */
     @Override
     public List<CardProductDto.Response> showTop4CardProduct() {
         List<CardProductDto.Response> responses = cardProductRepository.findTop4LikeCard();
@@ -57,6 +74,11 @@ public class CardProductServiceImpl implements CardProductService {
         return responses;
     }
 
+    /**
+     * 찜한 카드 리스트 조회 함수
+     *
+     * @return: 찜한 카드 리스트 정보
+     */
     @Override
     public List<CardProductDto.Response> showMembersLikeCard() {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -64,6 +86,12 @@ public class CardProductServiceImpl implements CardProductService {
         return cardProductRepository.findMemberLikeCard(memberId);
     }
 
+    /**
+     * 찜 추가 함수
+     *
+     * @param request: 카드 상품 아이디
+     * @return: 성공 여부
+     */
     @Override
     @Transactional
     public boolean clickLikeCardProduct(CardProductDto.LikeRequest request) {
@@ -71,11 +99,17 @@ public class CardProductServiceImpl implements CardProductService {
 
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", memberId);
-        map.put("cardId", request.getCardId());
+        map.put("cardProductId", request.getCardId());
 
         return cardProductRepository.insertMemberLikeCard(map);
     }
 
+    /**
+     * 찜 해제 함수
+     *
+     * @param request: 카드 상품 아이디
+     * @return: 성공 여부
+     */
     @Override
     @Transactional
     public boolean unclickLikeCardProduct(CardProductDto.LikeRequest request) {

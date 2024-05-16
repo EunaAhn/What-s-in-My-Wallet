@@ -7,6 +7,7 @@
     <th:block layout:fragment="head">
         <link th:href="@{/css/analyze.css}" rel="stylesheet" />
         <link th:href="@{/css/common.css}" rel="stylesheet" />
+        <script type="module" th:src="@{/js/utils.js}" defer></script>
         <script type="module" th:src="@{/api/analyze.js}" defer></script>
         <script type="module" th:src="@{/js/analyze.js}" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -17,19 +18,23 @@
 
     <div class="container">
         <div class="section section_up">
-            <div class="title">나의 소비MBTI</div>
-            <img class="mbti_image" th:src="@{/img/analyze/mbti1.png}" alt="mbti1">
+            <div class="title">나의 소비MBTI
+                <select id="monthSelect">
+                </select>
+                <button id="updateButton">업데이트</button>
+            </div>
+            <img id="mbtiImage" class="mbti_image" th:src="@{/img/analyze/써니플렉서.png}" alt="mbti1">
 
             <div class="content_box">
-                <div class="content time_content">
-                    <p class="expense_type">밤시간대 지출자</p>
-                    <p class="type_description">6:00 ~ 12:00</p>
-                    <p class="type_description">지출 횟수가 30회 이상이시군요!</p>
-                </div>
                 <div class="content price_content">
-                    <p class="expense_type">저각형 소비형</p>
-                    <p class="type_description">한달 소비 지출이 35만원이시군요!</p>
-                    <p class="type_description">목표 지출금액보다 15만원 절약하셨어요</p>
+                    <p class="expense_type" id="expenditureType2"></p>
+                    <p class="type_description" id="timePeriod"></p>
+                    <p class="type_description" id="totalCount"></p>
+                </div>
+                <div class="content time_content">
+                    <p class="expense_type" id="expenditureType1"></p>
+                    <p class="type_description" id="totalExpenditure"></p>
+                    <p class="type_description" id="savingAmount"></p>
                 </div>
             </div>
 

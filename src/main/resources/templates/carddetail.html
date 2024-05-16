@@ -7,162 +7,53 @@
     <th:block layout:fragment="head">
         <link th:href="@{/css/carddetail.css}" rel="stylesheet" />
         <link th:href="@{/css/common.css}" rel="stylesheet" />
-        <script type="text/javascript" th:src="@{/js/carddetail.js}" defer></script>
+        <script type="module" th:src="@{/js/api/card.js}" defer></script>
+        <script type="module" th:src="@{/js/carddetail.js}" defer></script>
     </th:block>
     <body>
     <th:block layout:fragment="header" th:include="@{/fragments/header}"></th:block>
     <th:block layout:fragment="sidemenubar" th:include="@{/fragments/sidemenubar}"></th:block>
-    <div class="container">
-
+    <div class="container scrollBar">
         <div class="card-detail-container">
-            <img class="image-9" src="/img/carddetail/image%209.png" />
-
+            <div class="imagewrapper">
+                <img class="image-9"/>
+            </div>
             <div class="card-text-info">
-                <div class="card-detail-title"> 디지로카 London </div>
-                <div class="card-detail-info">
-                    <div class="card-detail-info-text">
-                        <div class="card-detail-text">공지</div>
-                        <div class="card-detail-text">신규 연회비 100% 캐시백 이벤트</div>
-                    </div>
-
-                    <div class="card-detail-info-text">
-                        <div class="card-detail-text">연회비</div>
-                        <div class="card-detail-text">국내 2만원, 해외 2만원, 가족 1만3천원</div>
-                    </div>
-
-                    <div class="card-detail-info-text">
-                        <div class="card-detail-text">기준실적</div>
-                        <div class="card-detail-text">조건 없음</div>
-                    </div>
-
-                    <div class="card-detail-info-text">
-                        <div class="card-detail-text">혜택요약</div>
-                        <div class="card-detail-text">국내 모든 가맹점 최대 1.7%캐시백<br/>
-                            최대 6개월 결제금액 나누기 혜택</div>
-                    </div>
+                <div class="likeCount"></div>
+                <div class="likeButton">
+                    <svg style="cursor:pointer;" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.8607 24.298L13.8592 24.2967C10.6208 21.3601 8.01343 18.9903 6.20395 16.7765C4.40546 14.5762 3.5 12.6525 3.5 10.625C3.5 7.31598 6.07609 4.75 9.375 4.75C11.2477 4.75 13.0616 5.62696 14.2412 7.00128L15 7.88543L15.7588 7.00128C16.9384 5.62696 18.7523 4.75 20.625 4.75C23.9239 4.75 26.5 7.31598 26.5 10.625C26.5 12.6525 25.5945 14.5762 23.796 16.7765C21.9866 18.9903 19.3792 21.3601 16.1408 24.2967L16.1393 24.298L15 25.3352L13.8607 24.298Z" fill="#FFFFFF" stroke="#9288DD" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div class="card-detail-title"></div>
+                <div class="card-detail-info-text">
+                    <div class="card-detail-text">연회비</div>
+                    <div class="card-detail-descript card-membershipFee"></div>
                 </div>
 
-                <button id="card-website-move">카드사 바로가기</button>
-
+                <div class="card-detail-info-text">
+                    <div class="card-detail-text">기준실적</div>
+                    <div class="card-detail-descript card-baserecord"></div>
+                </div>
+                <div class="card-detail-info-text">
+                    <div class="card-detail-text">혜택요약</div>
+                    <div class="card-detail-descript card-benefitSummary"></div>
+                </div>
             </div>
         </div>
 
-
         <div class="card-info-list">
-                <div class="card-list">
-                    <img class="image-19" src="/img/carddetail/healthicons_money-bag-outline.svg" />
-
-                    <div class="card-text-info">
-                        <div class="card-title"> 연회비지원 </div>
-                        <div class="benefit-info">
-                            <div class="card-info"> 신규회원 연회비 100% 캐시백이벤트</br>
-                                롯데카드 온라인 신청 특별 혜택 </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-list">
-                    <img class="image-19" src="/img/carddetail/healthicons_money-bag-outline.svg" />
-
-                    <div class="card-text-info">
-                        <div class="card-title"> 연회비지원 </div>
-                        <div class="benefit-info">
-                            <div class="card-info"> 신규회원 연회비 100% 캐시백이벤트</br>
-                                롯데카드 온라인 신청 특별 혜택 </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-list">
-                    <img class="image-19" src="/img/carddetail/healthicons_money-bag-outline.svg" />
-
-                    <div class="card-text-info">
-                        <div class="card-title"> 연회비지원 </div>
-                        <div class="benefit-info">
-                            <div class="card-info"> 신규회원 연회비 100% 캐시백이벤트</br>
-                                롯데카드 온라인 신청 특별 혜택 </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="card-list">
-                    <img class="image-19" src="/img/carddetail/healthicons_money-bag-outline.svg" />
-
-                    <div class="card-text-info">
-                        <div class="card-title"> 연회비지원 </div>
-                        <div class="benefit-info">
-                            <div class="card-info"> 신규회원 연회비 100% 캐시백이벤트</br>
-                                롯데카드 온라인 신청 특별 혜택 </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-list">
-                    <img class="image-19" src="/img/carddetail/healthicons_money-bag-outline.svg" />
-
-                    <div class="card-text-info">
-                        <div class="card-title"> 연회비지원 </div>
-                        <div class="benefit-info">
-                            <div class="card-info"> 신규회원 연회비 100% 캐시백이벤트</br>
-                                롯데카드 온라인 신청 특별 혜택 </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-list">
-                    <img class="image-19" src="/img/carddetail/healthicons_money-bag-outline.svg" />
-
-                    <div class="card-text-info">
-                        <div class="card-title"> 연회비지원 </div>
-                        <div class="benefit-info">
-                            <div class="card-info"> 신규회원 연회비 100% 캐시백이벤트</br>
-                                롯데카드 온라인 신청 특별 혜택 </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                <div class="card-list">
-                    <img class="image-19" src="/img/carddetail/healthicons_money-bag-outline.svg" />
-
-                    <div class="card-text-info">
-                        <div class="card-title"> 연회비지원 </div>
-                        <div class="benefit-info">
-                            <div class="card-info"> 신규회원 연회비 100% 캐시백이벤트</br>
-                                롯데카드 온라인 신청 특별 혜택 </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-list">
-                    <img class="image-19" src="/img/carddetail/healthicons_money-bag-outline.svg" />
-
-                    <div class="card-text-info">
-                        <div class="card-title"> 연회비지원 </div>
-                        <div class="benefit-info">
-                            <div class="card-info"> 신규회원 연회비 100% 캐시백이벤트</br>
-                                롯데카드 온라인 신청 특별 혜택 </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-list">
-                    <img class="image-19" src="/img/carddetail/healthicons_money-bag-outline.svg" />
-
-                    <div class="card-text-info">
-                        <div class="card-title"> 연회비지원 </div>
-                        <div class="benefit-info">
-                            <div class="card-info"> 신규회원 연회비 100% 캐시백이벤트</br>
-                                롯데카드 온라인 신청 특별 혜택 </div>
-                        </div>
-                    </div>
-                </div>
-
+<!--            <div class="card-list">-->
+<!--                <img class="image-19" src="/img/carddetail/healthicons_money-bag-outline.svg" />-->
+<!--                <div class="card-text-info_box">-->
+<!--                    <div class="card-title"> 연회비지원 </div>-->
+<!--                    <div class="benefit-info">-->
+<!--                        <div class="card-info"> 신규회원 연회비 100% 캐시백이벤트</br>-->
+<!--                            롯데카드 온라인 신청 특별 혜택 </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
-
     </div>
     </body>
 </html>

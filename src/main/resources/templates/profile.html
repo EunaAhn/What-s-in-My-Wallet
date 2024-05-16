@@ -5,9 +5,12 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default_layout}">
     <th:block layout:fragment="head">
+
         <link th:href="@{/css/profile.css}" rel="stylesheet" />
         <link th:href="@{/css/common.css}" rel="stylesheet" />
-        <script type="text/javascript" th:src="@{/js/profile.js}" defer></script>
+        <script type="module" th:src="@{/js/utils.js}" defer></script>
+        <script type="module" th:src="@{/js/api/profile.js}" defer></script>
+        <script type="module" th:src="@{/js/profile.js}" defer></script>
         <script src="https://kit.fontawesome.com/e2b1540441.js" crossorigin="anonymous" defer></script>
     </th:block>
     <body>
@@ -18,7 +21,7 @@
                 <div class="left_section">
                     <img class="user_image" th:src="@{/img/common/user_image.png}" alt="user_image">
                     <div class="info">
-                        <p class="title">이눅스님</p>
+                        <p class="title"></p>
                         <p class="content">내 정보 수정하기</p>
                     </div>
                 </div>
@@ -52,8 +55,8 @@
             <section>
                 <div class="form-input-date-picker-default1">
                     <div class="idbox">
-                        <div class="start-date"> 아이디 </div>
-                        <input class="box" id="userid" type="text" placeholder="아이디 입력(6~20자)"/>
+                        <div class="start-date"> 이메일 </div>
+                        <input class="box" id="userid" type="text" placeholder="이메일 입력"/>
                     </div>
 
                     <div class="namebox">
@@ -134,27 +137,6 @@
             <p class="modal_description">카드 목록, 카드 정보</p>
             <div class="modal_content card_content scrollBar">
                 <div class="card_item">
-                    <div class="card_info">
-                        <p class="card_name">하나카드 H 체크카드</p>
-                        <p class="card_number">11111*******11</p>
-                    </div>
-                    <button class="card_delete">삭제</button>
-                </div>
-                <div class="card_item">
-                    <div class="card_info">
-                        <p class="card_name">국민카드 H 체크카드</p>
-                        <p class="card_number">11111*******11</p>
-                    </div>
-                    <button class="card_delete">삭제</button>
-                </div>
-                <div class="card_item">
-                    <div class="card_info">
-                        <p class="card_name">현대카드 H 체크카드</p>
-                        <p class="card_number">11111*******11</p>
-                    </div>
-                    <button class="card_delete">삭제</button>
-                </div>
-                <div class="card_item">
                     <p class="card_link">카드 연결하기</p>
                     <a href="cardregistration">
                         <button class="card_add">추가</button>
@@ -167,63 +149,22 @@
             </button>
         </dialog>
 
-        <!--카드 찜 목록 관리-->w
+        <!--카드 찜 목록 관리-->
         <dialog class="like_modal">
             <div class="modal_header like_header">
                 <p>찜한 카드</p>
                 <button class="close_btn">
-                    <img class="close_image" th:src="@{/img/common/closebtn.png}" alt="close_button" />
+                    <img class="close_image" src="/img/common/closebtn.png" alt="close_button" />
                 </button>
             </div>
-            <p class="modal_description like_description" >내가 찜한 카드 보기</p>
-            <div class="modal_content like_content scrollBar">
-                <div class="like_item">
-                    <img class="like_card_img" th:src="@{/img/cardlist/card1.png}" alt="card1"/>
-                    <div class="like_card_content">
-                        <p class="like_card_name">현대카드 M</p>
-                        <p class="like_card_benefit">국내 모든 가맹점 최대 1.7%캐시백</p>
-                        <p class="like_card_benefit">국내 2만원, 해외 2만원</p>
-                        <p class="like_card_benefit">연회비지원, 납부혜택</p>
-                    </div>
-                    <i class="fa-regular fa-heart"></i>
-                </div>
-                <div class="like_item">
-                    <img class="like_card_img" th:src="@{/img/cardlist/card1.png}" alt="card1"/>
-                    <div class="like_card_content">
-                        <p class="like_card_name">현대카드 M</p>
-                        <p class="like_card_benefit">국내 모든 가맹점 최대 1.7%캐시백</p>
-                        <p class="like_card_benefit">국내 2만원, 해외 2만원</p>
-                        <p class="like_card_benefit">연회비지원, 납부혜택</p>
-                    </div>
-                    <i class="fa-regular fa-heart"></i>
-                </div>
-
-                <div class="like_item">
-                    <img class="like_card_img" th:src="@{/img/cardlist/card1.png}" alt="card1"/>
-                    <div class="like_card_content">
-                        <p class="like_card_name">현대카드 M</p>
-                        <p class="like_card_benefit">국내 모든 가맹점 최대 1.7%캐시백</p>
-                        <p class="like_card_benefit">국내 2만원, 해외 2만원</p>
-                        <p class="like_card_benefit">연회비지원, 납부혜택</p>
-                    </div>
-                    <i class="fa-regular fa-heart"></i>
-                </div>
-
-                <div class="like_item">
-                    <img class="like_card_img" th:src="@{/img/cardlist/card1.png}" alt="card1"/>
-                    <div class="like_card_content">
-                        <p class="like_card_name">현대카드 M</p>
-                        <p class="like_card_benefit">국내 모든 가맹점 최대 1.7%캐시백</p>
-                        <p class="like_card_benefit">국내 2만원, 해외 2만원</p>
-                        <p class="like_card_benefit">연회비지원, 납부혜택</p>
-                    </div>
-                    <i class="fa-regular fa-heart"></i>
-                </div>
+            <p class="modal_description like_description">내가 찜한 카드 보기</p>
+            <div class="modal_content like_content scrollBar" id="likeCardList">
+                <!-- Liked cards will be dynamically inserted here -->
             </div>
             <button class="save_btn save_like">
-                <img class="save_image" th:src="@{/img/profile/save.png}" alt="save_image" >
+                <img class="save_image" src="/img/profile/save.png" alt="save_image">
                 저장
             </button>
         </dialog>
     </body>
-</html>`
+</html>

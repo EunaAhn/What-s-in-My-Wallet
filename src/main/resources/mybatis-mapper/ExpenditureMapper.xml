@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!--        private String expenditureDate;-->
-<!--        private Long expenditureId;-->
-<!--        private List<ExenditureDto.CategoryName> expenditureCategoryList;-->
-<!--    private Long expenditureAmount;-->
 
 
 <mapper namespace="kr.or.kosa.nux2.domain.expenditure.mapper.ExpenditureMapper">
@@ -315,7 +311,9 @@
     <select id="findTotalExpenditureByMonth" parameterType="map" resultType="long">
         select sum(expenditure_amount) as totalAmount from expenditure_history where member_id = #{memberId} and to_char(expenditure_datetime,'YYYY-MM') = #{yearAndMonth}
     </select>
-    <delete id="deleteExpenditure" parameterType="string">
+ 
+    <delete id="deleteExpenditure" parameterType="java.lang.String">
+
         delete from expenditure_history where reg_card_id = #{cardNumber}
     </delete>
 

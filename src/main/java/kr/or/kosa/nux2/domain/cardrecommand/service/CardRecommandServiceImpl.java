@@ -23,6 +23,15 @@ public class CardRecommandServiceImpl implements CardRecommadService {
     private final CardProductRepository cardProductRepository;
     private final RestTemplate restTemplate;
     private final ExpenditureRepository expenditureRepository;
+
+
+    /**
+     * 카드 추천 함수
+     *
+     * @param request: 해당연월일
+     * @return 추천 카드 정보
+     */
+
     @Override
     public CardRecommandDto.CardRecommandResponse recommandCards(CardRecommandDto.YearAndMonthRequest request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -30,6 +39,7 @@ public class CardRecommandServiceImpl implements CardRecommadService {
         URI uri = UriComponentsBuilder
                 .fromUriString("http://13.209.42.180:5000") // flask server uri
                 .path("/rewardrate")
+
                 .queryParam("memberId", memberId)
                 .queryParam("date", request.getYearAndMonth())
                 .encode()

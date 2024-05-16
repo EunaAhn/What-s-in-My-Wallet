@@ -170,7 +170,7 @@ a{
     cursor: pointer;
 }
 
-.hd_card_search:focus{
+#hd_card_search:focus{
     border: 2px solid #9288DD;
 }
 
@@ -187,11 +187,13 @@ a{
 
 .hd_user_name{
     font-weight: 900;
-    font-size: 18px;
+    font-size: 20px;
+    margin-bottom: 5px;
 }
 
 .hd_user_email{
     font-size: 15px;
+    font-family: 'paybooc-Bold';
 }
 
 .hd_user_image{
@@ -202,3 +204,110 @@ a{
     cursor: pointer;
 }
 
+.alert_container{
+    position: absolute;
+    top: 45%;
+    left: 55%;
+    width: 450px;
+    height: 250px;
+    border: none;
+    padding: 10px 30px 20px 30px;
+    background-color: white;
+    border-radius: 15px;
+    transform: translate(-225px,-115px);
+    box-shadow: 0px 1px 12px 0 rgba(0, 0, 0, 0.12);
+}
+
+.alert_wrapper{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.alert_content{
+    font-size: 21px;
+    font-weight: 900;
+    font-family: 'paybooc-Bold';
+    margin-bottom: 20px;
+}
+
+.alert_check{
+    position: absolute;
+    bottom: 0;
+    color: white;
+    font-size: 14px;
+    font-family: 'paybooc-Bold';
+    border-radius: 10px;
+    background-color: #3b3a45;
+    border: 1px solid #3b3a45;
+    padding: 11px;
+    width: 45%;
+    cursor: pointer;
+}
+
+.confirm_container{
+    position: absolute;
+    top: 45%;
+    left: 55%;
+    width: 450px;
+    height: 250px;
+    border: none;
+    padding: 10px 30px 20px 30px;
+    background-color: white;
+    border-radius: 15px;
+    transform: translate(-225px,-115px);
+    box-shadow: 0px 1px 12px 0 rgba(0, 0, 0, 0.12);
+}
+
+.confirm_wrapper{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirm_content{
+    font-size: 21px;
+    font-weight: 900;
+    font-family: 'paybooc-Bold';
+    margin-bottom: 20px;
+}
+
+.confirm_buttons{
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+}
+
+.confirm_true{
+    color: white;
+    font-size: 14px;
+    font-family: 'paybooc-Bold';
+    border-radius: 10px;
+    background-color: #3b3a45;
+    border: 2px solid #3b3a45;
+    padding: 11px;
+    width: 48.5%;
+    cursor: pointer;
+}
+
+.confirm_false{
+    color: #3b3a45;
+    font-size: 14px;
+    font-family: 'paybooc-Bold';
+    border-radius: 10px;
+    background-color: white;
+    border: 2px solid #3b3a45;
+    padding: 11px;
+    width: 48.5%;
+    cursor: pointer;
+}

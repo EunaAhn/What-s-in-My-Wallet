@@ -1,5 +1,6 @@
 const myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Authorization", `Bearer ${localStorage.getItem("access_token")}`);
 
 // 카드 상품 전체 목록 조회(검색옵션)
 export const getCardProductList = async (startNum, endNum, keyWord) => {
@@ -47,29 +48,49 @@ export const getCardProductTop = async () => {
 }
 
 // 내 카드 목록 조회
-export const getMyCardProduct = async () => {
+export const getMyCard = async () => {
     const raw = JSON.stringify({
-        "memberName": "김우재",
-        "memberContactNumber": "01089387607"
+        "memberName": localStorage.getItem("memberName"),
+        "memberEmail": localStorage.getItem("memberId")
     });
-
     const requestOptions = {
         method: "POST",
         headers: myHeaders,
-        body: raw,
+        body: raw
     };
     try {
-        const response = await fetch(`/api/mydata/mycard`, requestOptions);
+        const response = await fetch(`/mycard`, requestOptions);
         const result = await response.json();
         return result.result;
 
     } catch (error) {
-        console.log("getMyCardProduct error : ",error)
+        console.log("getMyCard error : ",error)
         return null
     }
 }
 
-// 카드 등록 시 내 카드 목록 불러오기
+// 등록된 내 카드 목록 조회
+export const postRegistrationcardRegister = async (selectedCardIdList) => {
+    const raw = JSON.stringify(
+        selectedCardIdList
+    );
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw
+    };
+    try {
+        console.log(raw)
+        const response = await fetch(`/api/registrationcard/register`, requestOptions);
+        return response.ok;
+
+    } catch (error) {
+        console.log("postRegistrationcardRegister error : ",error)
+        return null
+    }
+}
+
+// 등록된 내 카드 불러오기
 export const getRegistrationCardList = async () => {
     const requestOptions = {
         method: "GET",
@@ -77,6 +98,7 @@ export const getRegistrationCardList = async () => {
     };
     try {
         const response = await fetch(`/api/registrationcard/list`, requestOptions);
+        console.log(response)
         const result = await response.json();
         return result.result;
 
@@ -86,24 +108,68 @@ export const getRegistrationCardList = async () => {
     }
 }
 
-// 카드 등록 시 내 가드 목록 불러오기
-export const postRegistrationCardListRegister = async () => {
+// 카드 상세 정보 조회
+export const postCardDetail = async (cardId) => {
     const raw = JSON.stringify({
-        "cardNumber" : "5654338751249986"
+        "cardProductId": cardId
     });
 
     const requestOptions = {
         method: "POST",
         headers: myHeaders,
-        body: raw,
+        body: raw
     };
     try {
-        const response = await fetch(`/api/registrationcard/register`, requestOptions);
+        const response = await fetch(`/api/cardproduct/detail`, requestOptions);
         const result = await response.json();
         return result.result;
 
     } catch (error) {
-        console.log("postRegistrationCardListRegister error : ",error)
+        console.log("postCardDetail error : ",error)
+        return null
+    }
+}
+
+// 카드 찜하기
+export const postLikeCard = async (cardId) => {
+    const raw = JSON.stringify({
+        "cardId": cardId
+    });
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw
+    };
+    try {
+        const response = await fetch(`/api/cardproduct/memberlike`, requestOptions);
+        const result = await response.json();
+        return result.result;
+
+    } catch (error) {
+        console.log("postLikeCard error : ",error)
+        return null
+    }
+}
+
+// 카드 찜하기 취소
+export const deleteLikeCard = async (cardId) => {
+    const raw = JSON.stringify({
+        "cardId": cardId
+    });
+    const requestOptions = {
+        method: "DELETE",
+        headers: myHeaders,
+        body: raw
+    };
+    try {
+        const response = await fetch(`/api/cardproduct/memberlike`, requestOptions);
+        console.log(response)
+        const result = await response.json();
+        return result.result;
+
+    } catch (error) {
+        console.log("deleteLikeCard error : ",error)
         return null
     }
 }

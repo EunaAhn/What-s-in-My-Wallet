@@ -22,6 +22,12 @@ public class ExpenditureServiceImpl implements ExpenditureService {
     private final MyDataTransHistorySevice myDataTransHistorySevice;
     private final RegistrationCardServiceImpl registrationCardService;
 
+    /**
+     * 지출내역 리스트 출력 함수
+     *
+     * @param request: 해당연월일, 카테고리(옵션)
+     * @return: 지출내역 리스트
+     */
     @Override
     public Map<String, Object> showMemberMonthlyExpenditures(ExenditureDto.ByYearAndMonthRequest request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -43,6 +49,12 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         return responses;
     }
 
+    /**
+     * 지출 내역 상세 조회 함수
+     *
+     * @param request: 해당일
+     * @return: 지출 내역
+     */
     @Override
     public ExenditureDto.DetailsReponse showMemberDailyExpenditureDetails(ExenditureDto.ExpenditureDetailRequest request) {
         Map<String, Object> map = new HashMap<>();
@@ -56,6 +68,12 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         return response;
     }
 
+    /**
+     * 월별 지출 횟수 출력 함수
+     *
+     * @param request: 해당년월일
+     * @return: 해당월 지출 횟수
+     */
     @Override
     public List<ExenditureDto.TotalCount> showTotalExpenditureByMonth(ExenditureDto.ByYearAndMonthRequest request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -69,7 +87,12 @@ public class ExpenditureServiceImpl implements ExpenditureService {
     }
 
 
-
+    /**
+     * 카테고리별 지출 비율
+     *
+     * @param request: 시작시점(1,3,6개월)
+     * @return: 카테고리별 지출 비율
+     */
     @Override
     public List<ExenditureDto.RatioByCategoryResponse> showExpenditureRatioForCategoryByMonth(ExenditureDto.ByYearAndMonthRequest request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -82,6 +105,12 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         return response;
     }
 
+    /**
+     * 연도별 월별 지출 금액
+     *
+     * @param request: 해당연도
+     * @return: 해당연도 월별 지출 금액
+     */
     @Override
     public List<Map<String, Object>> showExpenditureCountForCategoryByMonth(ExenditureDto.ByYearAndMonthRequest request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -95,6 +124,12 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         return response;
     }
 
+    /**
+     * 월별 시간대별 총지출액 통계 조회 함수
+     *
+     * @param request: 해당연월일
+     * @return: 월별 시간대별 총지출액
+     */
     @Override
     public Map<String, Object> showTotalExpenditureForMonthAndTimeByYearAndMonth(ExenditureDto.ByYearAndMonthRequest request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -108,6 +143,12 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         return response;
     }
 
+    /**
+     * 해당연도 월별 지출 금액 조회 함수
+     *
+     * @param request: 해당연도
+     * @return: 월별 지출 금액
+     */
     @Override
     public Map<String, Object> findAverageExpenditureForMonthByYear(ExenditureDto.ByYearRequest request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -120,6 +161,11 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         return response;
     }
 
+    /**
+     * 지출 등록 함수
+     *
+     * @return: 등록 성공여부
+     */
     @Override
     @Transactional
     public boolean insertExpenditure() {
@@ -149,7 +195,12 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         return result;
     }
 
-    // 소비성향에서 낮,밤시간대 지출 횟수 통계
+    /**
+     * 해당 시간대별 소비횟수 조회 함수
+     *
+     * @param request: 해당연월, 끝시간, 시작시간
+     * @return: 해당시간대(낮, 밤시간대) 총 지출 횟수
+     */
     @Override
     public ExenditureDto.TotalCount showExpenditureTotalCount(ExenditureDto.TotalCountByTimePeriodRequest request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -165,6 +216,12 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         return response;
     }
 
+    /**
+     * 목표지출금액 대비 지출 조회 함수
+     *
+     * @param request: 해당연월
+     * @return 지출(절약금액) 조회
+     */
     @Override
     public ExenditureDto.TendencyAnalysis findExpendiutreTendencyAnalysis(ExenditureDto.ByYearAndMonthRequest request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -177,6 +234,12 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         return response;
     }
 
+    /**
+     * 메모 수정 함수
+     *
+     * @param request: 메모아이디, 메모 내용
+     * @return 성공여부
+     */
     @Override
     public boolean updateDailyExpenditureMemo(ExenditureDto.UpdateMemoRequest request) {
         boolean result = false;
@@ -196,11 +259,23 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         return result;
     }
 
+    /**
+     * 메모가 존재하는지 확인하는 함수
+     *
+     * @param map: 회원아이디, 메모아이디, 메모내용
+     * @return: 메모 있으면 true, 없으면 false
+     */
     @Override
     public boolean checkExistMemo(Map<String, Object> map) {
         return expenditureRepository.isExistMemo(map);
     }
 
+    /**
+     * 지출리스트 삭제 함수
+     *
+     * @param cardNumber: 카드번호
+     * @return: 성공여부
+     */
     @Override
     public boolean deleteExpenditureList(String cardNumber) {
         return expenditureRepository.deleteExpenditure(cardNumber);

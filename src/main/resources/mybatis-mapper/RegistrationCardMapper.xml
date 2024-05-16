@@ -15,7 +15,7 @@
 
     <insert id = "insertRegistrationCard" parameterType="map">
         insert into registered_card(card_number, member_id, card_name)
-        values(#{cardNumber}, #{memberId}, #{cardName})
+        values (#{cardNumber}, #{memberId}, #{cardName})
     </insert>
 
     <delete id="deleteRegistrationCard" parameterType="java.lang.String">

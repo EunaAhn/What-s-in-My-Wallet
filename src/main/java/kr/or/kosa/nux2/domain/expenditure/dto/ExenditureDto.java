@@ -130,7 +130,7 @@ public class ExenditureDto {
     @Getter
     @Setter
     public static class UpdateMemoRequest {
-        @Pattern(regexp = "\\d{4}\\d{2}", message = "날짜는 YYYYMM 형식이어야 합니다.")
+        //@Pattern(regexp = "\\d{4}\\d{2}", message = "날짜는 YYYYMM 형식이어야 합니다.")
         private String memoId;
         private String memo;
     }

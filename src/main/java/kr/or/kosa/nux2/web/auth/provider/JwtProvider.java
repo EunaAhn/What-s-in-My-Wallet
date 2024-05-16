@@ -36,7 +36,7 @@ public class JwtProvider implements AuthenticationProvider {
         if (userDetails != null && memberId.equals(userDetails.getUsername())) {
             if (bCryptPasswordEncoder.matches(password, userDetails.getPassword())) {
                 List<GrantedAuthority> authorities = new ArrayList<>();
-                return new JwtAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), authorities);
+                return new JwtAuthenticationToken(userDetails, userDetails.getPassword(), authorities);
             }
         }
         return null;

@@ -1,11 +1,13 @@
 package kr.or.kosa.nux2.web.auth.filter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.or.kosa.nux2.web.auth.JwtUtils;
 import kr.or.kosa.nux2.web.auth.authentication.JwtAuthenticationToken;
+import kr.or.kosa.nux2.web.auth.principal.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -36,6 +38,16 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         log.info("method = {}", "successfulAuthentication");
         String token = jwtUtils.createAccessToken(authResult);
         response.addHeader(HttpHeaders.AUTHORIZATION, token);
+
+        CustomUserDetails customUserDetails = (CustomUserDetails) authResult.getPrincipal();
+        customUserDetails.getUserDto().setMemberPassword(null);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String userJson = objectMapper.writeValueAsString(customUserDetails.getUserDto());
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(userJson);
     }
 
     @Override

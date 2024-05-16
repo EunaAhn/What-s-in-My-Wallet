@@ -1,5 +1,9 @@
-import * as history from "./api/history.js"
-import {getExpenditureList, getStoreAddressList} from "./api/history.js";
+import * as history from "./api/history.js";
+import { getExpenditureList, getStoreAddressList, getExpenditureKeywordList, getDailyExpenditureMemo, getNewExpenditureList } from "./api/history.js";
+
+document.addEventListener("DOMContentLoaded", () => {
+    localStorage.setItem('clickedmenu', ".side_history");
+});
 
 // 현재 날짜를 기준으로 nowDate와 yearAndMonth 생성
 const today = new Date();
@@ -7,91 +11,173 @@ const year = today.getFullYear();
 const month = String(today.getMonth() + 1).padStart(2, '0');
 const day = String(today.getDate()).padStart(2, '0');
 
-// const nowDate = `${year}-${month}-${day}`;
 const yearAndMonth = `${year}-${month}`;
 
 // 모달창
 const dialog = document.querySelector('dialog');
 
-const addDailyExpenditureList = async (currentYear, currentMonth, selectedday) => {
-     const year = String(currentYear);
-     const month = String(currentMonth).padStart(2, '0');
-     const day = String(selectedday).padStart(2, '0');
-     const nowDate = `${year}-${month}-${day}`;
-     //console.log(nowDate)
+// 전역 변수로 선택된 키워드를 저장
+let selectedKeyword = null;
+let currentMemoId = null;
 
-    const dailyList = await history.getDailyExpenditureList(nowDate);
-    //console.log(dailyList);
-    const expenditureSummaryDtoList = await history.getExpenditureSummaryDtoList(nowDate);
-    //console.log(expenditureSummaryDtoList);
-    //const addressList = await history.getStoreAddressList(nowDate);
-    //console.log(addressList);
+const addDailyExpenditureList = async (currentYear, currentMonth, selectedDay) => {
+    const year = String(currentYear);
+    const month = String(currentMonth).padStart(2, '0');
+    const day = String(selectedDay).padStart(2, '0');
+    const nowDate = `${year}-${month}-${day}`;
+    currentMemoId = nowDate;
 
-    const expenditureList = await getExpenditureList(yearAndMonth);
-    //console.log(expenditureList);
+    try {
+        const dailyList = await history.getDailyExpenditureList(nowDate) || {};
+        const expenditureSummaryDtoList = await history.getExpenditureSummaryDtoList(nowDate) || [];
 
-    const categoryNameList = expenditureList.categoryList.map(item => item.categoryNameList);
-    //console.log(categoryNameList);
+        if (!dailyList.expenditureTotalAmount && expenditureSummaryDtoList.length === 0) {
+            alert("소비내역이 없습니다.");
+            return;
+        }
 
-    renderCalendarCurrentMonth(categoryNameList);
+        document.querySelector('.main').innerHTML = '';
+        document.querySelector('.memo_box').innerHTML = '';
+        document.querySelector('.map_box').innerHTML = '';
+        document.querySelector('.expense_list').innerHTML = '';
+        dialog.showModal();
 
-    //console.log(expenditureSummaryDtoList)
-    createItems(dailyList,nowDate);
-    createExpenseItems(expenditureSummaryDtoList);
-    //console.log(addressList);
-    //console.log(dailyList);
-}
+        createItems(dailyList, nowDate);
+        createExpenseItems(expenditureSummaryDtoList);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+};
 
-// addDailyExpenditureList 함수를 호출하여 데이터를 가져와서 expense_item을 동적으로 생성합니다.
-addDailyExpenditureList();
+document.addEventListener("DOMContentLoaded", () => {
+    const calendarDates = document.getElementById('calendarDates');
+    const currentMonthElement = document.getElementById('currentMonth');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const categoriesSelect = document.getElementById('categories');
+    const closeButton = document.querySelector('.close_btn');
+    const saveButton = document.querySelector('.modal_save');
+    const updateButton = document.querySelector('.update_btn');
 
-const addCalendarData = async (currentMonth,currentYear) => {
+    let currentMonth = today.getMonth();
+    let currentYear = today.getFullYear();
+
+    categoriesSelect.addEventListener('change', () => {
+        selectedKeyword = categoriesSelect.options[categoriesSelect.selectedIndex].value === '전체' ? null : categoriesSelect.options[categoriesSelect.selectedIndex].text;
+        console.log(selectedKeyword);
+        addCalendarData(currentMonth, currentYear, selectedKeyword);
+    });
+
+    prevBtn.addEventListener('click', () => {
+        currentMonth--;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+        addCalendarData(currentMonth, currentYear, selectedKeyword); // 현재 선택된 키워드를 유지
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentMonth++;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
+        addCalendarData(currentMonth, currentYear, selectedKeyword); // 현재 선택된 키워드를 유지
+    });
+
+    closeButton.addEventListener('click', () => {
+        dialog.close();
+    });
+
+    saveButton.addEventListener('click', async () => {
+        const memoContentElement = document.querySelector('.memo_content');
+        const memo = memoContentElement.value;
+        try {
+            const result = await getDailyExpenditureMemo(currentMemoId, memo);
+            if (result) {
+                alert("메모가 성공적으로 저장되었습니다.");
+            } else {
+                alert("메모 저장에 실패했습니다.");
+            }
+        } catch (error) {
+            console.error('Error saving memo:', error);
+        }
+    });
+
+    updateButton.addEventListener('click', async () => {
+        try {
+            const newExpenditureList = await getNewExpenditureList();
+            console.log(newExpenditureList)
+            if (newExpenditureList && newExpenditureList.result === true) {
+                console.log("내역이 업데이트되었습니다.", newExpenditureList);
+                alert("내역이 업데이트되었습니다.");
+                addCalendarData(currentMonth, currentYear, selectedKeyword); // 캘린더 업데이트
+            } else {
+                console.log("가장 최신 내역입니다.");
+                alert("가장 최신 내역입니다.");
+            }
+        } catch (error) {
+            console.error('Error updating expenditure list:', error);
+            alert("내역 업데이트에 실패했습니다.");
+        }
+    });
+
+    addCalendarData(currentMonth, currentYear);
+});
+
+const addCalendarData = async (currentMonth, currentYear, keyword = null) => {
     const year = currentYear;
     const month = String(currentMonth + 1).padStart(2, '0');
     const yearAndMonth = `${year}-${month}`;
 
-    const expenditureList = await history.getExpenditureList(yearAndMonth);
-    console.log(expenditureList);
+    try {
+        let expenditureList;
+        if (keyword) {
+            console.log(keyword)
+            expenditureList = await getExpenditureKeywordList(yearAndMonth, keyword);
+            console.log(expenditureList);
+        } else {
+            expenditureList = await history.getExpenditureList(yearAndMonth);
+        }
 
-    const categoryNameList = expenditureList.categoryList.map(item => item.categoryNameList);
-    console.log(categoryNameList);
+        if (expenditureList.categoryList.length === 0 && expenditureList.expenditureList.length === 0) {
+            console.log('No expenditure data found for the given keyword.');
+        }
 
-    // 위에서 생성한 categoryNameList 배열을 사용하여 캘린더 렌더링
-    if (categoryNameList) {
-        renderCalendarCurrentMonth(categoryNameList);
-    } else {
-        renderCalendar();
+        const expenditureCategoryNameList = expenditureList.categoryList.map(item => {
+            return item.categoryNameList.map(category => category.categoryName);
+        });
+
+        const expenditureDayList = expenditureList.categoryList.map(item => {
+            const date = new Date(item.expenditureDatetime);
+            return date.getDate().toString();
+        });
+
+        const expenditureAmounts = expenditureList.expenditureList.reduce((acc, item) => {
+            acc[new Date(item.expenditureDate).getDate()] = item.expenditureAmount;
+            return acc;
+        }, {});
+
+        const categoryNameList = expenditureDayList.map((day, index) => [day, expenditureCategoryNameList[index]]);
+
+        renderCalendarCurrentMonth(categoryNameList, expenditureAmounts, currentYear, currentMonth, keyword);
+    } catch (error) {
+        console.error('Error fetching calendar data:', error);
+        renderCalendar(currentYear, currentMonth);
     }
-}
+};
 
-
-document.addEventListener("DOMContentLoaded", () => {
-    localStorage.setItem('clickedmenu', ".side_history");
-})
-
-const calendarDates = document.getElementById('calendarDates');
-const currentMonthElement = document.getElementById('currentMonth');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-
-let currentMonth = today.getMonth();
-let currentYear = today.getFullYear();
-
-
-function renderCalendarCurrentMonth(categoryNameList) {
+function renderCalendarCurrentMonth(categoryNameList, expenditureAmounts, currentYear, currentMonth, keyword = null) {
     const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
-    /* 해당 월이 몇 일까지 있는지 알 수 있다. */
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-    /* 현재 월의 첫 번째 날짜의 요일을 나타내는 값을 저장한다.*/
     const startDayOfWeek = firstDayOfMonth.getDay();
+    const currentMonthElement = document.getElementById('currentMonth');
+    const calendarDates = document.getElementById('calendarDates');
 
     currentMonthElement.textContent = `${currentYear}.${(currentMonth + 1).toString().padStart(2, '0')}`;
-    // 월을 나타내는 요소에 현재 월과 연도를 설정하여 표시한다.
-
     calendarDates.innerHTML = '';
 
-    // 빈 날짜(이전 달)
     const lastDayOfPrevMonth = new Date(currentYear, currentMonth, 0);
     const daysInPrevMonth = lastDayOfPrevMonth.getDate();
     for (let i = startDayOfWeek - 1; i >= 0; i--) {
@@ -101,43 +187,44 @@ function renderCalendarCurrentMonth(categoryNameList) {
         calendarDates.appendChild(dateElement);
     }
 
-    // 현재 달의 날짜
     for (let i = 1; i <= daysInMonth; i++) {
         const dateElement = document.createElement('div');
         const dateContentElement = document.createElement('div');
         const day = document.createElement('p');
         const categoriesElement = document.createElement('p');
+        const amountElement = document.createElement('p');
 
         dateElement.classList.add('date');
         dateContentElement.classList.add('date_content');
         day.classList.add("date_day");
 
         day.textContent = i;
-        categoriesElement.textContent = getCategoryNamesForDate(i, categoryNameList);
+
+        const categoryNames = getCategoryNamesForDate(i, categoryNameList, keyword);
+        categoriesElement.textContent = categoryNames;
+
+        const expenditureAmount = expenditureAmounts[i];
+        amountElement.textContent = (categoryNames || expenditureAmount) ? `${expenditureAmount ? expenditureAmount.toLocaleString() : ''}원` : '';
 
         calendarDates.appendChild(dateElement);
         dateElement.appendChild(day);
         dateElement.appendChild(dateContentElement);
         dateContentElement.appendChild(categoriesElement);
+        dateContentElement.appendChild(amountElement);
 
-        // 모달 열기 이벤트 리스너 추가
         dateElement.addEventListener('click', () => {
-            document.querySelector('.main').innerHTML = '';
-            document.querySelector('.memo_box').innerHTML = '';
-            document.querySelector('.map_box').innerHTML = '';
-            document.querySelector('.expense_list').innerHTML = '';
-            dialog.showModal();
-            addDailyExpenditureList(currentYear, currentMonth+1, i);
-            //map.relayout();
-            //setBounds();
+            if (!categoryNames && !expenditureAmount) {
+                alert("소비내역이 없습니다.");
+            } else {
+                addDailyExpenditureList(currentYear, currentMonth + 1, i);
+            }
         });
     }
 
-    // 현재 이후의 날짜
     const lastDayOfMonth = new Date(currentYear, currentMonth, daysInMonth);
     const endDayOfWeek = lastDayOfMonth.getDay();
-    const totalCells = 35; // 총 셀의 개수 (5주를 표시하기 위해)
-    const remainingDays = totalCells - (startDayOfWeek + daysInMonth); // 남은 셀의 개수
+    const totalCells = 35;
+    const remainingDays = totalCells - (startDayOfWeek + daysInMonth);
 
     for (let i = 1; i <= remainingDays; i++) {
         const dateElement = document.createElement('div');
@@ -145,38 +232,36 @@ function renderCalendarCurrentMonth(categoryNameList) {
         dateElement.textContent = i;
         calendarDates.appendChild(dateElement);
     }
-
 }
 
-function getCategoryNamesForDate(date, categoryNameList) {
+function getCategoryNamesForDate(date, categoryNameList, keyword = null) {
     const categoryNameArray = [];
-    categoryNameList.forEach((categoryList, index) => {
-        if (index + 1 === date) {
-            categoryList.forEach(category => {
-                categoryNameArray.push(category.categoryName);
-            });
+    categoryNameList.forEach(([day, categories]) => {
+        if (day === date.toString()) {
+            if (keyword) {
+                categories.forEach(category => {
+                    if (category === keyword) {
+                        categoryNameArray.push(category);
+                    }
+                });
+            } else {
+                categoryNameArray.push(...categories);
+            }
         }
     });
     return categoryNameArray.join(', ');
 }
 
-
-/* renderCalendar 함수는 월별 캘랜더를 생성하고 표시하는 함수이다. */
-function renderCalendar() {
-
+function renderCalendar(currentYear, currentMonth) {
     const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
-    /* 해당 월이 몇 일까지 있는지 알 수 있다. */
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-    /* 현재 월의 첫 번째 날짜의 요일을 나타내는 값을 저장한다.*/
     const startDayOfWeek = firstDayOfMonth.getDay();
+    const currentMonthElement = document.getElementById('currentMonth');
+    const calendarDates = document.getElementById('calendarDates');
 
     currentMonthElement.textContent = `${currentYear}.${(currentMonth + 1).toString().padStart(2, '0')}`;
-    // 월을 나타내는 요소에 현재 월과 연도를 설정하여 표시한다.
-
     calendarDates.innerHTML = '';
 
-    // 빈 날짜(이전 달)
     const lastDayOfPrevMonth = new Date(currentYear, currentMonth, 0);
     const daysInPrevMonth = lastDayOfPrevMonth.getDate();
     for (let i = startDayOfWeek - 1; i >= 0; i--) {
@@ -186,26 +271,28 @@ function renderCalendar() {
         calendarDates.appendChild(dateElement);
     }
 
-    // 현재 달의 날짜
     for (let i = 1; i <= daysInMonth; i++) {
         const dateElement = document.createElement('div');
-        const dateContentElement = document.createElement('div')
-        const day = document.createElement('p')
+        const dateContentElement = document.createElement('div');
+        const day = document.createElement('p');
         dateElement.classList.add('date');
-        dateContentElement.classList.add('date_content')
-        day.classList.add("date_day")
+        dateContentElement.classList.add('date_content');
+        day.classList.add("date_day");
 
         day.textContent = i;
         calendarDates.appendChild(dateElement);
-        dateElement.appendChild(day)
-        dateElement.appendChild(dateContentElement)
+        dateElement.appendChild(day);
+        dateElement.appendChild(dateContentElement);
+
+        dateElement.addEventListener('click', () => {
+            alert("소비내역이 없습니다.");
+        });
     }
 
-    // 현재 이후의 날짜
     const lastDayOfMonth = new Date(currentYear, currentMonth, daysInMonth);
     const endDayOfWeek = lastDayOfMonth.getDay();
-    const totalCells = 35; // 총 셀의 개수 (5주를 표시하기 위해)
-    const remainingDays = totalCells - (startDayOfWeek + daysInMonth); // 남은 셀의 개수
+    const totalCells = 35;
+    const remainingDays = totalCells - (startDayOfWeek + daysInMonth);
 
     for (let i = 1; i <= remainingDays; i++) {
         const dateElement = document.createElement('div');
@@ -213,158 +300,88 @@ function renderCalendar() {
         dateElement.textContent = i;
         calendarDates.appendChild(dateElement);
     }
-
 }
-
-
-prevBtn.addEventListener('click', () => {
-    currentMonth--;
-    if (currentMonth < 0) {
-        currentMonth = 11;
-        currentYear--;
-    }
-    addCalendarData(currentMonth,currentYear);
-});
-
-nextBtn.addEventListener('click', () => {
-    currentMonth++;
-    if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear++;
-    }
-    addCalendarData(currentMonth,currentYear);
-});
-
-const closeButton = document.querySelector('.close_btn')
-closeButton.addEventListener('click', () => {
-    dialog.close();
-})
-
 
 var map;
 var points = [];
 
-
 async function initMap(nowDate) {
     var REST_API_KEY = "846a14217115ae6027031b39e790b997"; // 여기에 발급받은 Kakao REST API 키를 입력하세요.
 
-    const addressList = await history.getStoreAddressList(nowDate);
-    console.log(addressList);
+    try {
+        const addressList = await history.getStoreAddressList(nowDate);
 
-    // 기존의 points 배열 초기화
-    //points = [];
-
-    // 기본적으로 중심 좌표를 설정하여 지도를 생성합니다.
-    var container = document.getElementById('map'); // 지도를 담을 영역의 DOM 요소를 가져옵니다.
-    var options = {
-        center: new kakao.maps.LatLng(37.583584616776854, 127.00193938906052), // 기본적인 중심 좌표를 설정합니다.
-        level: 5 // 지도의 확대 레벨을 설정합니다. (낮을수록 확대 수준이 높습니다.)
-    };
-    map = new kakao.maps.Map(container, options); // 지도를 생성합니다.
-
-    // 주소 목록에 있는 각 주소에 대해 처리합니다.
-    await Promise.all(addressList.map(async (item) => {
-        // 기존의 points 배열도 초기화
         points = [];
 
-        var query = item;
-        var response = await fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(query)}`, {
-            headers: {
-                "Authorization": `KakaoAK ${REST_API_KEY}`
+        var container = document.getElementById('map');
+        var options = {
+            center: new kakao.maps.LatLng(37.583584616776854, 127.00193938906052),
+            level: 5
+        };
+        map = new kakao.maps.Map(container, options);
+
+        await Promise.all(addressList.map(async (item) => {
+            points = [];
+
+            var query = item;
+            var response = await fetch(`https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(query)}`, {
+                headers: {
+                    "Authorization": `KakaoAK ${REST_API_KEY}`
+                }
+            });
+            var data = await response.json();
+            if (data.documents.length > 0) {
+                var firstPlace = data.documents[0];
+
+                var latitude = parseFloat(firstPlace.y);
+                var longitude = parseFloat(firstPlace.x);
+
+                var point = new kakao.maps.LatLng(latitude, longitude);
+                points.push(point);
+
+                var markerPosition = new kakao.maps.LatLng(latitude, longitude);
+
+                var marker = new kakao.maps.Marker({
+                    position: markerPosition
+                });
+
+                marker.setMap(map);
+
+                kakao.maps.event.addListener(marker, 'click', function () {
+                    console.log(firstPlace);
+                });
+            } else {
+                console.error('검색 결과가 없습니다.');
             }
-        });
-        var data = await response.json();
-        //console.log(data); // API 응답을 콘솔에 출력하여 확인합니다.
-        if (data.documents.length > 0) { // 검색 결과가 있는지 확인합니다.
-            // 검색 결과 중에서 0번째 장소의 위치 정보를 가져옵니다.
-            var firstPlace = data.documents[0];
-            //console.log(firstPlace);
+        }));
 
-            // 위도와 경도를 배열에 추가합니다.
-            var latitude = parseFloat(firstPlace.y);
-            var longitude = parseFloat(firstPlace.x);
-
-            // LatLng 객체를 생성하여 points 배열에 추가합니다.
-            var point = new kakao.maps.LatLng(latitude, longitude);
-            //console.log(point)
-            points.push(point);
-
-            // 마커가 표시될 위치입니다
-            var markerPosition = new kakao.maps.LatLng(latitude, longitude);
-
-            // 기존 지도에 마커를 추가합니다.
-            var marker = new kakao.maps.Marker({
-                position: markerPosition
-            });
-
-            // 기존 지도에 마커를 표시합니다.
-            marker.setMap(map);
-
-            // 마커 클릭 이벤트 리스너 추가
-            kakao.maps.event.addListener(marker, 'click', function () {
-                // 마커 클릭 시 실행할 동작을 여기에 작성합니다.
-                console.log(firstPlace);
-            });
-        } else {
-            console.error('검색 결과가 없습니다.'); // 검색 결과가 없는 경우 에러 메시지를 출력합니다.
-        }
-    }));
-
-    // 모든 주소를 처리한 후에 지도 범위를 재설정합니다.
-    setBounds();
-
-    // 선을 그립니다.
-    drawLine();
-
-    // 포인터 배열 확인을 위해 alert 함수 호출
-    //alertPointsArray();
-}
-
-//포인터 배열 확인 함수
-function alertPointsArray() {
-     // 포인터 배열이 비어있는지 확인합니다.
-     if (points.length > 0) {
-         // 포인터 배열의 내용을 문자열로 변환하여 알림창에 표시합니다.
-         var pointsString = points.map(point => `Latitude: ${point.getLat()}, Longitude: ${point.getLng()}`).join('\n');
-         window.alert("포인터 배열 내용:\n" + pointsString);
-     } else {
-         window.alert("포인터 배열이 비어 있습니다.");
-     }
+        setBounds();
+        drawLine();
+    } catch (error) {
+        console.error('Error initializing map:', error);
+    }
 }
 
 function setBounds() {
-    // points 배열이 비어있는지 확인합니다.
-    //console.log(points)
-
-    // LatLngBounds 객체를 생성하고 points 배열에 저장된 좌표들을 기준으로 범위를 설정합니다.
     var bounds = new kakao.maps.LatLngBounds();
     points.forEach(point => bounds.extend(point));
-
-    // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
-    // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
     map.setBounds(bounds);
 }
 
 function drawLine() {
-    // Polyline을 생성하고, points 배열에 저장된 좌표들을 연결합니다.
     var polyline = new kakao.maps.Polyline({
-        path: points, // 선을 구성하는 좌표 배열입니다
-        strokeWeight: 3, // 선의 두께입니다
-        strokeColor: '#47acd5', // 선의 색깔입니다
-        strokeOpacity: 0.7, // 선의 불투명도입니다
-        strokeStyle: 'solid' // 선의 스타일입니다
+        path: points,
+        strokeWeight: 3,
+        strokeColor: '#47acd5',
+        strokeOpacity: 0.7,
+        strokeStyle: 'solid'
     });
-
-    // 지도에 선을 표시합니다
     polyline.setMap(map);
 }
 
-
-
-// expenditureSummaryDtoList를 반복하면서 동적으로 expense_item을 생성하는 함수
-function createItems(dailyList,nowDate) {
+function createItems(dailyList, nowDate) {
     const main = document.querySelector('.main');
-    const memo  =  document.querySelector('.memo_box');
+    const memo = document.querySelector('.memo_box');
     const map_box = document.querySelector('.map_box');
 
     const boxprice = document.createElement('div');
@@ -377,10 +394,8 @@ function createItems(dailyList,nowDate) {
 
     const contentElement = document.createElement('div');
     contentElement.classList.add('content');
-    contentElement.textContent = `${dailyList.expenditureTotalAmount}원`;
+    contentElement.textContent = `${(dailyList.expenditureTotalAmount || 0).toLocaleString()}원`;
     boxprice.appendChild(contentElement);
-
-    //--------------------------
 
     const mapTitleElement = document.createElement('p');
     mapTitleElement.classList.add('title');
@@ -390,8 +405,6 @@ function createItems(dailyList,nowDate) {
     const mapElement = document.createElement('div');
     mapElement.id = 'map';
     map_box.appendChild(mapElement);
-
-    //--------------------------
 
     const cardinfo = document.createElement('div');
     cardinfo.classList.add('main_box', 'cardinfo');
@@ -403,10 +416,8 @@ function createItems(dailyList,nowDate) {
 
     const expendContentElement = document.createElement('div');
     expendContentElement.classList.add('content');
-    expendContentElement.textContent = `${dailyList.totalExpenditureCount}회`;
+    expendContentElement.textContent = `${(dailyList.totalExpenditureCount || 0).toLocaleString()}회`;
     cardinfo.appendChild(expendContentElement);
-
-    //--------------------------
 
     const memoTitleElement = document.createElement('p');
     memoTitleElement.classList.add('title');
@@ -416,70 +427,57 @@ function createItems(dailyList,nowDate) {
     const memoContentElement = document.createElement('input');
     memoContentElement.classList.add('content', 'memo_content');
     memoContentElement.type = 'text';
-    memoContentElement.value = `${dailyList.memo}`;
+    memoContentElement.value = `${dailyList.memo || ''}`;
     memo.appendChild(memoContentElement);
 
     main.appendChild(boxprice);
     main.appendChild(cardinfo);
 
-    // initMap 함수를 호출하여 지도를 초기화합니다.
     initMap(nowDate);
-
 }
 
-
-// expenditureSummaryDtoList를 반복하면서 동적으로 expense_item을 생성하는 함수
 function createExpenseItems(expenditureSummaryDtoList) {
-    const expenseList = document.querySelector('.expense_list'); // expense_list 요소를 선택합니다.
+    const expenseList = document.querySelector('.expense_list');
 
-
-    expenditureSummaryDtoList.forEach(item => { // expenditureSummaryDtoList를 반복합니다.
-        // expense_item 요소를 생성합니다.
+    expenditureSummaryDtoList.forEach(item => {
         const expenseItem = document.createElement('div');
         expenseItem.classList.add('expense_item');
 
-        // 소비 금액을 나타내는 요소를 생성하고 추가합니다.
         const priceElement = document.createElement('p');
         priceElement.classList.add('expense_price');
-        priceElement.textContent = `-${item.expenditureAmount}원`;
+        priceElement.textContent = `-${item.expenditureAmount.toLocaleString()}원`;
         expenseItem.appendChild(priceElement);
 
-        // 가게 이름을 나타내는 요소를 생성하고 추가합니다.
         const placeElement = document.createElement('p');
         placeElement.classList.add('expense_place');
         placeElement.textContent = item.storeName;
         expenseItem.appendChild(placeElement);
 
-        // 소비 일시와 카드 정보를 나타내는 요소를 생성하고 추가합니다.
         const dateCardElement = document.createElement('p');
         dateCardElement.classList.add('expense_date_card');
         dateCardElement.textContent = item.expenditureDatetime;
         expenseItem.appendChild(dateCardElement);
 
-        // expenseList에 생성된 expense_item을 추가합니다.
         expenseList.appendChild(expenseItem);
     });
 }
 
-
-// 카드 키워드 검색
-const hdCardSearch = document.querySelector("#hd_card_search")
+const hdCardSearch = document.querySelector("#hd_card_search");
 
 hdCardSearch.addEventListener("keydown", (event) => {
     if (event.key === "Enter" && hdCardSearch.value) {
-        localStorage.setItem("searchWord", hdCardSearch.value)
-        window.location.href = "cardlist"
-        hdCardSearch.value = ""
+        localStorage.setItem("searchWord", hdCardSearch.value);
+        window.location.href = "cardlist";
+        hdCardSearch.value = "";
     }
 });
 
-
-const hdSearchImage = document.querySelector(".hd_search_image")
+const hdSearchImage = document.querySelector(".hd_search_image");
 
 hdSearchImage.addEventListener("click", () => {
     if (hdCardSearch.value) {
-        localStorage.setItem("searchWord", hdCardSearch.value)
-        window.location.href = "cardlist"
-        hdCardSearch.value = ""
+        localStorage.setItem("searchWord", hdCardSearch.value);
+        window.location.href = "cardlist";
+        hdCardSearch.value = "";
     }
-})
+});

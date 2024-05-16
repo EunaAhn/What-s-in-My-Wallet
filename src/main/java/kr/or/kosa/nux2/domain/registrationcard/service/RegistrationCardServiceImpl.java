@@ -22,6 +22,11 @@ public class RegistrationCardServiceImpl implements RegistrationCardService {
     private final MyDataCardRepository myDataCardRepository;
     private final ExpenditureRepository expenditureRepository;
 
+    /**
+     * 등록 카드 리스트 조회 함수
+     *
+     * @return 등록 카드 리스트 정보
+     */
     @Override
     public List<RegistrationCardDto.Response> showAllRegisteredCardByMemberId() {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -30,6 +35,12 @@ public class RegistrationCardServiceImpl implements RegistrationCardService {
         return responses;
     }
 
+    /**
+     * 등록 카드 삭제 함수
+     *
+     * @param registeredCardId: 등록카드 아이디
+     * @return 성공여부
+     */
     @Override
     @Transactional
     public boolean deleteRegistrationCard(String registeredCardId) {
@@ -40,6 +51,12 @@ public class RegistrationCardServiceImpl implements RegistrationCardService {
         return result;
     }
 
+    /**
+     * 카드 등록하는 함수
+     *
+     * @param requests: 등록카드 번호
+     * @return: 성공여부
+     */
     @Override
     @Transactional
     public boolean insertRegistrationCard(List<RegistrationCardDto.InsertControllerRequest> requests) {
@@ -47,7 +64,7 @@ public class RegistrationCardServiceImpl implements RegistrationCardService {
         // 컨트롤러에서는 카드번호(16)만 보낸다.
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
         boolean result = false;
-        for(RegistrationCardDto.InsertControllerRequest request : requests) {
+        for (RegistrationCardDto.InsertControllerRequest request : requests) {
 
             System.out.println(request.getCardNumber());
             Map<String, Object> mdcMap = new HashMap<>();
@@ -55,7 +72,7 @@ public class RegistrationCardServiceImpl implements RegistrationCardService {
             MyDataCardDto.Response response = myDataCardRepository.findMyDataCardByCardNumber(mdcMap);
             Map<String, Object> map = new HashMap<>();
 
-            map.put("cardNumber" , response.getCardNumber());
+            map.put("cardNumber", response.getCardNumber());
             map.put("cardName", response.getCardName());
             map.put("memberId", memberId);
             result = registrationCardRepository.insertRegistrationCard(map);

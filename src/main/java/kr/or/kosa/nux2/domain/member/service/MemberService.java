@@ -19,7 +19,7 @@ public interface MemberService {
 
     String generateAuthenticationNumber();
 
-    boolean validateAuthenticationNumber(MemberDto.AuthenticationDto request);
+    boolean validateAuthenticationNumber(MemberDto.AuthenticationRequest request);
 
     MemberDto.ProfileResponse showMemberProfile();
 

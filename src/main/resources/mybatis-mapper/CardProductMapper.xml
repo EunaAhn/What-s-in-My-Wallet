@@ -59,9 +59,17 @@
         where cp.card_product_id = #{cardProductId}
     </select>
 
-    <select id="findBenefitDetails" parameterType="map" resultType="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$BenefitDetails">
+    <resultMap id="benefitDetailMap" type="map">
+        <result property="card_benefit_name" column=""></result>
+        <collection property="benefit_detail_list" javaType="list">
+            <result property="benefit_details" column="benefit_details"></result>
+        </collection>
+    </resultMap>
+    <select id="findBenefitDetails" parameterType="map" resultMap = "benefitDetailMap">
         select benefit_details
         from card_benefit_details  as benefitDetails
+        where card_product_id = #{cardProductId}
+        group by card_benefit_code, benefit_details
     </select>
 
     <resultMap id="cardListResultSumm" type="kr.or.kosa.nux2.domain.cardproduct.dto.CardProductDto$Response">

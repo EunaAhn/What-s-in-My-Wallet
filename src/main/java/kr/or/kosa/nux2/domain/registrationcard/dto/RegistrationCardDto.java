@@ -21,7 +21,7 @@ public class RegistrationCardDto {
     @Getter
     @NoArgsConstructor
     public static class InsertControllerRequest {
-        @Pattern(regexp = "\\d{16}", message = "카드형식은 16자리 숫자형문자여야합니다.")
+        //@Pattern(regexp = "\\d{16}", message = "카드형식은 16자리 숫자형문자여야합니다.")
         String cardNumber;
     }
 }

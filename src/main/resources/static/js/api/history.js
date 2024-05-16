@@ -7,7 +7,7 @@ myHeaders_extra.append("Content-Type", "application/json");
 export const getNewExpenditureList = async () => {
     const requestOptions = {
         method: "POST",
-        headers: myHeaders,
+        headers: myHeaders
     };
     try {
         const response = await fetch(`/api/expenditure/reload`, requestOptions);

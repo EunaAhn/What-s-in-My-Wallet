@@ -49,7 +49,7 @@ like.addEventListener('click', async event => {
         const cardElement = document.createElement('div');
         cardElement.classList.add('like_item');
         cardElement.innerHTML = `
-            <img class="like_card_img" src="/img/cardimg/${card.cardImageFileName}.jpg" alt="${card.cardName}"/>
+            <img class="like_card_img" src="/img/cardimg/카드${card.cardProductId}.jpg" alt="${card.cardName}"/>
             <div class="like_card_content">
                 <p class="like_card_name">${card.cardName}</p>
                 <p class="like_card_benefit">${card.benefitSummary.replace(/\n/g, '<br>')}</p>
@@ -94,7 +94,8 @@ document.addEventListener("DOMContentLoaded", function() {
     deleteButtons.forEach((button) => {
         button.addEventListener("click", function() {
             const cardItem = button.closest(".card_item");
-            const cardNumber = cardItem.querySelector('.card_number').textContent.trim().replace(/ /g, ''); // 카드 번호를 추출하고 공백 제거
+            console.log(cardItem)
+            const cardNumber = cardItem.dataset.cardNumber; // Retrieve original card number from data attribute
             if (cardItem) {
                 cardItem.remove();
                 deletedCardNumbers.push(cardNumber);
@@ -106,6 +107,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const saveCardButton = document.querySelector(".save_card");
     saveCardButton.addEventListener("click", async () => {
         for (const cardNumber of deletedCardNumbers) {
+            console.log(cardNumber)
             await getRegistrationCardDelete(cardNumber);
             console.log(`카드 번호 ${cardNumber} 삭제됨`);
         }
@@ -228,6 +230,7 @@ export const getRegistrationCardDelete = async (cardNumber) => {
 
 document.querySelector('.save_like').addEventListener('click', async () => {
     for (const cardId of unlikedCardIds) {
+        console.log(cardId)
         await getCardProducMembertLikeDelete(cardId);
         console.log(`카드 ID ${cardId} 삭제됨`);
     }
@@ -235,7 +238,7 @@ document.querySelector('.save_like').addEventListener('click', async () => {
     like_dialog.close();
 });
 
-// Function to format card number
+// Function to format card number for display
 function formatCardNumber(cardNumber) {
     return cardNumber.slice(0, 4) + ' **** **** ' + cardNumber.slice(-4);
 }
@@ -251,6 +254,7 @@ async function loadCardList() {
         cardList.forEach(card => {
             const cardItem = document.createElement('div');
             cardItem.classList.add('card_item');
+            cardItem.dataset.cardNumber = card.cardNumber; // Store the unmasked card number in a data attribute
 
             cardItem.innerHTML = `
                 <div class="card_info">
@@ -264,7 +268,7 @@ async function loadCardList() {
             cardListContainer.insertBefore(cardItem, cardListContainer.firstChild);
 
             cardItem.querySelector('.card_delete').addEventListener('click', function() {
-                const cardNumber = cardItem.querySelector('.card_number').textContent.trim().replace(/ /g, ''); // 카드 번호를 추출하고 공백 제거
+                const cardNumber = cardItem.dataset.cardNumber; // Retrieve original card number from data attribute
                 cardItem.remove();
                 deletedCardNumbers.push(cardNumber);
                 console.log(`카드 번호 ${cardNumber} 삭제 예정`);

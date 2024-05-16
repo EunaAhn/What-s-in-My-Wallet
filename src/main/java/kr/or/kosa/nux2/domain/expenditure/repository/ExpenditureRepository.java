@@ -15,6 +15,11 @@ public class ExpenditureRepository {
 
     private final ExpenditureMapper expenditureMapper;
 
+    public Long  findTotalExpenditureByMonth(Map<String, Object> map) {
+        return expenditureMapper.findTotalExpenditureByMonth(map);
+    }
+
+
     public List<ExenditureDto.TotalCount> findTotalExpenditureByStartAndEndDate(Map<String, Object> map) {
         return expenditureMapper.findTotalExpenditureByStartAndEndDate(map);
     }
@@ -34,7 +39,7 @@ public class ExpenditureRepository {
     public boolean insertExpenditures(Map<String, Object> map) {
         int result = expenditureMapper.insertExpenditures(map);
 
-        if(result == 1) return true;
+        if(result != 0) return true;
         return false;
     }
 
@@ -76,6 +81,14 @@ public class ExpenditureRepository {
         if(result == 1) return true;
         return false;
     }
+
+    public boolean insertExpenditureDetails(Map<String, Object> map) {
+        int result = expenditureMapper.insertExpenditureDetails(map);
+
+        if(result != 0) return true;
+        return false;
+    }
+
 
     public boolean isExistMemo(Map<String, Object> map) {
         int result = expenditureMapper.isExistMemo(map);

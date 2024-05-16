@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessExceptionHandler.class)
     public ResponseEntity<ErrorResponse> handleBusinessException(BusinessExceptionHandler e) {
         ErrorResponse response = ErrorResponse.of(ErrorCode.BUSINESS_EXCEPTION_ERROR, e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HTTP_BADREQUEST);
     }
 
     // 비즈니스 로직예외와 공존이 권장?

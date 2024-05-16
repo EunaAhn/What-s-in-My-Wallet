@@ -11,6 +11,11 @@ public class MemberConsCategoryDto {
         String expenditureCategoryId;
     }
 
+    /*
+      ========================================================================================
+                                            RESPONSE DTO
+      ========================================================================================
+     */
     @Getter
     public static class MemberConsCategoryResponse {
         String expenditureCategoryName;

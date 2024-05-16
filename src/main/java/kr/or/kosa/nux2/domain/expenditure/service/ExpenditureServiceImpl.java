@@ -127,8 +127,8 @@ public class ExpenditureServiceImpl implements ExpenditureService {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Map<String, Object> map = new HashMap<>();
-        map.put("memberId", memberId);
-
+        map.put("memberId", "dnwo1111@naver.com");
+        System.out.println(memberId);
         // 사용자의 등록카드리스트를 조회
         List<RegistrationCardDto.Response> registeredCard = registrationCardService.showAllRegisteredCardByMemberId();
 

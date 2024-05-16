@@ -108,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateButton.addEventListener('click', async () => {
         try {
             const newExpenditureList = await getNewExpenditureList();
+            console.log(newExpenditureList)
             if (newExpenditureList && newExpenditureList.result === true) {
                 console.log("내역이 업데이트되었습니다.", newExpenditureList);
                 alert("내역이 업데이트되었습니다.");

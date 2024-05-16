@@ -296,6 +296,8 @@
         insert into daily_expenditure_memo(memo_id, member_id, expenditure_memo) values(#{memoId}, #{memberId}, #{expenditureMemo})
     </insert>
 
-
+    <delete id="deleteExpenditure" parameterType="java.lang.String">
+        delete from expenditure_history where reg_card_id = #{cardNumber}
+    </delete>
 
 </mapper>

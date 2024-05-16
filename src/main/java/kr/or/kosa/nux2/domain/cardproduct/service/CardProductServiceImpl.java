@@ -82,8 +82,8 @@ public class CardProductServiceImpl implements CardProductService {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         Map<String, Object> map = new HashMap<>();
-        map.put("memberId", memberId);
-        map.put("cardId", request.getCardId());
+        map.put("memberId", "dnwo1111@naver.com");
+        map.put("cardProductId", request.getCardId());
 
         return cardProductRepository.deleteMemberLikeCard(map);
     }

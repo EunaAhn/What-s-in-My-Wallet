@@ -23,6 +23,12 @@ public class CardRecommandServiceImpl implements CardRecommadService {
     private final CardProductRepository cardProductRepository;
     private final RestTemplate restTemplate;
 
+    /**
+     * 카드 추천 함수
+     *
+     * @param request: 해당연월일
+     * @return 추천 카드 정보
+     */
     @Override
     public CardRecommandDto.CardRecommandResponse recommandCards(CardRecommandDto.YearAndMonthRequest request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();

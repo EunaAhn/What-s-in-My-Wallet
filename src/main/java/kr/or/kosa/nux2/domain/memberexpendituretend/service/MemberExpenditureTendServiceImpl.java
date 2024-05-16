@@ -15,6 +15,12 @@ import java.util.Map;
 public class MemberExpenditureTendServiceImpl implements MemberExpenditureTendService {
     private final MemberExpenditureTendRepository memberExpenditureTendRepository;
 
+    /**
+     * 소비 성향 조회 함수
+     *
+     * @param request: 해당연월일
+     * @return: 소비 성향 정보
+     */
     @Override
     public List<MemberExpenditureTendDto.Response> findMemberExpenditureTend(MemberExpenditureTendDto.ExpenditureTendRequest request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();

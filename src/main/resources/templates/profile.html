@@ -5,9 +5,12 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default_layout}">
     <th:block layout:fragment="head">
+
         <link th:href="@{/css/profile.css}" rel="stylesheet" />
         <link th:href="@{/css/common.css}" rel="stylesheet" />
-        <script type="text/javascript" th:src="@{/js/profile.js}" defer></script>
+        <script type="module" th:src="@{/js/utils.js}" defer></script>
+        <script type="module" th:src="@{/js/api/profile.js}" defer></script>
+        <script type="module" th:src="@{/js/profile.js}" defer></script>
         <script src="https://kit.fontawesome.com/e2b1540441.js" crossorigin="anonymous" defer></script>
     </th:block>
     <body>
@@ -18,7 +21,7 @@
                 <div class="left_section">
                     <img class="user_image" th:src="@{/img/common/user_image.png}" alt="user_image">
                     <div class="info">
-                        <p class="title">이눅스님</p>
+                        <p class="title"></p>
                         <p class="content">내 정보 수정하기</p>
                     </div>
                 </div>
@@ -52,8 +55,8 @@
             <section>
                 <div class="form-input-date-picker-default1">
                     <div class="idbox">
-                        <div class="start-date"> 아이디 </div>
-                        <input class="box" id="userid" type="text" placeholder="아이디 입력(6~20자)"/>
+                        <div class="start-date"> 이메일 </div>
+                        <input class="box" id="userid" type="text" placeholder="이메일 입력"/>
                     </div>
 
                     <div class="namebox">

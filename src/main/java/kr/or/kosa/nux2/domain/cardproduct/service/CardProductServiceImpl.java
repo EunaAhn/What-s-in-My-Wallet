@@ -44,7 +44,7 @@ public class CardProductServiceImpl implements CardProductService {
 
         Map<String, Object> map = new HashMap<>();
         map.put("cardProductId", request.getCardProductId());
-        map.put("memberId", "dnwo1111");
+        map.put("memberId", memberId);
         CardProductDto.DetailsResponse response = cardProductRepository.findCardDetails(map);
 
         return response;
@@ -71,7 +71,7 @@ public class CardProductServiceImpl implements CardProductService {
 
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", memberId);
-        map.put("cardId", request.getCardId());
+        map.put("cardProductId", request.getCardId());
 
         return cardProductRepository.insertMemberLikeCard(map);
     }
@@ -83,7 +83,7 @@ public class CardProductServiceImpl implements CardProductService {
 
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", memberId);
-        map.put("cardId", request.getCardId());
+        map.put("cardProductId", request.getCardId());
 
         return cardProductRepository.deleteMemberLikeCard(map);
     }

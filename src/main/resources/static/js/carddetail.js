@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // 카드 상세 정보 조회
 const cardDetail = async () => {
     const cardDetailItem = await card.postCardDetail(cardId)
-
+    console.log(cardDetailItem)
     const cardImage = document.querySelector(".image-9")
     const likeCount = document.querySelector(".likeCount")
     const likeButton = document.querySelector(".likeButton")
@@ -19,21 +19,48 @@ const cardDetail = async () => {
     const cardMembershipFee = document.querySelector(".card-membershipFee")
     const cardBaserecord = document.querySelector(".card-baserecord")
     const cardBenefitSummary = document.querySelector(".card-benefitSummary")
+    const imageWrapper = document.querySelector(".imagewrapper")
 
     if(cardDetailItem.isUserClickLike === 1) {
         likeButton.querySelector('path').setAttribute('fill', '#9288DD');
     }
 
     likeCount.innerHTML = cardDetailItem.likeCount
-    // cardImage.src = "/img/carddetail/" + cardDetailItem.cardImageFileName + ".png";
+    cardImage.src = `/img/cardimg/카드${cardDetailItem.cardProductId}.jpg`;
     cardDetailTitle.innerHTML = cardDetailItem.cardName
     cardMembershipFee.innerHTML = cardDetailItem.membershipFee
-    // cardBaserecord.value = cardDetailItem.baseRecord
-    cardBaserecord.innerHTML = "조건 없음"
+    cardBaserecord.innerHTML = cardDetailItem.baseRecord
     cardBenefitSummary.innerHTML =cardDetailItem.benefitSummary
 
-    const cardInfoList = document.querySelector(".card-info-list")
+    const cardRect = imageWrapper.getBoundingClientRect();
+    const cardWidth = cardRect.width;
 
+    const cardDetailContainer = document.querySelector(".card-detail-container")
+
+    cardImage.onload = () => {
+        const imgWidth = cardImage.width;
+        const imgHeight = cardImage.height;
+        const aspectRatio = imgWidth / imgHeight;
+
+        if (aspectRatio > 1) {
+            cardImage.style.transform = "rotate(85deg)";
+            cardImage.style.height =`${cardWidth}px`;
+            cardImage.style.width =`${aspectRatio*cardWidth}px`;
+            imageWrapper.style.height =`${aspectRatio*cardWidth+10}px`;
+            // console.log(aspectRatio ," : ",aspectRatio*cardWidth)
+            // console.log(aspectRatio ," : ",cardWidth)
+            // console.log(aspectRatio ," : ",aspectRatio*cardWidth+60)
+        }
+        else  {
+            cardImage.style.transform = "rotate(-5deg)";
+            cardImage.style.height = `${cardWidth/aspectRatio}px`;
+            cardImage.style.width = `${cardWidth}px`;
+            // console.log(aspectRatio ," : ",cardWidth/aspectRatio)
+            // console.log(aspectRatio ," : ",cardWidth)
+        }
+    };
+
+    const cardInfoList = document.querySelector(".card-info-list")
     cardDetailItem.benefitCategoryList.forEach((benefitCategory) => {
         const cardListDiv = document.createElement('div');
         cardListDiv.classList.add('card-list');
@@ -45,7 +72,7 @@ const cardDetail = async () => {
         cardListDiv.appendChild(image);
 
         const cardTextInfoDiv = document.createElement('div');
-        cardTextInfoDiv.classList.add('card-text-info');
+        cardTextInfoDiv.classList.add('card-text-info_box');
         cardListDiv.appendChild(cardTextInfoDiv);
 
         const cardTitleDiv = document.createElement('div');

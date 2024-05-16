@@ -22,7 +22,9 @@ password.addEventListener('input', ()=> {
 const login = async () => {
     if (!username.value) {alert("아이디를 입력해주세요.") ; return false}
     if (!password.value) {alert("비밃번호를 입력해주세요.") ; return false}
-    if (await auth.postLogin(username.value,password.value)) {location.href = "cardlist";}
+    if (await auth.postLogin(username.value,password.value)) {
+        location.href = "cardlist";
+    }
     else {alert("정보를 잘못 입력하셨습니다.")}
 }
 
@@ -31,3 +33,4 @@ document.addEventListener('keydown', (event) =>  {
 });
 
 signinButton.addEventListener('click', login);
+

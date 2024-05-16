@@ -1,10 +1,10 @@
 import * as card from "./api/card.js"
-import {postRegistrationcardRegister} from "./api/card.js";
 const companys = ["신한카드", "현대카드", "삼성카드", "국민카드","롯데카드", "하나카드", "우리카드", "NH농협카드","IBK기업은행카드"]
 let cardItemlist = []
 
 document.addEventListener("DOMContentLoaded", async () => {
     cardItemlist = await card.getMyCard()
+    console.log(cardItemlist)
     await generateCardInfo(cardItemlist)
 })
 

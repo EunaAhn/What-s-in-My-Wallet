@@ -282,7 +282,6 @@ dialog::backdrop {
     cursor: pointer;
 }
 
-
 /*개인 정보 수정*/
 .user_modal {
     position: relative;

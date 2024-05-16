@@ -1,5 +1,6 @@
 const myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Authorization", `Bearer ${localStorage.getItem("access_token")}`);
 
 export const getExpenditureRatioByCategory = async (yearAndMonth) => {
     const raw = JSON.stringify({
@@ -80,18 +81,21 @@ export const getLineCategoryNameList = async (yearAndMonth) => {
 }
 
 // 카드 추천
-export const getCardReco = async ()=> {
+export const getCardRecoList = async (yearAndMonth)=> {
+    const raw = JSON.stringify({
+        yearAndMonth: yearAndMonth
+    });
     const requestOptions = {
-        method: "GET",
+        method: "POST",
         headers: myHeaders,
+        body: raw
     };
     try {
         const response = await fetch(`/api/cardreco/list`, requestOptions);
         const result = await response.json();
-        console.log(result)
         return result;
     } catch (error) {
-        console.log("getCardReco error : ",error)
+        console.log("getCardRecoList error : ",error)
         return null
     }
 }

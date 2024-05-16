@@ -26,9 +26,10 @@ public class CardRecommandServiceImpl implements CardRecommadService {
     @Override
     public CardRecommandDto.CardRecommandResponse recommandCards(CardRecommandDto.YearAndMonthRequest request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
+//        String memberId = "dnwo1111@naver.com";
 
         URI uri = UriComponentsBuilder
-                .fromUriString("http://3.39.9.210:5000") // flask server uri
+                .fromUriString("http://13.209.42.180:5000") // flask server uri
                 .path("/")
                 .queryParam("memberId", memberId)
                 .queryParam("date", request.getYearAndMonth())

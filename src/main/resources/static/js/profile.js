@@ -1,3 +1,5 @@
+import * as profile from "./api/profile.js";
+
 document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem('clickedmenu', ".side_profile");
 })
@@ -5,8 +7,19 @@ document.addEventListener("DOMContentLoaded", () => {
 const user_dialog = document.querySelector('.user_modal');
 const user = document.querySelector('.user')
 
-user.addEventListener('click', event => {
-    user_dialog.showModal();
+user.addEventListener('click', async (event) => {
+    const userinfo = await profile.postMemberProfile()
+    await user_dialog.showModal();
+
+    const userid = document.querySelector("#userid")
+    userid.value = userinfo.memberId
+
+    const username = document.querySelector("#username")
+    username.value = userinfo.memberName
+
+    const signinMoneygoal = document.querySelector("#signin-moneygoal")
+    signinMoneygoal.value = userinfo.targetExpenditure
+
 });
 
 const card_dialog = document.querySelector('.card_modal');
@@ -97,7 +110,6 @@ hdCardSearch.addEventListener("keydown", (event) => {
     }
 });
 
-
 const hdSearchImage = document.querySelector(".hd_search_image")
 
 hdSearchImage.addEventListener("click", () => {
@@ -108,16 +120,6 @@ hdSearchImage.addEventListener("click", () => {
     }
 })
 
+const title = document.querySelector(".title")
+title.innerHTML = `${localStorage.getItem("memberName")}님`
 
-
-// 현재 페이지 URL 가져오기
-var urlString = window.location.href;
-
-// URL에서 쿼리 문자열 파싱
-var url = new URL(urlString);
-
-// 쿼리 매개변수 추출
-var statusParam = url.searchParams.get("status");
-
-// 결과 출력
-console.log("status 파라미터 값:", statusParam);

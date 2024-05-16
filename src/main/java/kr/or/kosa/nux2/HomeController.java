@@ -52,14 +52,11 @@ public class HomeController {
         return "suggestion";
     }
 
-//    @RequestMapping(value = "/profile", method= RequestMethod.GET)
-//    public String goProfile(HttpServletRequest request) {
-//        return "profile";
-//    }
+    @RequestMapping(value = "/profile", method= RequestMethod.GET)
+    public String goProfile(HttpServletRequest request) {return "profile";}
 
     @RequestMapping(value = "/carddetail", method= RequestMethod.GET)
     public String goCarddetail(HttpServletRequest request) {return "carddetail";}
-
 
     @RequestMapping(value = "/cardregistration", method = RequestMethod.GET)
     public String goCardregistration(HttpServletRequest request) {

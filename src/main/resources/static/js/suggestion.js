@@ -1,128 +1,3 @@
-const data =
-    {
-    "cardProductList": [
-    {
-        "cardProductId": 2,
-        "cardCompanyId": "1",
-        "cardName": "the Pink",
-        "cardImageFileName": "the Pink",
-        "membershipFee": "국내 15만원, 해외 15만원",
-        "benefitSummary": "웰컴바우처 10만원권 제공\n연 최대 50만 바우처 교환\n",
-        "likeCount": 12,
-        "benefitCategoryList": [
-            {
-                "benefitName": "연회비지원"
-            },
-            {
-                "benefitName": "포인트/캐시백"
-            },
-            {
-                "benefitName": "바우처"
-            },
-            {
-                "benefitName": "프리미엄"
-            },
-            {
-                "benefitName": "주유"
-            }
-        ]
-    },
-    {
-        "cardProductId": 58,
-        "cardCompanyId": "1",
-        "cardName": "현대카드 Summit",
-        "cardImageFileName": "현대카드 Summit",
-        "membershipFee": "국내 20만원, 해외 20만원",
-        "benefitSummary": "교육,병원,여행,골프 5%M포인트적립\n웰컴 이벤트 혜택\n",
-        "likeCount": 12,
-        "benefitCategoryList": [
-            {
-                "benefitName": "연회비지원"
-            },
-            {
-                "benefitName": "바우처"
-            },
-            {
-                "benefitName": "포인트/캐시백"
-            },
-            {
-                "benefitName": "프리미엄"
-            },
-            {
-                "benefitName": "교육"
-            }
-        ]
-    }
-],
-    "discountAmountByCategoryList": [
-    {
-        "cardId": 2,
-        "ac5": 1446.0,
-        "ce7": 2071.5,
-        "cs2": 1614.0,
-        "ct1": 0.0,
-        "fd6": 0.0,
-        "hp8": 1027.5,
-        "mt1": 2479.5,
-        "ol7": 4330.5,
-        "언제나할인": 16659.0,
-        "통합할인액": 29628.0
-    },
-    {
-        "cardId": 55,
-        "ac5": 1446.0,
-        "ce7": 2071.5,
-        "cs2": 1614.0,
-        "ct1": 0.0,
-        "fd6": 4240.5,
-        "hp8": 1027.5,
-        "mt1": 2479.5,
-        "ol7": 4330.5,
-        "언제나할인": 12418.5,
-        "통합할인액": 29628.0
-    },
-    {
-        "cardId": 42,
-        "언제나할인": 17776.799999999996,
-        "통합할인액": 17776.799999999996,
-        "ac5": 0.0,
-        "fd6": 0.0,
-        "hp8": 0.0,
-        "ct1": 0.0,
-        "mt1": 0.0,
-        "ce7": 0.0,
-        "ol7": 0.0,
-        "cs2": 0.0
-    },
-    {
-        "cardId": 58,
-        "ac5": 1446.0,
-        "ce7": 2071.5,
-        "cs2": 0.0,
-        "ct1": 0.0,
-        "fd6": 4240.5,
-        "hp8": 1027.5,
-        "mt1": 2479.5,
-        "ol7": 4330.5,
-        "언제나할인": 14032.5,
-        "통합할인액": 29628.0
-    },
-    {
-        "cardId": 38,
-        "언제나할인": 0.0,
-        "통합할인액": 16390.0,
-        "ac5": 0.0,
-        "fd6": 0.0,
-        "hp8": 0.0,
-        "ct1": 0.0,
-        "mt1": 0.0,
-        "ce7": 0.0,
-        "ol7": 0.0,
-        "cs2": 0.0
-    }
-]
-}
-
 import * as suggestion from "./api/suggestion.js";
 
 const currentDate = new Date();
@@ -145,12 +20,14 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 
 const CardRecommandation = async () => {
-    // const cardRecoList= await suggestion.getCardRecoList(yearAndMonth)
-    // const slicedCardProductList = cardRecoList.cardProductList.slice(0,2)
-    // console.log("slicedCardProductList : ",slicedCardProductList)
+    const cardRecoList= await suggestion.getCardRecoList(yearAndMonth)
+    console.log(cardRecoList)
+
+    const slicedCardProductList = (cardRecoList.cardProductList).slice(0,2)
+    console.log("slicedCardProductList : ",slicedCardProductList)
 
     const contentBox = document.querySelector(".content_box")
-    data.cardProductList.forEach((card) => {
+    slicedCardProductList.forEach((card) => {
         const timeContent = document.createElement('div');
         timeContent.classList.add('content', 'time_content');
         contentBox.appendChild(timeContent);
@@ -188,7 +65,9 @@ const CardRecommandation = async () => {
         timeDescriptionBox.classList.add('description_box');
         timeContent.appendChild(timeDescriptionBox);
 
-        const discountData = data.discountAmountByCategoryList.find((discount) => discount.cardId === card.cardProductId);
+        const discountData = cardRecoList.discountAmountByCategoryArr.find((discount) => discount.cardId === card.cardProductId);
+
+        console.log("discountData : ",discountData)
 
         // 내용 채울 곳
         const cardtitle = document.createElement('p');
@@ -198,18 +77,18 @@ const CardRecommandation = async () => {
 
         const timeExpenseType = document.createElement('p');
         timeExpenseType.classList.add('expense_type');
-        timeExpenseType.textContent = `총 ${discountData["통합할인액"].toLocaleString()}원 혜택`;
+        timeExpenseType.textContent = `총 ${Math.floor(discountData["통합할인액"]).toLocaleString()}원 혜택`;
 
         timeDescriptionBox.appendChild(timeExpenseType);
 
         const timeTypeDescription1 = document.createElement('p');
         timeTypeDescription1.classList.add('type_description');
-        timeTypeDescription1.textContent = `피킹률: 0.52%`;
+        timeTypeDescription1.textContent = `피킹률: ${parseFloat(discountData["피킹률"]).toFixed(2)}%`;
         timeDescriptionBox.appendChild(timeTypeDescription1);
 
         const { cardId, 통합할인액, ...discounts } = discountData;
         const filteredDiscounts = Object.entries(discounts)
-            .filter(([key, value]) => key !== '통합할인액' && value !== 0) // 통합할인액과 값이 0인 항목은 제외합니다.
+            .filter(([key, value]) => key !== '통합할인액' && value !== 0 &&  key !== '피킹률' &&  key !== '연회비') // 통합할인액과 값이 0인 항목은 제외합니다.
             .sort((a, b) => b[1] - a[1]) // 값을 기준으로 내림차순으로 정렬합니다.
             .slice(0, 5) // 상위 5개의 항목을 선택합니다.
             .reduce((obj, [key, value]) => {
@@ -227,8 +106,7 @@ const CardRecommandation = async () => {
 
             const categoryDiv = document.createElement('div');
             categoryDiv.classList.add('category');
-
-            categoryDiv.textContent = category in categories ? categories[category] : category
+            categoryDiv.textContent = category === "언제나할인" ? "기타" : (category in categories ? categories[category] : category);
 
             const pikingP = document.createElement('p');
             pikingP.classList.add('piking');

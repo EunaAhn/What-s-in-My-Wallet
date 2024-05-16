@@ -106,10 +106,10 @@ public class MemberDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class SignUpRequest {
-        @Pattern(regexp = "/^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$/", message = "아이디는 이메일형식입니다.")
+        //@Pattern(regexp = "/^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$/", message = "아이디는 이메일형식입니다.")
         private String memberId;
 
-        @Pattern(regexp = "/^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$/", message = "비밀번호는 문자, 숫자, 특수문자 1개씩 필수이고 8~20자리입니다.")
+        //@Pattern(regexp = "/^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$/", message = "비밀번호는 문자, 숫자, 특수문자 1개씩 필수이고 8~20자리입니다.")
         private String memberPassword; //암호화
         @NotNull
         private String memberName;
@@ -125,13 +125,15 @@ public class MemberDto {
     @Getter
     @Setter
     public static class MemberIdRequest {
-        @Pattern(regexp = "/^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$/", message = "아이디는 이메일형식입니다.")
+        //@Pattern(regexp = "/^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$/", message = "아이디는 이메일형식입니다.")
         private String memberId;
     }
 
     @NoArgsConstructor
     @Getter
     public static class AuthenticationRequest {
+        private String memberId;
+
         @Pattern(regexp = "\\d{6}", message = "인증번호 형식은 6자리 숫자입니다.")
         private String authenticationNumber;
     }

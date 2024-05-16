@@ -70,6 +70,7 @@ export const postEmailRequest = async (email) => {
         body: raw,
     };
     try {
+        console.log(raw)
         const response = await fetch(`/email`, requestOptions);
         console.log("이메일 요청중")
         if(response && response.status === 200) {

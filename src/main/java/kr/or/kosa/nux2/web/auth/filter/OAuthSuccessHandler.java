@@ -30,10 +30,10 @@ public class OAuthSuccessHandler implements AuthenticationSuccessHandler {
         response.addHeader(HttpHeaders.AUTHORIZATION, accessToken);
 
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        if (customUserDetails.getUserDto().getStatus() == 0) {
-            response.sendRedirect("/api/member/profile?status=0");
-        } else {
-            response.sendRedirect("/main");
-        }
+//        if (customUserDetails.getUserDto().getStatus() == 0) {
+//            response.sendRedirect("/api/member/profile?status=0");
+//        } else {
+//            response.sendRedirect("/main");
+//        }
     }
 }

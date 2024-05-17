@@ -12,6 +12,10 @@ user.addEventListener('click', async (event) => {
     const userinfo = await profile.postMemberProfile()
     await user_dialog.showModal();
 
+
+
+    console.log(userinfo)
+
     const userid = document.querySelector("#userid")
     userid.value = userinfo.memberId
 
@@ -214,6 +218,7 @@ export const getRegistrationCardDelete = async (cardNumber) => {
         body: raw
     };
     try {
+        console.log(raw)
         const response = await fetch(`/api/registrationcard/delete`, requestOptions);
         const result = await response.json();
         return result.result;

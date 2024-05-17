@@ -7,10 +7,7 @@ import kr.or.kosa.nux2.domain.cardrecommand.service.CardRecommadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,7 +17,7 @@ public class CardRecoRestController {
     private final CardRecommadService cardRecommadService;
 
     @Operation(summary = "카드 추천 ", description = "해당년월을 기준으로 카드 추천")
-    @GetMapping("/list")
+    @PostMapping("/list")
     public ResponseEntity<CardRecommandDto.CardRecommandResponse> recommandCardReco(@RequestBody CardRecommandDto.YearAndMonthRequest request) {
         CardRecommandDto.CardRecommandResponse response = cardRecommadService.recommandCards(request);
 

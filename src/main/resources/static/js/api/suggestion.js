@@ -93,6 +93,7 @@ export const getCardRecoList = async (yearAndMonth)=> {
     try {
         const response = await fetch(`/api/cardreco/list`, requestOptions);
         const result = await response.json();
+        console.log(result)
         return result;
     } catch (error) {
         console.log("getCardRecoList error : ",error)

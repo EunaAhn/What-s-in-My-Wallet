@@ -13,6 +13,7 @@ const generateCardInfo = (cardItemlist) => {
     const cardInfoList = document.querySelector('.card-info-list');
 
     cardItemlist.forEach((item, index) => {
+        console.log(item)
         const cardList = document.createElement('div');
         cardList.classList.add('card-list');
 

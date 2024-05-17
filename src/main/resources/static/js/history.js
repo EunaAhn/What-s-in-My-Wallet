@@ -1,4 +1,5 @@
 import * as history from "./api/history.js";
+import * as utils from "./utils.js"
 import { getExpenditureList, getStoreAddressList, getExpenditureKeywordList, getDailyExpenditureMemo, getNewExpenditureList } from "./api/history.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -106,16 +107,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     updateButton.addEventListener('click', async () => {
+        const container = document.querySelector(".container")
         try {
             const newExpenditureList = await getNewExpenditureList();
             console.log(newExpenditureList)
             if (newExpenditureList && newExpenditureList.result === true) {
                 console.log("내역이 업데이트되었습니다.", newExpenditureList);
-                alert("내역이 업데이트되었습니다.");
-                addCalendarData(currentMonth, currentYear, selectedKeyword); // 캘린더 업데이트
+                // alert("내역이 업데이트되었습니다.");
+                const customAlert = utils.customAlert("내역이 업데이트 되었습니다.")
+                container.appendChild(customAlert)
+                customAlert.showModal()
+                await addCalendarData(currentMonth, currentYear, selectedKeyword); // 캘린더 업데이트
+                customAlert.querySelector(".alert_check").addEventListener("click", () =>{
+                    window.location.href = "history"
+                })
             } else {
-                console.log("가장 최신 내역입니다.");
-                alert("가장 최신 내역입니다.");
+                console.log("내역이 업데이트되었습니다.");
+                // alert("내역이 업데이트되었습니다.");
+                const customAlert = utils.customAlert("내역이 업데이트 되었습니다.")
+                container.appendChild(customAlert)
+                customAlert.showModal()
+                customAlert.querySelector(".alert_check").addEventListener("click", () =>{
+                    window.location.href = "history"
+                })
             }
         } catch (error) {
             console.error('Error updating expenditure list:', error);

@@ -135,7 +135,7 @@
             on
             eh.expenditurecategory_id = ec.expenditure_category_id
         where
-             <![CDATA[to_char(eh.expenditure_datetime,'YYYY-MM') > #{month}]]>
+             <![CDATA[to_char(eh.expenditure_datetime,'YYYY-MM') = #{month}]]>
             and
             eh.member_id = #{memberId}
         group by
@@ -154,7 +154,7 @@
         on
             eh.expenditurecategory_id = ec.expenditure_category_id
         where
-        <![CDATA[to_char(eh.expenditure_datetime,'YYYY-MM') > #{yearAndMonth}]]>
+        <![CDATA[to_char(eh.expenditure_datetime,'YYYY-MM') = #{yearAndMonth}]]>
             and
             member_id = #{memberId}
         group by

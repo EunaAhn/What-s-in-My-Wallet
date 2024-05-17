@@ -34,9 +34,9 @@
 
 .blub{
     position: absolute;
-    width: 40px;
-    top: -30px;
-    right: 0;
+    width: 30px;
+    top: -37px;
+    left: 315px;
     cursor: pointer;
 }
 
@@ -44,8 +44,8 @@
     position: absolute;
     height: 150px;
     width: 200px;
-    top: 26px;
-    right: -80px;
+    top: 16px;
+    left: 230px;
     z-index: 10;
     background-color: white;
     border-radius: 5px;
@@ -58,14 +58,6 @@
     align-items: center;
 }
 
-.visible {
-    visibility: visible;
-}
-
-.unvisible{
-    visibility: hidden;
-}
-
 .pikingrate:after {
     content:"";
     position: absolute;
@@ -76,7 +68,13 @@
     border-bottom: 20px solid white;
 }
 
+.visible {
+    visibility: visible;
+}
 
+.unvisible{
+    visibility: hidden;
+}
 
 .content_box{
     display: flex;
@@ -100,7 +98,7 @@
 }
 
 .img{
-    margin-right: 30px;
+    margin-right: 55px;
 }
 
 .img1{
@@ -196,6 +194,7 @@
 }
 
 .chart_title{
+    position: relative;
     height: 10%;
     width: 90%;
     text-align: left;

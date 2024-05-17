@@ -1,4 +1,9 @@
-import { getExpenditureTendency, getTotalAmountBy12Month, getTotalAmountByTime, getSavingAmountGoal, getTotalCountByTimePeriod } from "./api/analyze.js";
+import {
+    getExpenditureTendency,
+    getTotalAmountBy12Month,
+    getTotalAmountByTime,
+    getSavingAmountGoal,
+    getTotalCountByTimePeriod } from "./api/analyze.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     localStorage.setItem('clickedmenu', ".side_analyze");

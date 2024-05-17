@@ -5,7 +5,7 @@ const password = document.querySelector("#signin-pw")
 const signinButton = document.querySelector("#signin")
 
 // 아이디, 비밀번호 길이 제한
-const MAX_LENGTH = 20;
+const MAX_LENGTH = 50;
 username.addEventListener('input', ()=> {
     if (username.value.length > MAX_LENGTH) {
         username.value = username.value.slice(0, MAX_LENGTH);
@@ -34,3 +34,9 @@ document.addEventListener('keydown', (event) =>  {
 
 signinButton.addEventListener('click', login);
 
+
+// const btn = document.querySelector(".snslogin_google2")
+//
+// btn.addEventListener("click", () => {
+//     window.location.href = "/oauth2/authorization/google";
+// })

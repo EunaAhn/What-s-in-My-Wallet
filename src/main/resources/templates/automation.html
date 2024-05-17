@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default_layout}">
+    <th:block layout:fragment="head">
+        <link th:href="@{/css/automation.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css" />
+        <script type="module" th:src="@{/js/automation.js}" defer></script>
+    </th:block>
+    <body>
+        <div class="background"></div>
+        <div class="container">
+            <div class="left_section">
+                <div class="main_logo">
+                    <p><span class="purple">A</span>utomation</p>
+                </div>
+                <div class="description">
+                    소비내역 입력 자동화
+                </div>
+                <div class="user_box">
+                    <div class="input-wrapper">
+                        <label for="input1">현재주소 : </label>
+                        <input class="ipt" id="input1" type="text" name="input1" placeholder="도로명 주소"/>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label >소비성향 : </label>
+<!--                        <input class="ipt" id="input2" type="text" name="input2"/>-->
+                        <select class="ipt tendency" name="tendency" id="tendency">
+                            <option disabled selected>선호하는 소비 카테고리</option>
+                            <option value="1">의류</option>
+                            <option value="2">문화</option>
+                            <option value="3">외식</option>
+                            <option value="4">카페</option>
+                            <option value="5">마트</option>
+                        </select>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="input3">시작날짜 : </label>
+                        <input class="ipt" id="input3" type="text" name="input3" placeholder="ex) 2024-03-01"/>
+                    </div>
+
+                    <button id="submit">소비내역 업데이트</button>
+                </div>
+            </div>
+            <div class="right-section">
+                <img class="display display1" th:src="@{/img/onboarding/display1.png}" alt="onboardingImg1"/>
+                <img class="display display2" th:src="@{/img/onboarding/display2.png}" alt="onboardingImg2"/>
+            </div>
+        </div>
+    </body>
+</html>

@@ -45,7 +45,7 @@ export const postSignIn = async (memberId, memberPassword, memberName, memberCon
     };
     try {
         console.log(raw)
-        const response = await fetch(`/signIn`, requestOptions);
+        const response = await fetch(`/signUp`, requestOptions);
         if(response && response.status === 200) {
             const result = await response.ok
             console.log("일반 사용자 회원가입 완료 : ", result)
@@ -70,6 +70,7 @@ export const postEmailRequest = async (email) => {
         body: raw,
     };
     try {
+        console.log(raw)
         const response = await fetch(`/email`, requestOptions);
         console.log("이메일 요청중")
         if(response && response.status === 200) {

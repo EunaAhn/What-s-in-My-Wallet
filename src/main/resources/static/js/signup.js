@@ -48,6 +48,13 @@ const moneyGoal = document.querySelector("#signin-moneygoal")
 let emailAuthentication = false;
 let passwordAuthentication = false;
 
+moneyGoal.addEventListener("input", function(event) {
+    // 입력된 값을 쉼표로 천 단위 구분하여 표시
+    let input = event.target;
+    let value = input.value.replace(/\D/g, "");
+    input.value = Number(value).toLocaleString();
+    console.log(input.value)
+});
 const signUp = async () => {
     if (!userID.value) {alert("이메일을 입력해주세요.") ; return false}
     if (!userName.value) {alert("이름을 입력해주세요.") ; return false}
@@ -62,7 +69,8 @@ const signUp = async () => {
         "memberId":userID.value,
         "expenditureCategoryId": category
     }))
-    const tmp = await auth.postSignIn(userID.value, password.value, userName.value,memberConsCategoryDtoList ,moneyGoal.value)
+    const moneyGoalValue = moneyGoal.value.replace(/,/g, '')
+    const tmp = await auth.postSignIn(userID.value, password.value, userName.value,memberConsCategoryDtoList ,moneyGoalValue)
     if(tmp === true) {
         console.log("회원가입 성공")
         location.href = "login";
@@ -110,7 +118,7 @@ checknumButton.addEventListener("click", async () => {
     startTimer(60 * 5, display);
     authenticationModal.showModal();
     const emailRequest = await auth.postEmailRequest(userID.value)
-    console.log("인증번호 요청 성고 : ",emailRequest)
+    console.log("인증번호 요청 성공 : ",emailRequest)
 })
 
 let timer, timerInterval ;
@@ -151,3 +159,7 @@ authenticationModalButton.addEventListener("click", async() => {
         authenticationModal.close();
     }
 })
+
+document.querySelector(".close_btns").addEventListener('click', () => {
+    window.location.href = "login"; // 로그인 페이지로 이동
+});

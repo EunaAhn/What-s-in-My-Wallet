@@ -31,7 +31,7 @@ public class ExpenditureServiceImpl implements ExpenditureService {
     @Override
     public Map<String, Object> showMemberMonthlyExpenditures(ExenditureDto.ByYearAndMonthRequest request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
-
+        System.out.println(memberId);
         // 쿼리 검색 map 정의
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", memberId);
@@ -153,6 +153,8 @@ public class ExpenditureServiceImpl implements ExpenditureService {
     public Map<String, Object> findAverageExpenditureForMonthByYear(ExenditureDto.ByYearRequest request) {
         String memberId = SecurityContextHolder.getContext().getAuthentication().getName();
 
+        System.out.println("여기?"+memberId);
+
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", memberId);
         map.put("year", request.getYear());
@@ -174,10 +176,9 @@ public class ExpenditureServiceImpl implements ExpenditureService {
 
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", memberId);
-
         // 사용자의 등록카드리스트를 조회
         List<RegistrationCardDto.Response> registeredCard = registrationCardService.showAllRegisteredCardByMemberId();
-
+        System.out.println(registeredCard.size());
         // 등록카드를 순회
         for (RegistrationCardDto.Response card : registeredCard) {
             // 마이데이터 거래내역에서 등록카드의 거래내역을 조회
